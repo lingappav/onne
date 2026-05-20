@@ -1,0 +1,58 @@
+{
+  "title": "The President's Rule",
+  "subtitle": "A Novel of Constitutional Democracy",
+  "form": "Novel — Treatment for Registration",
+  "author": {
+    "name": "Shambhulingappa (Vishwa)",
+    "pen_name": "Vishwa Shambhulingappa",
+    "swa_member_no": "46108",
+    "email": "lingappa.vishwa@gmail.com",
+    "country": "India"
+  },
+  "logline": "When a renowned oncologist from Jharkhand is unwillingly appointed Special Administrator of Karnataka during President's Rule, he treats a fevered democracy with the same surgical precision he brought to his patients — and discovers that the most dangerous thing a man of integrity can do is refuse to be the system's sacrificial goat.",
+  "tagline": "The patient is democracy.",
+  "synopsis_short": "Karnataka is in its third coalition collapse in eight months. Delhi imposes President's Rule and appoints, against all expectation, an outsider — Dr. Sampath Kumar, an oncologist with no political past — as Special Administrator. Across twenty-four chapters and an epilogue, Sampath confronts a Rs. 36,000-crore shadow economy, a Rs. 1,400-crore land fraud, sophisticated political surveillance, a media siege, an attempted Rs. 500-crore bribe, and the most elegant corruption he has ever encountered — a 47-page pitch deck proposing to reclassify 30,000 acres of protected coffee plantation in Kodagu. He refuses every comfortable exit. His tenure ends not with a transformed Karnataka but with a demonstration — a proof-of-concept that ordinary integrity, applied with extraordinary discipline, can briefly bend the machinery of governance toward the public good. The patient is not cured. But the patient is alive. And in India, that is the beginning of everything.",
+  "synopsis_long": "On a summer evening in 2026, Karnataka loses its third coalition government in eight months. Cabinets have been sworn in like temporary staff; power has changed hands in hotel corridors instead of the Assembly floor. Under cover of 'restoring stability', the Centre imposes President's Rule and announces — to the shock of every newsroom in the country — that a Jharkhand-born oncologist named Dr. Sampath Kumar will serve as Special Administrator until elections can be aligned with the One Nation, One Election framework. Sampath is at home in Ranchi when the announcement is made. Black SUVs arrive at his door. He sends his wife Priyadarshini and their two children to an inner room and refuses to open the door. He is not running away. He is buying time to think.\n\nWhen he does accept the assignment, he does so as a doctor accepts a difficult case. He arrives in Bengaluru with a Triple Agenda — fiscal sanity, law-enforcement reset, and the formal end of populist freebies without a productivity link. The political class reads him as Tughlaq. The internet manufactures #AntiSampath and #DirtyDoctor and #NaayiSarkar. A fabricated audio clip claims he has called Karnataka 'a burden on India.' A junior officer in his own office is feeding daily summaries to a surveillance firm linked to a political party in Delhi. He restructures information flow inside his administration the way he would limit a tumour's blood supply: surgically, without destroying surrounding tissue.\n\nHe refuses an invitation that arrives as Rs. 500 crore in 'CSR contributions' for a no-tender infrastructure deal. He mandates that all government-linked transactions above Rs. 50,000 must go digital within 21 days, breaking a Rs. 36,000 crore parallel cash economy that has lubricated Karnataka real estate for decades. At 11:47 PM one night, he authorises a Midnight Incision — court seals, sealed FIRs, twelve simultaneous raids — and arrests a nexus responsible for a Rs. 1,400 crore land fraud that destroyed two thousand farmers' livelihoods. He calls it Financial Surgery. The political fallout is ferocious. He answers it with what an aide labels Sarcastic Compliance — over-complying with every PIL, every documentary, every retired Chief Justice's op-ed, until the challengers are buried in their own procedural demands.\n\nThe novel does not let him win. A cyberattack on the welfare disbursement portal — engineered by the very fintech company that had lobbied to 'digitise' state welfare — siphons Rs. 340 crore from farmers' insurance payouts. The Kodagu Pitch Deck arrives in his final week: a 47-page proposal to reclassify 30,000 acres of protected coffee plantation to mixed commercial use, dressed in the language of progress, backed by Union Ministers and three private conglomerates. It is the most elegant corruption he has ever encountered. He refuses, and orders public disclosure with the names of the corporations involved. He visits an old schoolteacher named Jyestha in her courtyard and tells her the only thing he can promise: that he told the truth. He attends a family dinner where the sambhar is slightly too sour and his daughter spills her juice laughing. His wife says, quietly, 'I never doubted you. But I am also relieved it is almost over.' He does not argue. He serves her more rice.\n\nOn his last day, he leaves his official residence at 6 AM, walks through Cubbon Park, accepts a cup of chai from a vendor whose son wants to become an engineer, and boards a flight to Ranchi. He does not give interviews. He does not write a memoir. His penultimate act is to mail copies of an unsolved file — the suspicious death of a 34-year-old revenue officer named Prabhakar, who was killed for compiling evidence against a sitting MP — to a journalist, a retired Supreme Court judge, and a law professor. No cover letter. Six months later, a 26-year-old cybersecurity analyst named Kavitha files an RTI for his administrative records, writes a 60-page analysis, and is shortlisted for the IAS. The Kodagu Pitch Deck becomes the subject of a Supreme Court suo motu case. Prabhakar's file surfaces in a national newspaper. The MP who benefited resigns from the Cabinet citing health reasons. Jyestha's students eat warm food twice a week.\n\nWhat Sampath Kumar leaves behind is not a transformed Karnataka. It is something more modest and more durable: a demonstration. A proof-of-concept that a democracy is not fated to its worst impulses. The reset is not political — it is psychological. He has reminded a cynical citizenry that honesty in power is possible. It is difficult. It is costly. But it is possible. The patient is not cured. But the patient is alive. And in India, that is the beginning of everything.",
+  "themes": [
+    "Integrity is not a virtue — it is a tactic.",
+    "Corruption in India arrives as generosity, friendship, and pragmatism, never as itself.",
+    "The most radical act of governance is to refuse the grammar of the system.",
+    "Democracy is not a thing you save. It is a patient you tend.",
+    "Naming is always the first surgery.",
+    "Power is most durable when exercised through patience, precision, and the opponent's own systems.",
+    "The measure of an administration is not its announcements but whether the most forgotten citizen feels, briefly, that the state remembers they exist.",
+    "Every honest administration in India leaves behind one unsolved case — the wound the system refuses to heal because healing it would implicate the system itself.",
+    "Demonstrations, unlike heroes, can be repeated."
+  ],
+  "structure": {
+    "form": "Novel in Three Acts plus Epilogue",
+    "acts": [
+      {"name": "Act I — The Inciting Incident & Political Status Quo", "chapters": "1–8", "summary": "A democracy in fever; a doctor pressed into service. Sampath's appointment, his Triple Agenda, the first bribe, the Shadow Economy directive."},
+      {"name": "Act II — Escalation, Legal Siege & Narrowing Options", "chapters": "9–17", "summary": "The system fights back; the administrator is under siege. The Midnight Incision, the Shadow Siege, the Grand Arrest, Chanakya's Theory, the Confrontation."},
+      {"name": "Act III — Climax, Legacy & The Reset", "chapters": "18–24 + Epilogue", "summary": "The final weeks; the demonstration complete. Jyestha's House, the No Tech Crime, the Family Dinner, the Kodagu Pitch Deck, the 120-page Legacy Report, the Unsolved Case, the Reset, and the Epilogue."}
+    ],
+    "total_chapters": 24,
+    "has_epilogue": true,
+    "estimated_final_length_words": 72000
+  },
+  "registration": {
+    "primary_body": "Screenwriters Association of India (SWA)",
+    "primary_body_member_no": "46108",
+    "secondary_body": "Writers Guild of America West (WGAW) Registry",
+    "form": "Treatment (novel-form prose)",
+    "date_of_first_registration_target": "2026-05-20",
+    "copyright_year": 2026,
+    "rights_status": "Author retains all rights. Film/OTT option granted to Sunday Cinemas under 24-month exclusivity from February 16, 2026 (auto-revert clause active).",
+    "source_materials_chain": [
+      "English_Chapters.pages — early chapter drafts",
+      "Sampath Kumar.pages — extended protagonist prose",
+      "The President's Rule.pages — primary novel draft",
+      "The Claude Gen_Governor.pages — expanded cinematic Chapter 1",
+      "Governor_PaperWork.pages — film option agreement and political pitch strategy",
+      "The_Presidents_Rule_Novel_1.pages — secondary novel manuscript",
+      "The Novel Prompts.pages — author's working notes",
+      "Table of Contents.md — 24-chapter spine",
+      "The_Presidents_Rule_Master_Narrative.md — consolidated rewrite foundation (the authoritative reference document)"
+    ]
+  }
+}

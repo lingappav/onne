@@ -1,0 +1,98 @@
+{
+  "principal": [
+    {
+      "name": "Dr. Sampath Kumar",
+      "role": "Protagonist · Special Administrator under President's Rule",
+      "age_range": "Mid-50s",
+      "origin": "Ranchi, Jharkhand",
+      "profession": "Renowned oncologist (25+ years of practice)",
+      "introduced_in": "Chapter 1 — The Broken Compass",
+      "description": "An oncologist of national reputation, summoned in the middle of an ordinary evening to take charge of a state in constitutional crisis. He has spent a quarter-century cutting tumours out of bodies; now he is asked to operate on a democracy. He is not a politician, has never sought public office, and does not need power. His moral grammar is medical: identify the disease, stop the bleeding, treat the cause. The novel turns on his 'third choice' — neither surrendering to political power nor seizing it for himself, but exercising it with the discipline of a clinician. Married to Priyadarshini, father of two school-age children, devoted to his profession.",
+      "arc": "From private clinician to public administrator, from polite refusal to total commitment, from outsider to demonstration. He does not transform — he is asked, repeatedly, to abandon his principles, and his refusal is the story.",
+      "key_quotes": [
+        "We are not sacrificial goats they can drag into politics whenever they want.",
+        "I am no longer your ATM. But I will be your partner.",
+        "My principles are not for sale at any price. Goodnight.",
+        "I am still a doctor. I am just treating a different patient.",
+        "I cannot promise you a better government. I can only promise you that I told the truth."
+      ]
+    },
+    {
+      "name": "Priyadarshini",
+      "role": "Sampath's wife · The domestic anchor",
+      "introduced_in": "Chapter 1 — The Broken Compass",
+      "description": "A woman of quiet authority, married to Sampath for over two decades. She does not protest, does not argue, but holds the family together through the seven-month crisis. Her loyalty is not performative; her doubts are not vocal. She raises the question Sampath cannot afford to ask himself — at a family dinner she says, 'I never doubted you. But I am also relieved it is almost over.' Her 'also' carries both pride and exhaustion without resolving either. She is the novel's reminder that public courage extracts an invisible domestic toll.",
+      "arc": "From wife at a dinner table whose plate freezes in her hand at the announcement, to the woman who must hold a household together while her husband is hunted by political machinery, to the partner who can finally name the cost.",
+      "key_quotes": [
+        "How does a man who has spent a career fighting cancer make enemies of people who simply want a drink after a hard day's work?",
+        "I never doubted you. But I am also relieved it is almost over."
+      ]
+    },
+    {
+      "name": "The President of India",
+      "role": "Catalyst · A woman of severe grace",
+      "introduced_in": "Chapter 2 — Delhi Gambit",
+      "description": "The President who receives Sampath in Rashtrapati Bhavan. She does not warm to him; she weighs him. Her grace is severe — meaning correct, meaning exact, meaning unyielding. She represents the formal architecture of the Indian state at its most ceremonial. The deal between her and Sampath is sealed not in ink but in expectation, and the gap between what she expects and what Sampath intends becomes the novel's central dramatic irony.",
+      "arc": "Appears in a single chapter but functions as the institutional weight against which Sampath measures himself for the rest of the novel."
+    },
+    {
+      "name": "The Architect",
+      "role": "Antagonist · Veteran Karnataka politician",
+      "introduced_in": "Chapter 17 — Sarcastic Compliance and Confrontation",
+      "description": "A man who has survived seven governments and three corruption probes. Charming, urbane, direct. He leads the political campaign to destroy Sampath, and yet, in their one face-to-face meeting — no aides, no cameras, no record — he speaks to Sampath with warmth, as if doing him a favour. He believes everyone finds their level in the system. He cannot believe a doctor would seriously decline a survival deal. His final line to Sampath — 'You are a very good doctor. You should have stayed a doctor' — is meant as kindness and lands as a threat.",
+      "arc": "Antagonist as institution rather than individual — the personification of the political class that has made the system unaccountable.",
+      "key_quotes": [
+        "Everyone finds their level in this system.",
+        "You are a very good doctor. You should have stayed a doctor."
+      ]
+    }
+  ],
+  "supporting": [
+    {
+      "name": "Jyestha",
+      "role": "The forgotten citizen · A retired government schoolteacher",
+      "introduced_in": "Chapter 18 — The Last 10 Days — Jyestha's House",
+      "description": "An old woman who, seven months before Sampath's tenure ends, wrote a letter about the collapse of the mid-day meal programme in her village. Sampath read it then, made a note, and did not forget. With ten days remaining in office, he visits her. She serves tea. They sit on a cement bench in her small courtyard. The visit is not televised, not leaked. It is the moral centre of the novel — the most powerful man in Karnataka, briefly, sits before the most forgotten citizen and tells her the truth. She gives him absolution by acknowledging it.",
+      "key_quotes": [
+        "That is more than most people have done."
+      ]
+    },
+    {
+      "name": "Prabhakar",
+      "role": "The conscience figure · A deceased junior revenue officer",
+      "age": 34,
+      "post": "Tumkur, Karnataka",
+      "introduced_in": "Chapter 23 — The Unsolved Case",
+      "description": "A 34-year-old revenue officer who quietly compiled evidence of a decade-old land grab linked to a sitting Member of Parliament. He died in what was ruled a road accident eighteen months before Sampath's appointment. The file sat sealed in the state's records vault. Sampath finds it in Month 4 and passes it to a senior investigating officer; on his last day in office he learns the case has been reclassified as 'incomplete', the investigator transferred to the Andaman administrative service, and the MP given a Cabinet berth. Sampath posts copies of the file to a journalist, a retired Supreme Court judge, and a law professor, without a cover letter. Prabhakar is the conscience figure — the man the system killed for believing in it."
+    },
+    {
+      "name": "Kavitha",
+      "role": "The future · 26-year-old cybersecurity analyst",
+      "age": 26,
+      "origin": "Mysore",
+      "introduced_in": "Chapter 19 — No Tech Crime",
+      "description": "A young analyst who maps the cyberattack on Karnataka's welfare disbursement portal, where Rs. 340 crore meant for farmers has been siphoned over eighteen months. Her supervisor is implicated; she cannot escalate through normal channels. She contacts Sampath's office directly, bypassing two layers of hierarchy. Sampath meets her the same evening. Six months after his tenure ends, she will file an independent RTI request for his administrative records and write a 60-page analysis that circulates among civil society. Three months later, she is shortlisted for the IAS. She is the novel's evidence that a demonstration can be inherited."
+    },
+    {
+      "name": "The Bengaluru Industrialist",
+      "role": "First serious bribe · Chapter 6 antagonist",
+      "introduced_in": "Chapter 6 — Ethical Anchor",
+      "description": "Hosts the dinner where Sampath is offered Rs. 500 crore in CSR contributions in exchange for passing an infrastructure contract without tender. Charming, precise, supremely confident. Believes the conversation is negotiation. Sampath asks for the bill, says principles are not for sale, and leaves. The industrialist calls twice the next morning. Sampath does not answer."
+    },
+    {
+      "name": "The Hyderabad Tycoon",
+      "role": "The shadow economy · Chapter 8 power broker",
+      "introduced_in": "Chapter 8 — Cash Transactions and the Shadow Economy",
+      "description": "A real estate baron who has quietly bankrolled two political parties and operates the Rs. 36,000 crore parallel cash economy in Karnataka property transactions. When Sampath mandates that all government-linked transactions above Rs. 50,000 must go digital within 21 days, the tycoon calls in favours from Delhi. Three ministers phone in 'concerns.' Sampath logs every call and does not deviate."
+    }
+  ],
+  "ensemble_background": [
+    "Sampath's two school-age children — present in Chapter 1, return for the family dinner in Chapter 20",
+    "The Chief Secretary of Karnataka — Sampath's institutional collaborator",
+    "A retired judge — quietly assists with the Midnight Incision (Chapter 9)",
+    "The cybersecurity analyst's supervisor — implicated in the welfare portal fraud",
+    "The smooth-talking consultant of the Kodagu Pitch Deck (Chapter 21)",
+    "The journalist, retired Supreme Court judge, and law professor — three recipients of Prabhakar's file",
+    "The chai vendor in Cubbon Park — the final twelve-minute conversation of Sampath's tenure"
+  ]
+}
