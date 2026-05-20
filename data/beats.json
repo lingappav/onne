@@ -1,0 +1,987 @@
+{
+  "source": "The_Presidents_Rule_Master_Narrative.md",
+  "novel": "The President's Rule",
+  "author": "Shambhulingappa (Vishwa)",
+  "signature": {
+    "total_chapters": 25,
+    "total_words": 9939,
+    "act_distribution": {
+      "I": 8,
+      "II": 9,
+      "III": 7,
+      "Epilogue": 1
+    },
+    "beat_frequency": {
+      "world_building": 17,
+      "external_pressure": 15,
+      "crisis_response": 9,
+      "internal_conflict": 8,
+      "climax": 8,
+      "policy_didactic": 8,
+      "inciting_incident": 7,
+      "rising_tension": 7,
+      "moral_test": 5,
+      "resolution": 3
+    },
+    "per_chapter": [
+      {
+        "number": 1,
+        "title": "The Broken Compass",
+        "act": "I",
+        "beat_tags": [
+          "inciting_incident",
+          "world_building",
+          "rising_tension",
+          "moral_test",
+          "external_pressure",
+          "internal_conflict",
+          "crisis_response"
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Delhi Gambit",
+        "act": "I",
+        "beat_tags": [
+          "inciting_incident",
+          "world_building",
+          "moral_test",
+          "internal_conflict"
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Language and a Bad Punchline",
+        "act": "I",
+        "beat_tags": [
+          "world_building"
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Digital Backlash",
+        "act": "I",
+        "beat_tags": [
+          "inciting_incident",
+          "world_building",
+          "rising_tension"
+        ]
+      },
+      {
+        "number": 5,
+        "title": "Triple Agenda",
+        "act": "I",
+        "beat_tags": [
+          "inciting_incident",
+          "world_building",
+          "climax",
+          "policy_didactic",
+          "crisis_response"
+        ]
+      },
+      {
+        "number": 6,
+        "title": "Ethical Anchor",
+        "act": "I",
+        "beat_tags": [
+          "moral_test",
+          "internal_conflict",
+          "policy_didactic"
+        ]
+      },
+      {
+        "number": 7,
+        "title": "The High-Octane Friday",
+        "act": "I",
+        "beat_tags": [
+          "external_pressure",
+          "crisis_response"
+        ]
+      },
+      {
+        "number": 8,
+        "title": "Cash Transactions and the Shadow Economy",
+        "act": "I",
+        "beat_tags": [
+          "world_building",
+          "rising_tension",
+          "external_pressure"
+        ]
+      },
+      {
+        "number": 9,
+        "title": "Midnight Incision",
+        "act": "II",
+        "beat_tags": [
+          "inciting_incident",
+          "world_building",
+          "external_pressure",
+          "crisis_response"
+        ]
+      },
+      {
+        "number": 10,
+        "title": "Shadow Siege",
+        "act": "II",
+        "beat_tags": [
+          "world_building",
+          "rising_tension",
+          "internal_conflict",
+          "policy_didactic"
+        ]
+      },
+      {
+        "number": 11,
+        "title": "The No Alcohol Dilemma",
+        "act": "II",
+        "beat_tags": [
+          "external_pressure",
+          "internal_conflict",
+          "policy_didactic"
+        ]
+      },
+      {
+        "number": 12,
+        "title": "The Stray Dog Dilemma",
+        "act": "II",
+        "beat_tags": [
+          "external_pressure",
+          "policy_didactic"
+        ]
+      },
+      {
+        "number": 13,
+        "title": "The RIP Moment",
+        "act": "II",
+        "beat_tags": [
+          "external_pressure",
+          "crisis_response"
+        ]
+      },
+      {
+        "number": 14,
+        "title": "The Pitch Deck — Spying and Surveillance",
+        "act": "II",
+        "beat_tags": [
+          "world_building",
+          "rising_tension",
+          "internal_conflict",
+          "climax",
+          "policy_didactic"
+        ]
+      },
+      {
+        "number": 15,
+        "title": "The Grand Arrest",
+        "act": "II",
+        "beat_tags": [
+          "world_building",
+          "external_pressure",
+          "crisis_response"
+        ]
+      },
+      {
+        "number": 16,
+        "title": "Chanakya's Theory",
+        "act": "II",
+        "beat_tags": [
+          "world_building",
+          "rising_tension",
+          "moral_test",
+          "external_pressure"
+        ]
+      },
+      {
+        "number": 17,
+        "title": "Sarcastic Compliance and Confrontation",
+        "act": "II",
+        "beat_tags": [
+          "world_building",
+          "moral_test",
+          "external_pressure",
+          "climax",
+          "resolution"
+        ]
+      },
+      {
+        "number": 18,
+        "title": "The Last 10 Days — Jyestha's House",
+        "act": "III",
+        "beat_tags": [
+          "inciting_incident",
+          "world_building",
+          "external_pressure",
+          "internal_conflict",
+          "crisis_response"
+        ]
+      },
+      {
+        "number": 19,
+        "title": "No Tech Crime",
+        "act": "III",
+        "beat_tags": [
+          "rising_tension",
+          "policy_didactic"
+        ]
+      },
+      {
+        "number": 20,
+        "title": "Family Dinner",
+        "act": "III",
+        "beat_tags": [
+          "external_pressure",
+          "internal_conflict"
+        ]
+      },
+      {
+        "number": 21,
+        "title": "Elevation Attack — Kodagu's Pitch Deck",
+        "act": "III",
+        "beat_tags": [
+          "world_building",
+          "climax",
+          "crisis_response"
+        ]
+      },
+      {
+        "number": 22,
+        "title": "Counter Attack",
+        "act": "III",
+        "beat_tags": [
+          "world_building",
+          "external_pressure",
+          "climax"
+        ]
+      },
+      {
+        "number": 23,
+        "title": "The Unsolved Case",
+        "act": "III",
+        "beat_tags": [
+          "inciting_incident",
+          "world_building",
+          "external_pressure",
+          "climax"
+        ]
+      },
+      {
+        "number": 24,
+        "title": "Reset in Democracy",
+        "act": "III",
+        "beat_tags": [
+          "world_building",
+          "climax",
+          "resolution",
+          "policy_didactic"
+        ]
+      },
+      {
+        "number": "Epilogue",
+        "title": "What the Patient Does Next",
+        "act": "Epilogue",
+        "beat_tags": [
+          "external_pressure",
+          "climax",
+          "resolution",
+          "crisis_response"
+        ]
+      }
+    ],
+    "unique_hashtags": [
+      "#AntiSampath",
+      "#BowBowDictatorship",
+      "#DirtyDoctor",
+      "#GoSampathGo",
+      "#NaayiSarkar",
+      "#SarameyaRaksha",
+      "#ShameOnSampath"
+    ],
+    "money_mentions_count": 8,
+    "quote_count": 32
+  },
+  "chapters": [
+    {
+      "number": 1,
+      "title": "The Broken Compass",
+      "act": "I",
+      "unique_details": [
+        "EXPANDED SOURCE (The_Claude_Gen_GovernorPdf): Full cinematic Chapter 1 prose — richly detailed sensory opening at Vidhana Soudha, specific anchor dialogue, and Sampath's 'third choice' motif (shutting the door vs. surrender/seizure)",
+        "PRIMARY SOURCE (Novel.docx): Wife's name given as 'Priyadarshini' (Claude_Gen uses 'Priyadarshi' — consolidated as 'Priyadarshini')",
+        "PRIMARY: Detail that Sampath 'puts his children to bed' before accepting — enriches the domestic dignity arc",
+        "PRIMARY: 'Black SUVs screech to a halt' — retained alongside Claude_Gen's tactile detail of 'tyres on gravel' and 'heavy boots'",
+        "CLAUDE_GEN UNIQUE: Ceiling fan / half-eaten dal / children's schoolbags — specific domestic inventory not in primary draft",
+        "CLAUDE_GEN UNIQUE: The anchor's line — 'nobody gives power; you either surrender to it, or you take it' — and Sampath's 'third choice' framing",
+        "CLAUDE_GEN UNIQUE: 'Not sacrificial goats they can drag into politics' — Sampath's exact refusal line; stronger than primary's 'we are not going to be part of this race'"
+      ],
+      "key_insight": "True power is often thrust upon those who do not chase it. Sampath's appointment mirrors the Indian bureaucratic tradition of using technocrats as political shields — clean hands used to sign dirty decisions. His 'third choice' (neither surrender nor seizure, but principled refusal) establishes the novel's moral grammar from its very first scene. The domestic inventory — half-eaten dal, children's schoolbags, retirement diaries — anchors the political in the profoundly human.",
+      "quotes": [
+        "In just eight months, Karnataka has lost its third coalition government—\" \"—MLAs missing, allegedly flown to resorts—\" \"—governor sends report to Delhi—\" \"—constitutional breakdown—",
+        "In India, we talk about power as if it is a blessing. But let's be honest — no one gives power. You take it. Today, Delhi has decided to take back Karnataka.",
+        "We are getting breaking news. The Centre has appointed a Special Administrator — an outsider — to run Karnataka. Repeat, an outsider. Dr. Sampath Kumar… renowned oncologist from Jharkhand.",
+        "Priya, look at the news. They have crossed all limits. They announced my name. But remember — we are not going to be a part of this race.",
+        "Turn off your phone and take the kids inside the room. Under no circumstances should the door be opened. Tell them we have nothing to discuss. We are not sacrificial goats they can drag into politics whenever they want. Get inside. Now."
+      ],
+      "hashtags": [],
+      "money_mentioned": [],
+      "word_count": 1467,
+      "body_preview": "> **Unique Details Retained from Source Files:**\n> - EXPANDED SOURCE (The_Claude_Gen_GovernorPdf): Full cinematic Chapter 1 prose — richly detailed sensory opening at Vidhana Soudha, specific anchor dialogue, and Sampath's 'third choice' motif (shutting the door vs. surrender/seizure)\n> - PRIMARY SOURCE (Novel.docx): Wife's name given as 'Priyadarshini' (Claude_Gen uses 'Priyadarshi' — consolidate",
+      "beat_tags": [
+        "inciting_incident",
+        "world_building",
+        "rising_tension",
+        "moral_test",
+        "external_pressure",
+        "internal_conflict",
+        "crisis_response"
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Delhi Gambit",
+      "act": "I",
+      "unique_details": [
+        "PRIMARY: The President described as 'a woman of severe grace' — specific characterisation retained",
+        "PRIMARY: Sampath's reply on merit — 'I have always left speechless those who doubted me'",
+        "PRIMARY: The deal 'sealed not in ink, but in expectation' — metaphor retained",
+        "PITCH_DECK: Delhi's use of integrity as a 'deniability costume' confirmed as the ONOE 'Proof of Concept' framing"
+      ],
+      "key_insight": "Delhi's political calculus uses integrity as a costume. An honest man in an administrative role provides deniability for those pulling the strings — unless that honest man refuses to be a puppet. The gap between what Delhi expects and what Sampath intends is the novel's central dramatic irony.",
+      "quotes": [
+        "On my own merit. I have always left speechless those who doubted me."
+      ],
+      "hashtags": [],
+      "money_mentioned": [],
+      "word_count": 364,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: The President described as 'a woman of severe grace' — specific characterisation retained\n> - PRIMARY: Sampath's reply on merit — 'I have always left speechless those who doubted me'\n> - PRIMARY: The deal 'sealed not in ink, but in expectation' — metaphor retained\n> - PITCH_DECK: Delhi's use of integrity as a 'deniability costume' confirmed as the ONOE '",
+      "beat_tags": [
+        "inciting_incident",
+        "world_building",
+        "moral_test",
+        "internal_conflict"
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Language and a Bad Punchline",
+      "act": "I",
+      "unique_details": [
+        "PRIMARY: The IAS officer's whispered line — 'A South Indian leader would at least fail in a language we understand'",
+        "PRIMARY: Sampath writes three agenda items in Kannada on the notice board",
+        "PRIMARY: 'Learn in 90 days or find another job — with full heart' — the 'full heart' qualifier preserved",
+        "PRIMARY: 'I speak the truth, until they cut me off. I go to the people, and I don't stop'"
+      ],
+      "key_insight": "Language is not merely communication in Indian politics — it is a loyalty test. Sampath's refusal to be either apologetic or performative about his linguistic limitations disarms a trap set to humiliate him.",
+      "quotes": [
+        "Sir, do you even speak Kannada? Or are you going to need a translator?",
+        "I speak the truth, until they cut me off. I go to the people, and I don't stop.",
+        "Learn in 90 days or find another job — with full heart."
+      ],
+      "hashtags": [],
+      "money_mentioned": [],
+      "word_count": 316,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: The IAS officer's whispered line — 'A South Indian leader would at least fail in a language we understand'\n> - PRIMARY: Sampath writes three agenda items in Kannada on the notice board\n> - PRIMARY: 'Learn in 90 days or find another job — with full heart' — the 'full heart' qualifier preserved\n> - PRIMARY: 'I speak the truth, until they cut me off. I go t",
+      "beat_tags": [
+        "world_building"
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Digital Backlash",
+      "act": "I",
+      "unique_details": [
+        "PRIMARY: Specific hashtags — #GoSampathGo and #AntiSampath",
+        "PRIMARY: 'Diluting Machine' as Sampath's private label for social media distortion",
+        "PRIMARY: 'We are not running a startup — we are running a state. Get back to work.'",
+        "PRIMARY: The handwritten Kannada note on the government notice board (vs. PR agency)",
+        "PRIMARY: 'Leave the sorry responses to your colleagues. Learn, work, and let the results speak in 48 hours.'",
+        "WEBSITE: 'The Hunger Vultures' label for opposition politicians"
+      ],
+      "key_insight": "The digital backlash against honest administrators is a designed system — it outsources the silencing of reformers to anonymous crowds, keeping political hands clean. Sampath's antidote is the oldest one: results, not rhetoric.",
+      "quotes": [
+        "Leave the sorry responses to your colleagues. Learn, work, and let the results speak in 48 hours.",
+        "We are not running a startup — we are running a state. Get back to work."
+      ],
+      "hashtags": [
+        "#GoSampathGo",
+        "#AntiSampath"
+      ],
+      "money_mentioned": [],
+      "word_count": 348,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: Specific hashtags — #GoSampathGo and #AntiSampath\n> - PRIMARY: 'Diluting Machine' as Sampath's private label for social media distortion\n> - PRIMARY: 'We are not running a startup — we are running a state. Get back to work.'\n> - PRIMARY: The handwritten Kannada note on the government notice board (vs. PR agency)\n> - PRIMARY: 'Leave the sorry responses to",
+      "beat_tags": [
+        "inciting_incident",
+        "world_building",
+        "rising_tension"
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Triple Agenda",
+      "act": "I",
+      "unique_details": [
+        "PRIMARY: Three specific agenda items — Fiscal Sanity, Law Enforcement Reset, Welfare Rationalisation",
+        "PRIMARY: Radio broadcast detail — Sampath bypasses television entirely",
+        "PRIMARY: 'I am no longer your ATM, but I will be your partner.'",
+        "PRIMARY: The young Kodagu farmer on a cracked phone speaker"
+      ],
+      "key_insight": "India's welfare state has become an addiction machine. Linking benefits to productivity is not cruelty — it is the most difficult and urgent form of respect. Sampath understands that dignity requires expectation.",
+      "quotes": [
+        "I am no longer your ATM. But I will be your partner."
+      ],
+      "hashtags": [],
+      "money_mentioned": [],
+      "word_count": 306,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: Three specific agenda items — Fiscal Sanity, Law Enforcement Reset, Welfare Rationalisation\n> - PRIMARY: Radio broadcast detail — Sampath bypasses television entirely\n> - PRIMARY: 'I am no longer your ATM, but I will be your partner.'\n> - PRIMARY: The young Kodagu farmer on a cracked phone speaker\n\nWithin the first week of his administration, Sampath Kum",
+      "beat_tags": [
+        "inciting_incident",
+        "world_building",
+        "climax",
+        "policy_didactic",
+        "crisis_response"
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Ethical Anchor",
+      "act": "I",
+      "unique_details": [
+        "PRIMARY: The bribe arrives as dinner invitation — 'crystal and expensive whisky' atmospheric detail",
+        "PRIMARY: The bribe amount — 'CSR contributions worth Rs. 500 crores'",
+        "PRIMARY: 'I have lived a full life with regulations. My principles are not for sale at any price. Goodnight.'",
+        "PRIMARY: 'Sampath asks for the bill' — the specific gesture that startles everyone",
+        "PRIMARY: Diary entry — 'Today was not a victory. It was merely the price of staying upright in a tilted room.'",
+        "PRIMARY: 'For the first time in a decade, the playing field has a level patch.'"
+      ],
+      "key_insight": "Corruption in India rarely announces itself as corruption. It arrives as generosity, as friendship, as pragmatism. Sampath's refusal to accept the grammar of the system is the most radical act of governance.",
+      "quotes": [
+        "Look, I have lived a full life with regulations. My principles are not for sale at any price. Goodnight.",
+        "Today was not a victory. It was merely the price of staying upright in a tilted room."
+      ],
+      "hashtags": [],
+      "money_mentioned": [
+        "Rs. 500 crore"
+      ],
+      "word_count": 376,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: The bribe arrives as dinner invitation — 'crystal and expensive whisky' atmospheric detail\n> - PRIMARY: The bribe amount — 'CSR contributions worth Rs. 500 crores'\n> - PRIMARY: 'I have lived a full life with regulations. My principles are not for sale at any price. Goodnight.'\n> - PRIMARY: 'Sampath asks for the bill' — the specific gesture that startles",
+      "beat_tags": [
+        "moral_test",
+        "internal_conflict",
+        "policy_didactic"
+      ]
+    },
+    {
+      "number": 7,
+      "title": "The High-Octane Friday",
+      "act": "I",
+      "unique_details": [
+        "PRIMARY: Exact seven issues enumerated — GST revenue shortfall, WHO health compliance gap, municipal workers' strike, foreign liquor policy revision, hospital accident inquiry, land acquisition standoff, school digitisation pilot",
+        "PRIMARY: 3 PM window walk / 'A functioning democracy would be nice.'",
+        "PRIMARY: GST addressed with targeted tax drive (not new cess); hospital inquiry to retired judge; digitisation only in districts with reliable electricity"
+      ],
+      "key_insight": "Governance at its best is not dramatic — it is relentless, grinding, unglamorous decision-making, day after day. The political class has made theatre of what should be administration. Sampath restores the original meaning of the word.",
+      "quotes": [
+        "A functioning democracy would be nice."
+      ],
+      "hashtags": [],
+      "money_mentioned": [],
+      "word_count": 329,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: Exact seven issues enumerated — GST revenue shortfall, WHO health compliance gap, municipal workers' strike, foreign liquor policy revision, hospital accident inquiry, land acquisition standoff, school digitisation pilot\n> - PRIMARY: 3 PM window walk / 'A functioning democracy would be nice.'\n> - PRIMARY: GST addressed with targeted tax drive (not new ce",
+      "beat_tags": [
+        "external_pressure",
+        "crisis_response"
+      ]
+    },
+    {
+      "number": 8,
+      "title": "Cash Transactions and the Shadow Economy",
+      "act": "I",
+      "unique_details": [
+        "PRIMARY: Rs. 36,000 crore in black money circulating through Karnataka property transactions annually",
+        "PRIMARY: 'Bootleg infrastructure' network — Sampath's own coinage",
+        "PRIMARY: All government-linked transactions above Rs. 50,000 must go digital within 21 days",
+        "PRIMARY: 'A Hyderabad-based tycoon who has quietly bankrolled two political parties'",
+        "PRIMARY: Day-22 compliance — 70% — specific figure preserved",
+        "PRIMARY: 'Not perfect, but the first fracture in a wall that has stood for decades'"
+      ],
+      "key_insight": "Black money is not just an economic problem — it is a governance culture. Disrupting it requires not just law, but the political will to absorb the fury of those who profit from opacity. Sampath treats corruption like a tumour: you do not negotiate with it.",
+      "quotes": [
+        "If we remove the money from this system, what breaks, and what can we rebuild?"
+      ],
+      "hashtags": [],
+      "money_mentioned": [
+        "Rs. 36,000 crore",
+        "Rs. 50,000",
+        "rs 9"
+      ],
+      "word_count": 367,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: Rs. 36,000 crore in black money circulating through Karnataka property transactions annually\n> - PRIMARY: 'Bootleg infrastructure' network — Sampath's own coinage\n> - PRIMARY: All government-linked transactions above Rs. 50,000 must go digital within 21 days\n> - PRIMARY: 'A Hyderabad-based tycoon who has quietly bankrolled two political parties'\n> - PRIM",
+      "beat_tags": [
+        "world_building",
+        "rising_tension",
+        "external_pressure"
+      ]
+    },
+    {
+      "number": 9,
+      "title": "Midnight Incision",
+      "act": "II",
+      "unique_details": [
+        "PRIMARY: Exact time of the call — 11:47 PM",
+        "PRIMARY: Three simultaneous actions at 12:30 AM — court seal on records vault, two deputy commissioners on temporary transfer, sealed FIR through bypass channels",
+        "PRIMARY: 'No press. No television. No hashtags.'",
+        "PRIMARY: 'The process was followed. The files are safe. Let the law work.'",
+        "PRIMARY: Counter-attack planted in three national papers; two retired IAS officers' open letter"
+      ],
+      "key_insight": "Reform in India requires the willingness to act at midnight — when the machinery of delay, leakage, and sabotage is most active. Sampath's surgical instincts translate directly from medicine to governance: the window for intervention is always narrow.",
+      "quotes": [
+        "The process was followed. The files are safe. Let the law work."
+      ],
+      "hashtags": [],
+      "money_mentioned": [],
+      "word_count": 346,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: Exact time of the call — 11:47 PM\n> - PRIMARY: Three simultaneous actions at 12:30 AM — court seal on records vault, two deputy commissioners on temporary transfer, sealed FIR through bypass channels\n> - PRIMARY: 'No press. No television. No hashtags.'\n> - PRIMARY: 'The process was followed. The files are safe. Let the law work.'\n> - PRIMARY: Counter-att",
+      "beat_tags": [
+        "inciting_incident",
+        "world_building",
+        "external_pressure",
+        "crisis_response"
+      ]
+    },
+    {
+      "number": 10,
+      "title": "Shadow Siege",
+      "act": "II",
+      "unique_details": [
+        "PRIMARY: Specific hashtags — #DirtyDoctor and #ShameOnSampath",
+        "PRIMARY: Fabricated audio clip — 'Karnataka is a burden on India' — later debunked",
+        "PRIMARY: Mispronunciation clipped, looped, shared ten million times in 48 hours",
+        "PRIMARY: 'Key implementation officer suddenly transferred' / 'signed welfare order lost in transit'",
+        "PRIMARY: Diary entry — 'Cancerous cells are expert at disguise. But the immune system, if strong enough, always knows.'"
+      ],
+      "key_insight": "Political character assassination in the social media age operates through volume and speed, not truth. The target's only defence is consistency — and Sampath's clinical training gives him an unusual immunity to panic.",
+      "quotes": [
+        "Cancerous cells are expert at disguise. But the immune system, if strong enough, always knows."
+      ],
+      "hashtags": [
+        "#DirtyDoctor",
+        "#ShameOnSampath"
+      ],
+      "money_mentioned": [],
+      "word_count": 327,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: Specific hashtags — #DirtyDoctor and #ShameOnSampath\n> - PRIMARY: Fabricated audio clip — 'Karnataka is a burden on India' — later debunked\n> - PRIMARY: Mispronunciation clipped, looped, shared ten million times in 48 hours\n> - PRIMARY: 'Key implementation officer suddenly transferred' / 'signed welfare order lost in transit'\n> - PRIMARY: Diary entry — '",
+      "beat_tags": [
+        "world_building",
+        "rising_tension",
+        "internal_conflict",
+        "policy_didactic"
+      ]
+    },
+    {
+      "number": 11,
+      "title": "The No Alcohol Dilemma",
+      "act": "II",
+      "unique_details": [
+        "PRIMARY: 40% reduction in retail outlets, bootlegging enforcement, outlet density linked to health indices",
+        "PRIMARY: Zomato/biryani tweet — 'My salary feeds my Zomato habit and you have cancelled biryani culture'",
+        "PRIMARY: Comedian's viral reel — 'Get out of state if you want to drink!'",
+        "PRIMARY: Priyadarshini's quiet dinner question and Sampath's answer — 'Because the bootleg mafia that profits from no regulation is killing people quietly, and nobody films that.'"
+      ],
+      "key_insight": "Public health governance in India is perpetually hostage to the politics of pleasure. The most justified interventions attract the loudest opposition because they disrupt invisible economies of harm that have powerful protectors.",
+      "quotes": [
+        "Because the bootleg mafia that profits from no regulation is killing people quietly, and nobody films that."
+      ],
+      "hashtags": [],
+      "money_mentioned": [],
+      "word_count": 328,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: 40% reduction in retail outlets, bootlegging enforcement, outlet density linked to health indices\n> - PRIMARY: Zomato/biryani tweet — 'My salary feeds my Zomato habit and you have cancelled biryani culture'\n> - PRIMARY: Comedian's viral reel — 'Get out of state if you want to drink!'\n> - PRIMARY: Priyadarshini's quiet dinner question and Sampath's answer",
+      "beat_tags": [
+        "external_pressure",
+        "internal_conflict",
+        "policy_didactic"
+      ]
+    },
+    {
+      "number": 12,
+      "title": "The Stray Dog Dilemma",
+      "act": "II",
+      "unique_details": [
+        "PRIMARY: Child mauled in Shivajinagar neighbourhood, Bengaluru",
+        "PRIMARY: Karnataka reports 300+ dog bite cases daily",
+        "PRIMARY: Animal Birth Control programme stalled 3 years — 'contractual corruption and municipal indifference'",
+        "PRIMARY: 'Bhairava Van' renamed 'Shiv's Vehicle Park' by irreverent aides",
+        "PRIMARY: Adoption drive hashtag — #SarameyaRaksha",
+        "PRIMARY: Hashtags — #NaayiSarkar and #BowBowDictatorship",
+        "PRIMARY: 45% reduction in Shivajinagar bite incidents by end of month",
+        "PRIMARY: 'No one trends that.'"
+      ],
+      "key_insight": "Urban governance in India is judged by its controversies, not its competencies. The stray dog crisis is a microcosm of every civic problem: entrenched contractors, political apathy, and a public that demands instant solutions to decade-old neglect.",
+      "quotes": [],
+      "hashtags": [
+        "#SarameyaRaksha",
+        "#NaayiSarkar",
+        "#BowBowDictatorship"
+      ],
+      "money_mentioned": [],
+      "word_count": 330,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: Child mauled in Shivajinagar neighbourhood, Bengaluru\n> - PRIMARY: Karnataka reports 300+ dog bite cases daily\n> - PRIMARY: Animal Birth Control programme stalled 3 years — 'contractual corruption and municipal indifference'\n> - PRIMARY: 'Bhairava Van' renamed 'Shiv's Vehicle Park' by irreverent aides\n> - PRIMARY: Adoption drive hashtag — #SarameyaRaksha",
+      "beat_tags": [
+        "external_pressure",
+        "policy_didactic"
+      ]
+    },
+    {
+      "number": 13,
+      "title": "The RIP Moment",
+      "act": "II",
+      "unique_details": [
+        "PRIMARY: Location — Palace Grounds, Bengaluru",
+        "PRIMARY: 'A hundred thousand people... many by buses that left before dawn'",
+        "PRIMARY: Sampath is simultaneously in Kodagu supervising flood relief after a landslide that killed fourteen people",
+        "PRIMARY: 'The people of Kodagu need rice, not rhetoric. I'll respond when they're safe.' — while carrying a supply box in the rain",
+        "PRIMARY: 'The clip goes quietly viral in a way that no orchestrated moment could engineer'",
+        "PRIMARY: 'The day the opposition confirmed they had no argument — only theatre'"
+      ],
+      "key_insight": "In Indian democracy, the loudest funeral for a reform is proof that the reform is working. Sampath's quiet competence at the Kodagu flood site is more politically powerful than any counter-rally could be.",
+      "quotes": [
+        "The people of Kodagu need rice, not rhetoric. I'll respond when they're safe."
+      ],
+      "hashtags": [],
+      "money_mentioned": [],
+      "word_count": 334,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: Location — Palace Grounds, Bengaluru\n> - PRIMARY: 'A hundred thousand people... many by buses that left before dawn'\n> - PRIMARY: Sampath is simultaneously in Kodagu supervising flood relief after a landslide that killed fourteen people\n> - PRIMARY: 'The people of Kodagu need rice, not rhetoric. I'll respond when they're safe.' — while carrying a supply",
+      "beat_tags": [
+        "external_pressure",
+        "crisis_response"
+      ]
+    },
+    {
+      "number": 14,
+      "title": "The Pitch Deck — Spying and Surveillance",
+      "act": "II",
+      "unique_details": [
+        "PRIMARY: Surveillance firm 'linked to a political party in Delhi'",
+        "PRIMARY: Dossier contains — 'known associates, family's financial history, medical record, Jharkhand networks'",
+        "PRIMARY: Medical metaphor — 'limit the tumour's blood supply without destroying surrounding tissue'",
+        "PRIMARY: Penetrated officer 'transferred to a ceremonial post — not dismissed, not prosecuted. Not yet.' — the 'not yet' qualifier is significant",
+        "PRIMARY: 'They have everything except the one thing that actually matters.' / 'A reason.'"
+      ],
+      "key_insight": "Surveillance of inconvenient administrators is standard practice in Indian political culture. The architecture of control extends into the administrator's own office. Sampath's 'limit the blood supply' counter-strategy is precisely the right treatment.",
+      "quotes": [
+        "They have everything except the one thing that actually matters.",
+        "A reason."
+      ],
+      "hashtags": [],
+      "money_mentioned": [],
+      "word_count": 331,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: Surveillance firm 'linked to a political party in Delhi'\n> - PRIMARY: Dossier contains — 'known associates, family's financial history, medical record, Jharkhand networks'\n> - PRIMARY: Medical metaphor — 'limit the tumour's blood supply without destroying surrounding tissue'\n> - PRIMARY: Penetrated officer 'transferred to a ceremonial post — not dismisse",
+      "beat_tags": [
+        "world_building",
+        "rising_tension",
+        "internal_conflict",
+        "climax",
+        "policy_didactic"
+      ]
+    },
+    {
+      "number": 15,
+      "title": "The Grand Arrest",
+      "act": "II",
+      "unique_details": [
+        "PRIMARY: Rs. 1,400 crore land conversion fraud in Bengaluru periphery",
+        "PRIMARY: Victims — 'two thousand farmers' livelihoods destroyed",
+        "PRIMARY: 12 simultaneous raids across the state",
+        "PRIMARY: Timeline — 6:30 AM raids; 8 AM first arrests; noon minister's PS in custody; evening two of three bureaucrats surrendered",
+        "PRIMARY: 'Chanakya's Theory' first named here",
+        "PRIMARY: 'Financial Surgery' as insiders' term",
+        "PRIMARY: Evidence file released to three news organisations simultaneously 'to make suppression impossible'",
+        "PRIMARY: 'On a good note, the tumour has been named.'"
+      ],
+      "key_insight": "In Indian governance, corruption is rarely prosecuted because the evidence-gathering itself requires clean hands at every level of the system. The Grand Arrest is possible only because Sampath has spent months building a chain of integrity inside a corrupt apparatus.",
+      "quotes": [
+        "On a good note, the tumour has been named."
+      ],
+      "hashtags": [],
+      "money_mentioned": [
+        "Rs. 1,400 crore"
+      ],
+      "word_count": 379,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: Rs. 1,400 crore land conversion fraud in Bengaluru periphery\n> - PRIMARY: Victims — 'two thousand farmers' livelihoods destroyed\n> - PRIMARY: 12 simultaneous raids across the state\n> - PRIMARY: Timeline — 6:30 AM raids; 8 AM first arrests; noon minister's PS in custody; evening two of three bureaucrats surrendered\n> - PRIMARY: 'Chanakya's Theory' first n",
+      "beat_tags": [
+        "world_building",
+        "external_pressure",
+        "crisis_response"
+      ]
+    },
+    {
+      "number": 16,
+      "title": "Chanakya's Theory",
+      "act": "II",
+      "unique_details": [
+        "PRIMARY: Three simultaneous legal attacks — three PILs, retired Chief Justice op-ed, two TV documentary series",
+        "PRIMARY: 'Sarcastic compliance' as the label for Sampath's legal strategy",
+        "PRIMARY: The 45-minute unedited YouTube video — specific format and duration; live chat questions",
+        "PRIMARY: Two of three PILs withdrawn within the month"
+      ],
+      "key_insight": "Chanakya understood that power is most durable when it is exercised through patience, precision, and the opponent's own systems. Sampath weaponises the very process his opponents use to delay and obstruct. 'Sarcastic compliance' is the novel's most important tactical concept.",
+      "quotes": [],
+      "hashtags": [],
+      "money_mentioned": [],
+      "word_count": 326,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: Three simultaneous legal attacks — three PILs, retired Chief Justice op-ed, two TV documentary series\n> - PRIMARY: 'Sarcastic compliance' as the label for Sampath's legal strategy\n> - PRIMARY: The 45-minute unedited YouTube video — specific format and duration; live chat questions\n> - PRIMARY: Two of three PILs withdrawn within the month\n\nIn the wake of",
+      "beat_tags": [
+        "world_building",
+        "rising_tension",
+        "moral_test",
+        "external_pressure"
+      ]
+    },
+    {
+      "number": 17,
+      "title": "Sarcastic Compliance and Confrontation",
+      "act": "II",
+      "unique_details": [
+        "PRIMARY: 'The Architect' — the veteran Karnataka politician who has survived seven governments and three corruption probes",
+        "PRIMARY: The deal — tone down investigations, approve two specific infrastructure projects, in return guaranteed tenure extension + Delhi protection",
+        "PRIMARY: 'Everyone finds their level in this system.' / 'I found my level a long time ago. It's called the truth.'",
+        "PRIMARY: 'You are a very good doctor. You should have stayed a doctor.' / 'I am still a doctor. I am just treating a different patient.'",
+        "PRIMARY: Meeting has 'no aides, no cameras, and no record'"
+      ],
+      "key_insight": "The most dangerous moment in any reformer's tenure is when the system offers them a comfortable exit. The deal is always framed as pragmatism — because idealism is the one thing the corrupt cannot price.",
+      "quotes": [
+        "Everyone finds their level in this system.",
+        "I found my level a long time ago. It's called the truth.",
+        "You are a very good doctor. You should have stayed a doctor.",
+        "I am still a doctor. I am just treating a different patient."
+      ],
+      "hashtags": [],
+      "money_mentioned": [
+        "rs 18"
+      ],
+      "word_count": 392,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: 'The Architect' — the veteran Karnataka politician who has survived seven governments and three corruption probes\n> - PRIMARY: The deal — tone down investigations, approve two specific infrastructure projects, in return guaranteed tenure extension + Delhi protection\n> - PRIMARY: 'Everyone finds their level in this system.' / 'I found my level a long time",
+      "beat_tags": [
+        "world_building",
+        "moral_test",
+        "external_pressure",
+        "climax",
+        "resolution"
+      ]
+    },
+    {
+      "number": 18,
+      "title": "The Last 10 Days — Jyestha's House",
+      "act": "III",
+      "unique_details": [
+        "PRIMARY: Jyestha's letter — written seven months ago about the collapse of the mid-day meal programme in her village",
+        "PRIMARY: The visit is un-televised, un-leaked — surfaces online three days later 'spreading quietly, not virally'",
+        "PRIMARY: 'I cannot promise you a better government. I can only promise you that I told the truth.'",
+        "PRIMARY: Jyestha's response — 'That is more than most people have done.'",
+        "PRIMARY: 'She reminded me why I came. A doctor goes to the patient. Always.'",
+        "PRIMARY: 'A suited man and an old woman drinking tea' — the image description"
+      ],
+      "key_insight": "The measure of an administration is not its policy announcements but whether the most forgotten citizen feels, even briefly, that the state remembers they exist. Jyestha's courtyard is the true Vidhana Soudha.",
+      "quotes": [
+        "I cannot promise you a better government. I can only promise you that I told the truth.",
+        "That is more than most people have done.",
+        "She reminded me why I came. A doctor goes to the patient. Always."
+      ],
+      "hashtags": [],
+      "money_mentioned": [],
+      "word_count": 373,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: Jyestha's letter — written seven months ago about the collapse of the mid-day meal programme in her village\n> - PRIMARY: The visit is un-televised, un-leaked — surfaces online three days later 'spreading quietly, not virally'\n> - PRIMARY: 'I cannot promise you a better government. I can only promise you that I told the truth.'\n> - PRIMARY: Jyestha's resp",
+      "beat_tags": [
+        "inciting_incident",
+        "world_building",
+        "external_pressure",
+        "internal_conflict",
+        "crisis_response"
+      ]
+    },
+    {
+      "number": 19,
+      "title": "No Tech Crime",
+      "act": "III",
+      "unique_details": [
+        "PRIMARY: Rs. 340 crore siphoned over eighteen months",
+        "PRIMARY: The attacker linked to 'a private fintech company that had lobbied aggressively to digitise state welfare schemes' — the irony stated explicitly",
+        "PRIMARY: The cybersecurity analyst — 26-year-old woman from Mysore — maps the attack but cannot escalate because her supervisor is implicated",
+        "PRIMARY: She contacts Sampath's office 'bypassing two layers of hierarchy'",
+        "PRIMARY: Four specific actions — portal shut for audit, disbursement rerouted bank-to-bank, FIR against fintech company, case to CBI",
+        "PRIMARY: 'NO TECH CRIME' as the internal motto"
+      ],
+      "key_insight": "India's rush to digitise governance has created new vectors for the same old theft. Technology does not eliminate corruption — it upgrades it.",
+      "quotes": [],
+      "hashtags": [],
+      "money_mentioned": [
+        "Rs. 340 crore"
+      ],
+      "word_count": 355,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: Rs. 340 crore siphoned over eighteen months\n> - PRIMARY: The attacker linked to 'a private fintech company that had lobbied aggressively to digitise state welfare schemes' — the irony stated explicitly\n> - PRIMARY: The cybersecurity analyst — 26-year-old woman from Mysore — maps the attack but cannot escalate because her supervisor is implicated\n> - PRIM",
+      "beat_tags": [
+        "rising_tension",
+        "policy_didactic"
+      ]
+    },
+    {
+      "number": 20,
+      "title": "Family Dinner",
+      "act": "III",
+      "unique_details": [
+        "PRIMARY: 'Sambhar that is slightly too sour' / 'an aide burns the rotis' / 'daughter laughs so hard she spills her juice'",
+        "PRIMARY: Location — 'ordinary Bengaluru flat — not his official residence'",
+        "PRIMARY: Priyadarshini's line — 'I never doubted you. But I am also relieved it is almost over.' — the 'also' is essential",
+        "PRIMARY: 'He serves her more rice' instead of arguing",
+        "PRIMARY: 'Naming is always the first surgery.'",
+        "PRIMARY: 'A million lives going about their ordinary business, mostly unconcerned with who administers them.'"
+      ],
+      "key_insight": "Leadership in Indian public life extracts an invisible personal toll — on families, on friendships, on the ordinary texture of a life. Priyadarshini's 'also' holds both pride and exhaustion without resolving either.",
+      "quotes": [
+        "I never doubted you. But I am also relieved it is almost over."
+      ],
+      "hashtags": [],
+      "money_mentioned": [],
+      "word_count": 332,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: 'Sambhar that is slightly too sour' / 'an aide burns the rotis' / 'daughter laughs so hard she spills her juice'\n> - PRIMARY: Location — 'ordinary Bengaluru flat — not his official residence'\n> - PRIMARY: Priyadarshini's line — 'I never doubted you. But I am also relieved it is almost over.' — the 'also' is essential\n> - PRIMARY: 'He serves her more rice",
+      "beat_tags": [
+        "external_pressure",
+        "internal_conflict"
+      ]
+    },
+    {
+      "number": 21,
+      "title": "Elevation Attack — Kodagu's Pitch Deck",
+      "act": "III",
+      "unique_details": [
+        "PRIMARY: The pitch deck is 47 pages",
+        "PRIMARY: Development corridor value — Rs. 12,000 crore; three private conglomerates",
+        "PRIMARY: 30,000 acres of protected coffee plantation land reclassified to 'mixed commercial use' — buried in the appendix",
+        "PRIMARY: Consultant drops names of Union Ministers and hints at post-tenure opportunities for Sampath himself",
+        "PRIMARY: 'The most elegant corruption he has encountered'",
+        "PRIMARY: Sampath orders public disclosure including names of corporations involved",
+        "PRIMARY: 'The consultant turns pale.'",
+        "PRIMARY: The pitch deck becomes subject of a Parliamentary question",
+        "PRIMARY: 'Some victories are invisible — the things that did not happen because someone, briefly, was watching.'"
+      ],
+      "key_insight": "The most sophisticated corruption in modern India wears the mask of investment and development. Sampath's greatest act may be what he refused to sign.",
+      "quotes": [],
+      "hashtags": [],
+      "money_mentioned": [
+        "Rs. 12,000 crore"
+      ],
+      "word_count": 379,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: The pitch deck is 47 pages\n> - PRIMARY: Development corridor value — Rs. 12,000 crore; three private conglomerates\n> - PRIMARY: 30,000 acres of protected coffee plantation land reclassified to 'mixed commercial use' — buried in the appendix\n> - PRIMARY: Consultant drops names of Union Ministers and hints at post-tenure opportunities for Sampath himself\n>",
+      "beat_tags": [
+        "world_building",
+        "climax",
+        "crisis_response"
+      ]
+    },
+    {
+      "number": 22,
+      "title": "Counter Attack",
+      "act": "III",
+      "unique_details": [
+        "PRIMARY: The 120-page Administrative Legacy Report",
+        "PRIMARY: Names both bureaucrats who helped AND those who obstructed",
+        "PRIMARY: 'Three structural reforms that future administrations must prioritise to prevent backsliding'",
+        "PRIMARY: Two obstructing bureaucrats promoted within weeks of incoming administration",
+        "PRIMARY: 'Three universities have requested it for policy research'",
+        "PRIMARY: 'Young IAS probationers reading it late at night in their hostels'",
+        "PRIMARY: 'The counter-attack can restore the old system, but it cannot unring the bell.'"
+      ],
+      "key_insight": "The most durable act of a reforming administrator is documentation — making the record of what was attempted, what succeeded, and what was resisted immune to erasure. Sampath's legacy report is his final incision.",
+      "quotes": [],
+      "hashtags": [],
+      "money_mentioned": [],
+      "word_count": 325,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: The 120-page Administrative Legacy Report\n> - PRIMARY: Names both bureaucrats who helped AND those who obstructed\n> - PRIMARY: 'Three structural reforms that future administrations must prioritise to prevent backsliding'\n> - PRIMARY: Two obstructing bureaucrats promoted within weeks of incoming administration\n> - PRIMARY: 'Three universities have request",
+      "beat_tags": [
+        "world_building",
+        "external_pressure",
+        "climax"
+      ]
+    },
+    {
+      "number": 23,
+      "title": "The Unsolved Case",
+      "act": "III",
+      "unique_details": [
+        "PRIMARY: Prabhakar — name, age 34, posted in Tumkur",
+        "PRIMARY: Evidence on 'a decade-old land grab linked to a sitting MP'",
+        "PRIMARY: Prabhakar's death — 'ruled a road accident eighteen months before Sampath's appointment'",
+        "PRIMARY: Sampath found the file in Month 4",
+        "PRIMARY: File reclassified as 'incomplete' on last day — bureaucratic suspension",
+        "PRIMARY: Investigating officer transferred to 'Andaman administrative service'",
+        "PRIMARY: 'The MP has just been given a Cabinet berth in Delhi'",
+        "PRIMARY: Sampath mails sealed copies to — a trusted journalist, a retired Supreme Court judge, a law professor in Bengaluru",
+        "PRIMARY: 'No cover letter. The file will speak for itself, or it will not speak at all.'"
+      ],
+      "key_insight": "Every honest administration in India leaves behind an unsolved case — a wound the system refuses to heal because healing it would implicate the system itself. Prabhakar is the novel's conscience figure — the man the system killed for believing in it.",
+      "quotes": [],
+      "hashtags": [],
+      "money_mentioned": [],
+      "word_count": 435,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: Prabhakar — name, age 34, posted in Tumkur\n> - PRIMARY: Evidence on 'a decade-old land grab linked to a sitting MP'\n> - PRIMARY: Prabhakar's death — 'ruled a road accident eighteen months before Sampath's appointment'\n> - PRIMARY: Sampath found the file in Month 4\n> - PRIMARY: File reclassified as 'incomplete' on last day — bureaucratic suspension\n> - PR",
+      "beat_tags": [
+        "inciting_incident",
+        "world_building",
+        "external_pressure",
+        "climax"
+      ]
+    },
+    {
+      "number": 24,
+      "title": "Reset in Democracy",
+      "act": "III",
+      "unique_details": [
+        "PRIMARY: 6 AM departure, before farewell protocols — deliberate timing",
+        "PRIMARY: The chai vendor in Cubbon Park — 12-minute conversation about the vendor's son who wants to become an engineer",
+        "PRIMARY: 'He promises nothing except to listen.'",
+        "PRIMARY: 'I came as a doctor. I tried to treat what I could see. The patient is still unwell. But the patient is alive, and the patient is fighting.'",
+        "PRIMARY: 'The city does not stop for his departure. The traffic signals work. The garbage trucks run their routes.'",
+        "PRIMARY: The Shivajinagar child learning to walk again — callback to Chapter 12",
+        "PRIMARY: 'Not a transformed Karnataka. A demonstration. A proof-of-concept.'",
+        "PRIMARY: 'In India, where possibility itself has become the rarest of political commodities.'"
+      ],
+      "key_insight": "India's democracy does not need saviours — it needs proof that ordinary integrity, applied with extraordinary discipline, can make a difference. Sampath Kumar is not a hero. He is a demonstration. And demonstrations, unlike heroes, can be repeated.",
+      "quotes": [
+        "I came as a doctor. I tried to treat what I could see. The patient is still unwell. But the patient is alive, and the patient is fighting."
+      ],
+      "hashtags": [],
+      "money_mentioned": [],
+      "word_count": 451,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: 6 AM departure, before farewell protocols — deliberate timing\n> - PRIMARY: The chai vendor in Cubbon Park — 12-minute conversation about the vendor's son who wants to become an engineer\n> - PRIMARY: 'He promises nothing except to listen.'\n> - PRIMARY: 'I came as a doctor. I tried to treat what I could see. The patient is still unwell. But the patient is",
+      "beat_tags": [
+        "world_building",
+        "climax",
+        "resolution",
+        "policy_didactic"
+      ]
+    },
+    {
+      "number": "Epilogue",
+      "title": "What the Patient Does Next",
+      "act": "Epilogue",
+      "unique_details": [
+        "PRIMARY: Kavitha — RTI request; 4,200 pages; 60-page analysis; shortlisted for IAS",
+        "PRIMARY: Kodagu Pitch Deck becomes subject of Supreme Court suo motu case",
+        "PRIMARY: Prabhakar's case file surfaces in national newspaper 90 days later; MP resigns citing 'health reasons'",
+        "PRIMARY: Jyestha's village — new mid-day meal contract, properly tendered; students eat warm food twice a week",
+        "PRIMARY: Sampath operates on 340 patients in first year back",
+        "PRIMARY: 'He does not give interviews. He does not write a memoir.'"
+      ],
+      "key_insight": "",
+      "quotes": [],
+      "hashtags": [],
+      "money_mentioned": [],
+      "word_count": 323,
+      "body_preview": "> **Unique Details Retained:**\n> - PRIMARY: Kavitha — RTI request; 4,200 pages; 60-page analysis; shortlisted for IAS\n> - PRIMARY: Kodagu Pitch Deck becomes subject of Supreme Court suo motu case\n> - PRIMARY: Prabhakar's case file surfaces in national newspaper 90 days later; MP resigns citing 'health reasons'\n> - PRIMARY: Jyestha's village — new mid-day meal contract, properly tendered; students",
+      "beat_tags": [
+        "external_pressure",
+        "climax",
+        "resolution",
+        "crisis_response"
+      ]
+    }
+  ]
+}

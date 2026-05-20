@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The President's Rule — 90-Day Command Centre</title>
+<style>
+  :root {
+    --p1: #1a56db;     /* Phase 1 blue */
+    --p1-light: #ebf5ff;
+    --p2: #7e3af2;     /* Phase 2 purple */
+    --p2-light: #f3f0ff;
+    --p3: #0694a2;     /* Phase 3 teal */
+    --p3-light: #ecfeff;
+    --fund: #e3a008;   /* Gold for funding */
+    --fund-light: #fffbeb;
+    --star: #e02424;   /* Red for stars */
+    --star-light: #fdf2f2;
+    --done: #057a55;
+    --sidebar: #1e2533;
+    --ink: #111827;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --bg: #f9fafb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--ink); }
+
+  /* ── LAYOUT ── */
+  .shell { display: flex; min-height: 100vh; }
+  aside {
+    width: 240px; min-width: 240px; background: var(--sidebar); color: #d1d5db;
+    position: sticky; top: 0; height: 100vh; overflow-y: auto;
+    display: flex; flex-direction: column;
+  }
+  main { flex: 1; padding: 32px 40px; max-width: 1100px; }
+
+  /* ── SIDEBAR ── */
+  .brand { padding: 24px 20px 12px; border-bottom: 1px solid #374151; }
+  .brand h1 { font-size: 13px; font-weight: 700; color: #f9fafb; letter-spacing: .5px; text-transform: uppercase; }
+  .brand p { font-size: 11px; color: #9ca3af; margin-top: 4px; }
+  nav ul { list-style: none; padding: 12px 0; }
+  nav li a {
+    display: block; padding: 9px 20px; font-size: 13px; color: #d1d5db;
+    text-decoration: none; border-left: 3px solid transparent; transition: all .15s;
+  }
+  nav li a:hover, nav li a.active {
+    background: #374151; color: #f9fafb; border-left-color: #60a5fa;
+  }
+  .nav-section { padding: 16px 20px 4px; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; color: #6b7280; }
+  .today-badge {
+    margin: auto 20px 20px; background: #374151; border-radius: 8px; padding: 12px;
+    font-size: 11px; color: #9ca3af;
+  }
+  .today-badge strong { color: #f9fafb; display: block; font-size: 14px; margin-bottom: 2px; }
+
+  /* ── HEADINGS ── */
+  h2.section-title {
+    font-size: 22px; font-weight: 700; color: var(--ink);
+    border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 24px;
+  }
+  h3.sub { font-size: 15px; font-weight: 600; margin: 20px 0 12px; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #1e2533 0%, #1a56db 100%);
+    color: white; border-radius: 16px; padding: 36px 40px; margin-bottom: 40px;
+  }
+  .hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 6px; }
+  .hero p { font-size: 14px; opacity: .8; max-width: 600px; line-height: 1.6; }
+  .hero-meta { display: flex; gap: 32px; margin-top: 24px; flex-wrap: wrap; }
+  .hero-stat { }
+  .hero-stat .val { font-size: 32px; font-weight: 800; }
+  .hero-stat .lbl { font-size: 11px; opacity: .7; text-transform: uppercase; letter-spacing: .5px; }
+
+  /* ── CARDS ── */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 36px; }
+  .card {
+    background: white; border-radius: 12px; padding: 20px;
+    border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,.05);
+  }
+  .card .icon { font-size: 24px; margin-bottom: 10px; }
+  .card .num { font-size: 26px; font-weight: 800; }
+  .card .desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .card.blue { border-top: 3px solid var(--p1); }
+  .card.purple { border-top: 3px solid var(--p2); }
+  .card.teal { border-top: 3px solid var(--p3); }
+  .card.gold { border-top: 3px solid var(--fund); }
+  .card.red { border-top: 3px solid var(--star); }
+
+  /* ── PHASE TIMELINE ── */
+  .timeline { margin-bottom: 48px; }
+  .phase-bar { display: flex; gap: 0; border-radius: 12px; overflow: hidden; height: 56px; margin-bottom: 20px; }
+  .phase-seg {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: white; padding: 0 12px; flex-direction: column; gap: 2px;
+  }
+  .phase-seg .days { font-size: 10px; opacity: .8; }
+  .p1-seg { background: var(--p1); flex: 30; }
+  .p2-seg { background: var(--p2); flex: 30; }
+  .p3-seg { background: var(--p3); flex: 30; }
+
+  /* ── WEEK GRID ── */
+  .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 12px; }
+  .day-cell {
+    border-radius: 8px; padding: 10px 8px; min-height: 80px; border: 1px solid var(--border);
+    background: white; font-size: 11px;
+  }
+  .day-cell .day-num { font-weight: 700; font-size: 13px; margin-bottom: 6px; }
+  .day-cell .task { color: var(--muted); line-height: 1.4; }
+  .day-cell.p1 { border-top: 3px solid var(--p1); }
+  .day-cell.weekend { background: #f3f4f6; }
+
+  /* ── CHAPTER TRACKER ── */
+  .act-block { margin-bottom: 28px; }
+  .act-label {
+    display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 11px;
+    font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 14px;
+  }
+  .act1 { background: var(--p1-light); color: var(--p1); }
+  .act2 { background: var(--p2-light); color: var(--p2); }
+  .act3 { background: var(--p3-light); color: var(--p3); }
+  .ch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+  .ch-item {
+    background: white; border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start;
+  }
+  .ch-num {
+    width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0;
+  }
+  .ch-num.a1 { background: var(--p1-light); color: var(--p1); }
+  .ch-num.a2 { background: var(--p2-light); color: var(--p2); }
+  .ch-num.a3 { background: var(--p3-light); color: var(--p3); }
+  .ch-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+  .ch-sub { font-size: 11px; color: var(--muted); }
+  .ch-target { font-size: 10px; color: var(--p1); font-weight: 600; margin-top: 4px; }
+  .ch-item input[type=checkbox] { margin-top: 2px; accent-color: var(--done); transform: scale(1.2); }
+
+  /* ── PROGRESS BARS ── */
+  .prog-wrap { margin-bottom: 20px; }
+  .prog-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+  .prog-bar { height: 10px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .prog-fill { height: 100%; border-radius: 99px; transition: width .3s; }
+  .blue-fill { background: var(--p1); }
+  .purple-fill { background: var(--p2); }
+  .teal-fill { background: var(--p3); }
+  .gold-fill { background: var(--fund); }
+
+  /* ── FUNDING PLAN ── */
+  .fund-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .fund-table th { background: var(--fund-light); padding: 10px 14px; text-align: left; font-weight: 600; border-bottom: 2px solid #fde68a; }
+  .fund-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .fund-table tr:hover td { background: #fffdf0; }
+  .fund-amount { font-weight: 700; color: #92400e; }
+  .tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600;
+    text-transform: uppercase;
+  }
+  .tag-green { background: #def7ec; color: #057a55; }
+  .tag-yellow { background: #fef3c7; color: #92400e; }
+  .tag-red { background: #fde8e8; color: #9b1c1c; }
+  .tag-blue { background: var(--p1-light); color: var(--p1); }
+
+  /* ── STAR CARDS ── */
+  .star-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .star-card {
+    background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px;
+    border-left: 4px solid var(--star);
+  }
+  .star-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .star-role { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .star-angle { font-size: 12px; background: var(--star-light); border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; }
+  .star-angle strong { display: block; color: var(--star); font-size: 10px; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 3px; }
+  .star-ask { font-size: 12px; color: var(--muted); }
+  .star-timing { display: flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 11px; font-weight: 600; color: var(--p2); }
+
+  /* ── MILESTONE TABLE ── */
+  .mile-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .mile-table th { background: #f3f4f6; padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+  .mile-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .mile-table tr:hover td { background: #f9fafb; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .dot-blue { background: var(--p1); }
+  .dot-purple { background: var(--p2); }
+  .dot-teal { background: var(--p3); }
+  .dot-gold { background: var(--fund); }
+  .dot-red { background: var(--star); }
+
+  /* ── SECTION SPACING ── */
+  .section { margin-bottom: 56px; scroll-margin-top: 20px; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+  /* ── RISK BOX ── */
+  .risk-box {
+    background: #fdf2f2; border: 1px solid #fde8e8; border-left: 4px solid var(--star);
+    border-radius: 8px; padding: 16px 20px; font-size: 13px; margin-bottom: 10px;
+  }
+  .risk-box strong { color: #9b1c1c; }
+
+  /* ── WEEK1 DETAIL ── */
+  .day-row {
+    display: grid; grid-template-columns: 80px 1fr 1fr;
+    gap: 0; border-bottom: 1px solid var(--border); align-items: start;
+  }
+  .day-row:last-child { border-bottom: none; }
+  .day-label {
+    padding: 14px 16px; font-size: 13px; font-weight: 700; color: var(--p1);
+    background: var(--p1-light); border-right: 1px solid var(--border);
+  }
+  .day-task { padding: 14px 16px; border-right: 1px solid var(--border); }
+  .day-goal { padding: 14px 16px; font-size: 12px; color: var(--muted); }
+  .day-task-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .day-task-detail { font-size: 12px; color: var(--muted); }
+  .week1-table { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: white; }
+
+  /* PRINT */
+  @media print {
+    aside { display: none; }
+    main { padding: 20px; max-width: none; }
+    .hero { background: #1e2533 !important; -webkit-print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ═══════════════════════════════════════ SIDEBAR ═══════════════════════════ -->
+<aside>
+  <div class="brand">
+    <h1>The President's Rule</h1>
+    <p>90-Day Command Centre</p>
+  </div>
+  <nav>
+    <div class="nav-section">Overview</div>
+    <ul>
+      <li><a href="#dashboard" onclick="setActive(this)">Dashboard</a></li>
+      <li><a href="#timeline" onclick="setActive(this)">90-Day Timeline</a></li>
+      <li><a href="#week1" onclick="setActive(this)">Week 1 — Day by Day</a></li>
+    </ul>
+    <div class="nav-section">Writing</div>
+    <ul>
+      <li><a href="#chapters" onclick="setActive(this)">Chapter Tracker</a></li>
+      <li><a href="#milestones" onclick="setActive(this)">Draft Milestones</a></li>
+    </ul>
+    <div class="nav-section">Funding</div>
+    <ul>
+      <li><a href="#funding" onclick="setActive(this)">$10K Fundraising Plan</a></li>
+    </ul>
+    <div class="nav-section">Outreach</div>
+    <ul>
+      <li><a href="#stars" onclick="setActive(this)">South India Superstars</a></li>
+      <li><a href="#risks" onclick="setActive(this)">Risks &amp; Blockers</a></li>
+    </ul>
+  </nav>
+  <div class="today-badge">
+    <strong>Day 1 of 90</strong>
+    Started: 20 May 2026<br>First Draft Deadline: 17 Aug 2026
+  </div>
+</aside>
+
+<!-- ═══════════════════════════════════════ MAIN ═══════════════════════════════ -->
+<main>
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <h1>The President's Rule</h1>
+  <p>A fictional novel by Shambhulingappa (Vishwa) · SWA Member No. 46108 · 24 chapters, 3 acts, one doctor who treats democracy itself. This is the 90-day command centre: first draft, $10K in funding, and South India's biggest names.</p>
+  <div class="hero-meta">
+    <div class="hero-stat"><div class="val">90</div><div class="lbl">Days to First Draft</div></div>
+    <div class="hero-stat"><div class="val">24</div><div class="lbl">Chapters Mapped</div></div>
+    <div class="hero-stat"><div class="val">$10K</div><div class="lbl">Fundraising Target</div></div>
+    <div class="hero-stat"><div class="val">5</div><div class="lbl">Stars to Approach</div></div>
+    <div class="hero-stat"><div class="val">Aug 17</div><div class="lbl">First Draft Deadline</div></div>
+  </div>
+</div>
+
+<!-- ─── DASHBOARD ─── -->
+<div class="section" id="dashboard">
+  <h2 class="section-title">Dashboard</h2>
+  <div class="cards">
+    <div class="card blue">
+      <div class="icon">✍️</div>
+      <div class="num">0 / 24</div>
+      <div class="desc">Chapters drafted</div>
+    </div>
+    <div class="card purple">
+      <div class="icon">📅</div>
+      <div class="num">90</div>
+      <div class="desc">Days remaining</div>
+    </div>
+    <div class="card teal">
+      <div class="icon">🎯</div>
+      <div class="num">~2,500</div>
+      <div class="desc">Words needed per day (est. 60K novel)</div>
+    </div>
+    <div class="card gold">
+      <div class="icon">💰</div>
+      <div class="num">$0 / $10K</div>
+      <div class="desc">Funding raised</div>
+    </div>
+    <div class="card red">
+      <div class="icon">⭐</div>
+      <div class="num">0 / 5</div>
+      <div class="desc">Superstar contacts made</div>
+    </div>
+  </div>
+
+  <h3 class="sub">Overall Progress</h3>
+  <div class="prog-wrap">
+    <div class="prog-label"><span>Research &amp; Outline (Phase 1)</span><span>0%</span></div>
+    <div class="prog-bar"><div class="prog-fill blue-fill" style="width:0%"></div></div>
+  </div>
+  <div class="prog-wrap">
+    <div class="prog-label"><span>First Draft — All 24 Chapters</span><span>0%</span></div>
+    <div class="prog-bar"><div class="prog-fill purple-fill" style="width:0%"></div></div>
+  </div>
+  <div class="prog-wrap">
+    <div class="prog-label"><span>Fundraising ($10K USD target)</span><span>0%</span></div>
+    <div class="prog-bar"><div class="prog-fill gold-fill" style="width:0%"></div></div>
+  </div>
+  <div class="prog-wrap">
+    <div class="prog-label"><span>Superstar Outreach (5 targets)</span><span>0%</span></div>
+    <div class="prog-bar"><div class="prog-fill" style="width:0%; background: var(--star);"></div></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ─── 90-DAY TIMELINE ─── -->
+<div class="section" id="timeline">
+  <h2 class="section-title">90-Day Timeline — How the Novel Gets Written</h2>
+
+  <div class="phase-bar">
+    <div class="phase-seg p1-seg">
+      <span>Phase 1 — Research &amp; Act I</span>
+      <span class="days">Days 1–30 · May 20 – Jun 18</span>
+    </div>
+    <div class="phase-seg p2-seg">
+      <span>Phase 2 — Act II &amp; III Draft</span>
+      <span class="days">Days 31–60 · Jun 19 – Jul 18</span>
+    </div>
+    <div class="phase-seg p3-seg">
+      <span>Phase 3 — Polish &amp; Launch</span>
+      <span class="days">Days 61–90 · Jul 19 – Aug 17</span>
+    </div>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="act-block">
+    <span class="act-label act1">Phase 1 · Days 1–30 · Research + Act I Draft</span>
+    <table class="mile-table" style="width:100%; background:white; border:1px solid var(--border); border-radius:10px; overflow:hidden;">
+      <thead>
+        <tr>
+          <th style="width:100px">Days</th>
+          <th style="width:140px">Period</th>
+          <th>Focus</th>
+          <th>Deliverable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="dot dot-blue"></span> 1–7</td>
+          <td>May 20–26</td>
+          <td><strong>Research Sprint</strong> — President's Rule constitutional law, real cases (2019 Maharashtra, 2016 Arunachal, 1984 J&amp;K), ONOE policy debate, Karnataka political history 2023–2026</td>
+          <td>5-page Research Brief per Act + updated Character Bible (Sampath, Priyadarshini, The Architect, Jyestha, Prabhakar, Kavitha)</td>
+        </tr>
+        <tr>
+          <td><span class="dot dot-blue"></span> 8–14</td>
+          <td>May 27–Jun 2</td>
+          <td><strong>Chapter Detailing</strong> — Scene-by-scene beat sheets for Ch 1–8 (Act I). Lock all dialogue cues, locations, specific data (Rs. figures, dates, hashtags) from the Master Narrative</td>
+          <td>8 chapter beat sheets · Scene outlines ready to write from</td>
+        </tr>
+        <tr>
+          <td><span class="dot dot-blue"></span> 15–21</td>
+          <td>Jun 3–9</td>
+          <td><strong>Write Ch 1–4</strong> — Full prose drafts: Broken Compass, Delhi Gambit, Language Punchline, Digital Backlash</td>
+          <td>4 complete chapter drafts (~12,000 words)</td>
+        </tr>
+        <tr>
+          <td><span class="dot dot-blue"></span> 22–30</td>
+          <td>Jun 10–18</td>
+          <td><strong>Write Ch 5–8</strong> — Triple Agenda, Ethical Anchor, High-Octane Friday, Shadow Economy. Begin pitch deck for funding outreach.</td>
+          <td>4 complete chapter drafts (~12,000 words) + 1-page funding pitch</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="act-block">
+    <span class="act-label act2">Phase 2 · Days 31–60 · Act II + Act III First Draft</span>
+    <table class="mile-table" style="width:100%; background:white; border:1px solid var(--border); border-radius:10px; overflow:hidden;">
+      <thead>
+        <tr>
+          <th style="width:100px">Days</th>
+          <th style="width:140px">Period</th>
+          <th>Focus</th>
+          <th>Deliverable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="dot dot-purple"></span> 31–37</td>
+          <td>Jun 19–25</td>
+          <td><strong>Write Ch 9–12</strong> — Midnight Incision, Shadow Siege, No Alcohol Dilemma, Stray Dog Dilemma</td>
+          <td>4 chapter drafts (~12,000 words)</td>
+        </tr>
+        <tr>
+          <td><span class="dot dot-purple"></span> 38–44</td>
+          <td>Jun 26–Jul 2</td>
+          <td><strong>Write Ch 13–17</strong> — RIP Moment, Spying &amp; Surveillance, Grand Arrest, Chanakya's Theory, Confrontation</td>
+          <td>5 chapter drafts (~15,000 words) · Act II COMPLETE</td>
+        </tr>
+        <tr>
+          <td><span class="dot dot-purple"></span> 45–52</td>
+          <td>Jul 3–10</td>
+          <td><strong>Write Ch 18–21</strong> — Jyestha's House, No Tech Crime, Family Dinner, Kodagu Pitch Deck. First superstar outreach emails sent.</td>
+          <td>4 chapter drafts + outreach to 2 superstars initiated</td>
+        </tr>
+        <tr>
+          <td><span class="dot dot-purple"></span> 53–60</td>
+          <td>Jul 11–18</td>
+          <td><strong>Write Ch 22–24 + Epilogue</strong> — Counter Attack, Unsolved Case, Reset in Democracy, What the Patient Does Next</td>
+          <td>FIRST DRAFT COMPLETE (all 24 chapters + epilogue, ~72,000 words)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="act-block">
+    <span class="act-label act3">Phase 3 · Days 61–90 · Polish + Fund + Launch Outreach</span>
+    <table class="mile-table" style="width:100%; background:white; border:1px solid var(--border); border-radius:10px; overflow:hidden;">
+      <thead>
+        <tr>
+          <th style="width:100px">Days</th>
+          <th style="width:140px">Period</th>
+          <th>Focus</th>
+          <th>Deliverable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="dot dot-teal"></span> 61–68</td>
+          <td>Jul 19–26</td>
+          <td><strong>Self-Edit Pass 1</strong> — Structural consistency, Act transitions, character arcs. Simultaneously: crowdfunding campaign live.</td>
+          <td>Revised draft + crowdfunding campaign page live</td>
+        </tr>
+        <tr>
+          <td><span class="dot dot-teal"></span> 69–76</td>
+          <td>Jul 27–Aug 3</td>
+          <td><strong>Beta Readers</strong> — 2–3 trusted readers (journalist, academic, political staffer). Approach remaining superstars. Sunday Cinemas option advance follow-up.</td>
+          <td>Beta feedback received + all 5 superstar approaches sent</td>
+        </tr>
+        <tr>
+          <td><span class="dot dot-teal"></span> 77–83</td>
+          <td>Aug 4–10</td>
+          <td><strong>Revision Pass 2</strong> — Incorporate beta feedback. Tighten prose. Lock Kannada/Hindi dialogue with native speaker check.</td>
+          <td>Polished draft ready for professional edit</td>
+        </tr>
+        <tr>
+          <td><span class="dot dot-teal"></span> 84–90</td>
+          <td>Aug 11–17</td>
+          <td><strong>Submission Ready</strong> — Finalize manuscript + synopsis + pitch letter. First publisher/agent query batch. Funding targets consolidated.</td>
+          <td>Query-ready manuscript · $10K funding pipeline locked</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ─── WEEK 1 DETAIL ─── -->
+<div class="section" id="week1">
+  <h2 class="section-title">Week 1 — Day by Day Plan (May 20–26)</h2>
+  <p style="font-size:13px; color:var(--muted); margin-bottom:20px;">This week is entirely research — no prose writing yet. The goal is to build a rock-solid knowledge base so every chapter writes itself with specific, accurate, vivid detail.</p>
+
+  <div class="week1-table">
+    <div class="day-row" style="background:#f9fafb; border-bottom:1px solid var(--border);">
+      <div style="padding:10px 16px; font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase;">Day</div>
+      <div style="padding:10px 16px; font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; border-left:1px solid var(--border);">Task Focus (Morning)</div>
+      <div style="padding:10px 16px; font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; border-left:1px solid var(--border);">Task Focus (Evening) + Daily Goal</div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-label">Day 1<br><small style="font-weight:400;color:#6b7280">May 20</small></div>
+      <div class="day-task">
+        <div class="day-task-name">Read all source documents end to end</div>
+        <div class="day-task-detail">Re-read Master Narrative, Table of Contents, all PDF chapters (English_Chapters, Sampath Kumar, The President's Rule). Annotate gaps, inconsistencies, and unanswered questions.</div>
+      </div>
+      <div class="day-goal">
+        <div class="day-task-name">Create a "Research Gap List"</div>
+        <div class="day-task-detail">Write 1–2 pages of specific questions: What really happened in the 2023–2024 Karnataka elections? What does Article 356 actually say? What was the actual ONOE timeline? List 20 questions to answer this week.</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-label">Day 2<br><small style="font-weight:400;color:#6b7280">May 21</small></div>
+      <div class="day-task">
+        <div class="day-task-name">Constitutional Research — Article 356 &amp; President's Rule</div>
+        <div class="day-task-detail">Study: S.R. Bommai v. Union of India (1994 Supreme Court judgment). Real cases: Arunachal Pradesh 2016, Maharashtra 2019. How are governors involved? What exactly does a Special Administrator do vs. an elected CM?</div>
+      </div>
+      <div class="day-goal">
+        <div class="day-task-name">Write a 2-page "Legal Framework Note"</div>
+        <div class="day-task-detail">This becomes a reference for every political scene. Include: powers of the administrator, limitations, judicial review history, Delhi's levers of control. Directly feeds Ch 1, 2, 9, 16.</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-label">Day 3<br><small style="font-weight:400;color:#6b7280">May 22</small></div>
+      <div class="day-task">
+        <div class="day-task-name">Karnataka Political Landscape Research</div>
+        <div class="day-task-detail">Study: Coalition dynamics 2023–2025, JD(S), INC, BJP power plays. Karnataka's black economy in real estate. Actual stray dog crisis data in Bengaluru. Alcohol policy battles. Research the BBMP &amp; mid-day meal programme.</div>
+      </div>
+      <div class="day-goal">
+        <div class="day-task-name">Build a "World Bible" document</div>
+        <div class="day-task-detail">Ground the novel in real Bengaluru geography: Vidhana Soudha, Cubbon Park, Shivajinagar, Kodagu. Real newspaper headlines, real Twitter hashtag patterns from the period. Makes prose feel lived-in, not fictional.</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-label">Day 4<br><small style="font-weight:400;color:#6b7280">May 23</small></div>
+      <div class="day-task">
+        <div class="day-task-name">Character Bible — Deep Dive</div>
+        <div class="day-task-detail">Write full profiles for: (1) Dr. Sampath Kumar — backstory, oncology specialty, Ranchi life, marriage, motivations. (2) Priyadarshini — her own agency, sacrifices. (3) The Architect — which real-world politician archetype? (4) Jyestha, Prabhakar, Kavitha.</div>
+      </div>
+      <div class="day-goal">
+        <div class="day-task-name">One scene exercise per character</div>
+        <div class="day-task-detail">Write 200 words from each character's POV — not for the novel, just to find their voice. Sampath thinks like a diagnostician. The Architect thinks in poker. Jyestha thinks in patience. This unlocks authentic dialogue for all chapters.</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-label">Day 5<br><small style="font-weight:400;color:#6b7280">May 24</small></div>
+      <div class="day-task">
+        <div class="day-task-name">ONOE Research + Thematic Framework</div>
+        <div class="day-task-detail">One Nation One Election: what is the actual policy, who supports/opposes it, what is the constitutional amendment required? How does the novel position ONOE — as a good idea misused, or a bad idea? Nail the thematic stance.</div>
+      </div>
+      <div class="day-goal">
+        <div class="day-task-name">Write the Novel's "Spine Statement"</div>
+        <div class="day-task-detail">One paragraph: what this novel is arguing about democracy. "Not that President's Rule is good, but that…" This becomes the compass for every editorial decision in the draft. Also drafts the back-cover blurb you need for pitches.</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-label">Day 6<br><small style="font-weight:400;color:#6b7280">May 25</small></div>
+      <div class="day-task">
+        <div class="day-task-name">Beat Sheet — Act I (Ch 1–8)</div>
+        <div class="day-task-detail">For each of the 8 Act I chapters: write a 5-line beat sheet. Scene — Opening image → Conflict → Turn → Decision → Closing image. Lock every key line of dialogue (from Master Narrative). Note word count target per chapter (aim 2,500–3,500 words each).</div>
+      </div>
+      <div class="day-goal">
+        <div class="day-task-name">Week 1 Review + Plan Week 2</div>
+        <div class="day-task-detail">Read through all notes. Identify: What did you NOT know that you now know? What is still unclear? Update Day 8–14 plan. Send one email to a Karnataka-based political journalist — introduce yourself, request 30-min call for background research.</div>
+      </div>
+    </div>
+
+    <div class="day-row">
+      <div class="day-label">Day 7<br><small style="font-weight:400;color:#6b7280">May 26</small></div>
+      <div class="day-task">
+        <div class="day-task-name">Rest + Inspiration Day</div>
+        <div class="day-task-detail">Read one comparable novel: "The Space Between Us" (Thrity Umrigar) OR rewatch Nayakan / A Wednesday — films that show how lone integrity plays in Indian political contexts. Note what makes them work cinematically.</div>
+      </div>
+      <div class="day-goal">
+        <div class="day-task-name">Visualize Chapter 1 as a film opening</div>
+        <div class="day-task-detail">Write 300 words describing Ch 1 as a film director would shoot it: camera angles, sound design, the moment the SUVs arrive at Ranchi. This is pre-writing that makes Ch 1 prose vivid. You start writing Chapter 1 prose on Day 15. That is next week.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--p1-light); border:1px solid #bfdbfe; border-radius:8px; padding:16px 20px; margin-top:20px; font-size:13px;">
+    <strong style="color:var(--p1)">Week 1 Success Criteria:</strong> By end of Day 7 you have — (1) Research Gap List answered, (2) Legal Framework Note, (3) World Bible draft, (4) Character Bible with 6 profiles, (5) Spine Statement written, (6) 8 Act I beat sheets. You are 100% ready to write prose from Day 15.
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ─── CHAPTER TRACKER ─── -->
+<div class="section" id="chapters">
+  <h2 class="section-title">Chapter Tracker — All 24 Chapters + Epilogue</h2>
+  <p style="font-size:13px; color:var(--muted); margin-bottom:24px;">Check off each chapter as you complete the first draft. The Master Narrative Document is your detailed brief for every chapter.</p>
+
+  <div class="act-block">
+    <span class="act-label act1">Act I — The Inciting Incident &amp; Status Quo · Ch 1–8 · Target: Days 15–30</span>
+    <div class="ch-grid">
+      <div class="ch-item">
+        <input type="checkbox">
+        <div>
+          <div class="ch-num a1">01</div>
+        </div>
+        <div>
+          <div class="ch-title">The Broken Compass</div>
+          <div class="ch-sub">Midnight summons in Ranchi. SUVs. Dal and schoolbags. The locked door.</div>
+          <div class="ch-target">Target: Day 15–16 · ~3,000 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a1">02</div></div>
+        <div>
+          <div class="ch-title">Delhi Gambit</div>
+          <div class="ch-sub">Integrity as political shield. A deal sealed in expectation, not ink.</div>
+          <div class="ch-target">Target: Day 16–17 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a1">03</div></div>
+        <div>
+          <div class="ch-title">Language &amp; a Bad Punchline</div>
+          <div class="ch-sub">A loyalty test in Kannada. "Learn in 90 days or find another job — with full heart."</div>
+          <div class="ch-target">Target: Day 17–18 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a1">04</div></div>
+        <div>
+          <div class="ch-title">Digital Backlash</div>
+          <div class="ch-sub">#AntiSampath. The Diluting Machine. "We are running a state, not a startup."</div>
+          <div class="ch-target">Target: Day 18–19 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a1">05</div></div>
+        <div>
+          <div class="ch-title">Triple Agenda</div>
+          <div class="ch-sub">Fiscal sanity, law reset, no free lunches. "I am no longer your ATM."</div>
+          <div class="ch-target">Target: Day 22–23 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a1">06</div></div>
+        <div>
+          <div class="ch-title">Ethical Anchor</div>
+          <div class="ch-sub">Rs. 500 Cr bribe dressed as CSR. "My principles are not for sale at any price."</div>
+          <div class="ch-target">Target: Day 23–24 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a1">07</div></div>
+        <div>
+          <div class="ch-title">The High-Octane Friday</div>
+          <div class="ch-sub">7 crises, 7 decisions, 8 hours. "A functioning democracy would be nice."</div>
+          <div class="ch-target">Target: Day 24–25 · ~3,000 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a1">08</div></div>
+        <div>
+          <div class="ch-title">Shadow Economy</div>
+          <div class="ch-sub">Rs. 36,000 Cr black money. 70% digital compliance. First fracture in a decades-old wall.</div>
+          <div class="ch-target">Target: Day 25–26 · ~2,500 words</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="act-block">
+    <span class="act-label act2">Act II — Escalation, Legal Siege &amp; Narrowing Options · Ch 9–17 · Target: Days 31–44</span>
+    <div class="ch-grid">
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a2">09</div></div>
+        <div>
+          <div class="ch-title">Midnight Incision</div>
+          <div class="ch-sub">11:47 PM. Court seal. Sealed FIR. "The process was followed. Let the law work."</div>
+          <div class="ch-target">Target: Day 31–32 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a2">10</div></div>
+        <div>
+          <div class="ch-title">Shadow Siege</div>
+          <div class="ch-sub">#DirtyDoctor. Fabricated audio clip. "Cancerous cells are expert at disguise."</div>
+          <div class="ch-target">Target: Day 32–33 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a2">11</div></div>
+        <div>
+          <div class="ch-title">The No Alcohol Dilemma</div>
+          <div class="ch-sub">Health policy becomes culture war. "Nobody films the bootleg mafia killing people quietly."</div>
+          <div class="ch-target">Target: Day 33–34 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a2">12</div></div>
+        <div>
+          <div class="ch-title">The Stray Dog Dilemma</div>
+          <div class="ch-sub">#NaayiSarkar. Heat maps. 45% reduction. "No one trends that."</div>
+          <div class="ch-target">Target: Day 34–35 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a2">13</div></div>
+        <div>
+          <div class="ch-title">The RIP Moment</div>
+          <div class="ch-sub">Funeral rally at Palace Grounds. He's in Kodagu in the rain. "Rice, not rhetoric."</div>
+          <div class="ch-target">Target: Day 38–39 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a2">14</div></div>
+        <div>
+          <div class="ch-title">Spying &amp; Surveillance</div>
+          <div class="ch-sub">His office is watching him. "They have everything except a reason."</div>
+          <div class="ch-target">Target: Day 39–40 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a2">15</div></div>
+        <div>
+          <div class="ch-title">The Grand Arrest</div>
+          <div class="ch-sub">Rs. 1,400 Cr fraud. 12 simultaneous raids. "The tumour has been named."</div>
+          <div class="ch-target">Target: Day 40–41 · ~3,000 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a2">16</div></div>
+        <div>
+          <div class="ch-title">Chanakya's Theory</div>
+          <div class="ch-sub">PILs, op-eds, documentaries. Sarcastic compliance. 45-minute YouTube video.</div>
+          <div class="ch-target">Target: Day 41–42 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a2">17</div></div>
+        <div>
+          <div class="ch-title">Confrontation</div>
+          <div class="ch-sub">The Architect. No cameras. "I am still a doctor. Different patient."</div>
+          <div class="ch-target">Target: Day 43–44 · ~2,500 words</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="act-block">
+    <span class="act-label act3">Act III — Climax, Legacy &amp; The Reset · Ch 18–24 + Epilogue · Target: Days 45–60</span>
+    <div class="ch-grid">
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a3">18</div></div>
+        <div>
+          <div class="ch-title">Jyestha's House</div>
+          <div class="ch-sub">An old teacher. Tea. "I cannot promise a better government. I can promise the truth."</div>
+          <div class="ch-target">Target: Day 45–46 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a3">19</div></div>
+        <div>
+          <div class="ch-title">No Tech Crime</div>
+          <div class="ch-sub">Rs. 340 Cr stolen through welfare portal. Kavitha, 26. Technology upgrades corruption.</div>
+          <div class="ch-target">Target: Day 46–47 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a3">20</div></div>
+        <div>
+          <div class="ch-title">Family Dinner</div>
+          <div class="ch-sub">Slightly sour sambhar. "I never doubted you. But I am also relieved it's almost over."</div>
+          <div class="ch-target">Target: Day 50–51 · ~2,000 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a3">21</div></div>
+        <div>
+          <div class="ch-title">Kodagu Pitch Deck</div>
+          <div class="ch-sub">47-page development plan. 30,000 acres. "The most elegant corruption he has seen."</div>
+          <div class="ch-target">Target: Day 51–52 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a3">22</div></div>
+        <div>
+          <div class="ch-title">Counter Attack</div>
+          <div class="ch-sub">120-page legacy report. "You can restore the old system. You cannot unring the bell."</div>
+          <div class="ch-target">Target: Day 53–54 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a3">23</div></div>
+        <div>
+          <div class="ch-title">The Unsolved Case</div>
+          <div class="ch-sub">Prabhakar, 34. Filed sealed. The file goes to three addresses. No cover letter.</div>
+          <div class="ch-target">Target: Day 55–56 · ~2,500 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a3">24</div></div>
+        <div>
+          <div class="ch-title">Reset in Democracy</div>
+          <div class="ch-sub">6 AM departure. Chai in Cubbon Park. "Not a hero. A demonstration."</div>
+          <div class="ch-target">Target: Day 57–58 · ~3,000 words</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <input type="checkbox">
+        <div><div class="ch-num a3" style="font-size:9px">EPL</div></div>
+        <div>
+          <div class="ch-title">Epilogue — What the Patient Does Next</div>
+          <div class="ch-sub">Kavitha's RTI. Prabhakar's case surfaces. Jyestha's students eat warm food twice a week.</div>
+          <div class="ch-target">Target: Day 59–60 · ~2,000 words</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ─── MILESTONES ─── -->
+<div class="section" id="milestones">
+  <h2 class="section-title">Draft Milestones — What Done Looks Like</h2>
+  <table class="mile-table" style="background:white; border:1px solid var(--border); border-radius:10px; overflow:hidden;">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Day</th>
+        <th>Milestone</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>May 26</td><td>7</td>
+        <td><span class="dot dot-blue"></span> Week 1 Research Complete — Character Bible, World Bible, Beat Sheets locked</td>
+        <td><span class="tag tag-yellow">In Progress</span></td>
+      </tr>
+      <tr>
+        <td>Jun 9</td><td>21</td>
+        <td><span class="dot dot-blue"></span> Act I — First 4 chapters in draft (Ch 1–4)</td>
+        <td><span class="tag tag-red">Upcoming</span></td>
+      </tr>
+      <tr>
+        <td>Jun 18</td><td>30</td>
+        <td><span class="dot dot-blue"></span> Act I COMPLETE — All 8 chapters drafted (~24,000 words)</td>
+        <td><span class="tag tag-red">Upcoming</span></td>
+      </tr>
+      <tr>
+        <td>Jun 25</td><td>37</td>
+        <td><span class="dot dot-purple"></span> Act II first half — Ch 9–12 drafted</td>
+        <td><span class="tag tag-red">Upcoming</span></td>
+      </tr>
+      <tr>
+        <td>Jul 2</td><td>44</td>
+        <td><span class="dot dot-purple"></span> Act II COMPLETE — All chapters 9–17 drafted (~27,000 words)</td>
+        <td><span class="tag tag-red">Upcoming</span></td>
+      </tr>
+      <tr>
+        <td>Jul 10</td><td>52</td>
+        <td><span class="dot dot-purple"></span> Act III first half — Ch 18–21 drafted + first 2 superstar emails sent</td>
+        <td><span class="tag tag-red">Upcoming</span></td>
+      </tr>
+      <tr>
+        <td><strong>Jul 18</strong></td><td><strong>60</strong></td>
+        <td><strong><span class="dot dot-teal"></span> 🎉 FIRST DRAFT COMPLETE — All 24 chapters + Epilogue (~72,000 words)</strong></td>
+        <td><span class="tag tag-red">Deadline</span></td>
+      </tr>
+      <tr>
+        <td>Jul 26</td><td>68</td>
+        <td><span class="dot dot-teal"></span> Self-edit pass complete + Crowdfunding campaign live</td>
+        <td><span class="tag tag-red">Upcoming</span></td>
+      </tr>
+      <tr>
+        <td>Aug 3</td><td>76</td>
+        <td><span class="dot dot-teal"></span> All 5 superstar approaches sent + Beta reader feedback received</td>
+        <td><span class="tag tag-red">Upcoming</span></td>
+      </tr>
+      <tr>
+        <td><strong>Aug 17</strong></td><td><strong>90</strong></td>
+        <td><strong><span class="dot dot-teal"></span> 🏁 Query-ready manuscript + $10K funding pipeline locked</strong></td>
+        <td><span class="tag tag-red">Final Target</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<hr class="divider">
+
+<!-- ─── FUNDING ─── -->
+<div class="section" id="funding">
+  <h2 class="section-title">$10,000 USD Fundraising Plan</h2>
+  <p style="font-size:13px; color:var(--muted); margin-bottom:24px;">Five parallel streams. The key framing from your own document: position distribution sponsorship as "funding a policy idea" — not "buying a book." That is politically easier to fund.</p>
+
+  <div class="cards" style="margin-bottom:28px;">
+    <div class="card gold">
+      <div class="icon">🌐</div>
+      <div class="num">$2,500</div>
+      <div class="desc">Crowdfunding (Stream 1)</div>
+    </div>
+    <div class="card gold">
+      <div class="icon">🎬</div>
+      <div class="num">$2,000</div>
+      <div class="desc">Sunday Cinemas Advance (Stream 2)</div>
+    </div>
+    <div class="card gold">
+      <div class="icon">🏛️</div>
+      <div class="num">$2,500</div>
+      <div class="desc">Political/Cultural Sponsorship (Stream 3)</div>
+    </div>
+    <div class="card gold">
+      <div class="icon">🎓</div>
+      <div class="num">$1,500</div>
+      <div class="desc">Literary Grants &amp; Fellowships (Stream 4)</div>
+    </div>
+    <div class="card gold">
+      <div class="icon">🎤</div>
+      <div class="num">$1,500</div>
+      <div class="desc">Speaking / Events (Stream 5)</div>
+    </div>
+  </div>
+
+  <table class="fund-table" style="background:white; border:1px solid var(--border); border-radius:10px; overflow:hidden;">
+    <thead>
+      <tr>
+        <th>Stream</th>
+        <th>Channel / Platform</th>
+        <th>Target</th>
+        <th>When to Activate</th>
+        <th>Pitch Angle</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Crowdfunding</strong></td>
+        <td>
+          <strong>Wishberry</strong> (India's leading lit/film crowdfunding)<br>
+          <small style="color:var(--muted)">or Milaap / Ketto for broader reach</small>
+        </td>
+        <td class="fund-amount">$2,500<br><small>(~₹2 Lakhs)</small></td>
+        <td>Day 61 (Jul 19) — launch alongside self-edit phase. Build campaign page during Days 50–60.</td>
+        <td>"Fund the first fictional novel about India's constitutional democracy crisis. 50,000 copies across Karnataka."</td>
+        <td><span class="tag tag-red">Not Started</span></td>
+      </tr>
+      <tr>
+        <td><strong>2. Film Option Advance</strong></td>
+        <td>
+          <strong>Sunday Cinemas</strong> (Ramenahalli Jagannatha)<br>
+          <small style="color:var(--muted)">Already have 24-month option agreement from Feb 2026</small>
+        </td>
+        <td class="fund-amount">$2,000<br><small>(deferred writing fee)</small></td>
+        <td>Day 60 (Jul 18) — when first draft is delivered. Trigger advance conversation immediately after completion.</td>
+        <td>"First draft delivered on time. Activate the writing fee under the existing agreement. Film development begins."</td>
+        <td><span class="tag tag-yellow">Agreement Exists</span></td>
+      </tr>
+      <tr>
+        <td><strong>3. Distribution Sponsorship</strong></td>
+        <td>
+          <strong>Political / Ideological orgs</strong> aligned with ONOE narrative<br>
+          <small style="color:var(--muted)">India Foundation, Syama Prasad Mookerjee Research Foundation, state cultural depts</small>
+        </td>
+        <td class="fund-amount">$2,500<br><small>(~₹2 Lakhs)</small></td>
+        <td>Day 45 — approach after Act I is complete and you have 8 chapters to show as proof. Don't approach empty-handed.</td>
+        <td>"Sponsor distribution of 10,000 copies across Karnataka university libraries. This is policy communication, not a book sale."</td>
+        <td><span class="tag tag-red">Not Started</span></td>
+      </tr>
+      <tr>
+        <td><strong>4. Literary Grants</strong></td>
+        <td>
+          <strong>Sahitya Akademi Translation &amp; Publication Grant</strong><br>
+          <strong>India Foundation Arts Grant</strong><br>
+          <strong>Kalaa Utsavam / IGNCA</strong>
+        </td>
+        <td class="fund-amount">$1,500<br><small>(~₹1.2 Lakhs)</small></td>
+        <td>Day 30 — begin applications. Grants have 60–90 day processing. Apply with Master Narrative + Chapter samples.</td>
+        <td>"Political fiction addressing constitutional democracy. First novel to fictionalise President's Rule as a governance experiment."</td>
+        <td><span class="tag tag-red">Not Started</span></td>
+      </tr>
+      <tr>
+        <td><strong>5. Speaking / Events</strong></td>
+        <td>
+          <strong>Literary festivals</strong> (Bengaluru Lit Fest, Hyderabad Literary Festival)<br>
+          <strong>Policy panels</strong> (ONOE debate circuit)<br>
+          <strong>University talks</strong>
+        </td>
+        <td class="fund-amount">$1,500<br><small>(speaking fees + book pre-orders)</small></td>
+        <td>Day 75+ — once manuscript is substantially polished. Position yourself as "the novelist who researched India's real democratic crisis."</td>
+        <td>"Shambhulingappa (Vishwa), SWA Member, political novelist. How fiction can explain what journalism cannot."</td>
+        <td><span class="tag tag-red">Not Started</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="background:var(--fund-light); border:1px solid #fde68a; border-radius:8px; padding:16px 20px; margin-top:20px; font-size:13px;">
+    <strong style="color:#92400e">Key Funding Principle from your own documents:</strong> Frame distribution sponsorship as "sponsoring a policy idea" — not as "buying a book." Political organisations are 10x more likely to fund distribution of content that advances a policy they believe in (ONOE, democratic stability) than to be seen as literary patrons. Use this framing in every political meeting from Day 45 onward.
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ─── STARS ─── -->
+<div class="section" id="stars">
+  <h2 class="section-title">South India Superstar Outreach Plan</h2>
+  <p style="font-size:13px; color:var(--muted); margin-bottom:24px;">Five targets already identified in your Appendix B. Sequenced by accessibility — start with the intellectual pitch (easiest entry), build momentum, then approach the film production houses.</p>
+
+  <div style="background:#fdf2f2; border:1px solid #fde8e8; border-radius:8px; padding:14px 18px; margin-bottom:20px; font-size:13px;">
+    <strong style="color:#9b1c1c">Strategy:</strong> Don't ask stars to endorse a book. Ask them to be associated with a <em>political idea at the right moment</em>. The novel is about democracy — every major South Indian actor who has political aspirations has a reason to care about this. Frame it as "your voice on the biggest constitutional debate of 2026."
+  </div>
+
+  <div class="star-grid">
+    <div class="star-card">
+      <div class="star-name">Malavika Avinash</div>
+      <div class="star-role">Actress · Lawyer · BJP Spokesperson · Intellectual Voice</div>
+      <div class="star-angle">
+        <strong>Your angle</strong>
+        Lawyer + actress + BJP voice = perfect fit for the ONOE policy angle. She is "the character of Chanakya's Theory come to life." Pitch her as the face of the policy conversation the novel opens.
+      </div>
+      <div class="star-ask"><strong>Ask:</strong> Write a foreword (200 words) or be credited as a policy consultant. Leverage her existing platform to run 3 posts about the novel's democratic themes.</div>
+      <div class="star-timing">🎯 Approach: Day 45–52 (Jul 3–10) — First target. Start here.</div>
+    </div>
+
+    <div class="star-card">
+      <div class="star-name">Thaara Venugopal</div>
+      <div class="star-role">National Award Winner · Actress · Former MLC · Veteran BJP Voice</div>
+      <div class="star-angle">
+        <strong>Your angle</strong>
+        National award credibility + MLC experience = she adds literary legitimacy. She has navigated both art and politics — exactly Sampath Kumar's arc. "You have lived this novel."
+      </div>
+      <div class="star-ask"><strong>Ask:</strong> Book launch endorsement + participation in one Bengaluru Lit Fest panel on "Democracy in Fiction." Her MLC network opens district library distribution doors.</div>
+      <div class="star-timing">🎯 Approach: Day 52–60 (Jul 10–18) — Second target.</div>
+    </div>
+
+    <div class="star-card">
+      <div class="star-name">Sai Kumar</div>
+      <div class="star-role">Actor · BJP Member · Cross-language presence (Kannada + Telugu)</div>
+      <div class="star-angle">
+        <strong>Your angle</strong>
+        Bridges Kannada and Telugu markets — critical for a novel that needs South India reach beyond Karnataka. His political membership makes the ONOE angle natural. "You are Sampath Kumar's voice in the Telugu belt."
+      </div>
+      <div class="star-ask"><strong>Ask:</strong> Record a 90-second video supporting the book's democratic themes for social media. Telugu language endorsement unlocks Andhra Pradesh and Telangana distribution.</div>
+      <div class="star-timing">🎯 Approach: Day 60–68 (Jul 18–26) — Third target.</div>
+    </div>
+
+    <div class="star-card">
+      <div class="star-name">Hombale Films (Ananthnag / Rishab Shetty connection)</div>
+      <div class="star-role">Production House · KGF franchise · Karnataka's biggest film brand</div>
+      <div class="star-angle">
+        <strong>Your angle</strong>
+        Hombale understands large-canvas, politically resonant stories (KGF is about institutional power). This novel is their intellectual prestige project — a "KGF of democracy." Sunday Cinemas + Hombale collaboration changes the league entirely.
+      </div>
+      <div class="star-ask"><strong>Ask:</strong> Co-production interest conversation OR a Rishab Shetty social endorsement. Even a "reading" post from Rishab creates instant Karnataka traction.</div>
+      <div class="star-timing">🎯 Approach: Day 68–76 (Jul 26–Aug 3) — This needs a warm introduction. Identify the mutual contact first.</div>
+    </div>
+
+    <div class="star-card">
+      <div class="star-name">Shruti (Shruti Haasan / political sphere Shruti)</div>
+      <div class="star-role">Actress · BJP Leader · Women's Vote Bank Voice</div>
+      <div class="star-angle">
+        <strong>Your angle</strong>
+        Jyestha, Priyadarshini, and Kavitha — the novel has three strong women characters. Position this as "the first political novel that shows how women hold democracy together when men perform politics." She is the voice for this angle.
+      </div>
+      <div class="star-ask"><strong>Ask:</strong> Instagram story / post featuring the novel with the women's democracy angle. Rural and semi-urban women's book clubs across Karnataka open immediately.</div>
+      <div class="star-timing">🎯 Approach: Day 76–84 (Aug 3–10) — Fifth target.</div>
+    </div>
+  </div>
+
+  <h3 class="sub" style="margin-top:28px;">What to Send — The Outreach Package</h3>
+  <table class="mile-table" style="background:white; border:1px solid var(--border); border-radius:10px; overflow:hidden;">
+    <thead><tr><th>Component</th><th>Format</th><th>Prepare By</th></tr></thead>
+    <tbody>
+      <tr><td>1-page pitch letter</td><td>PDF, personalised per star (reference their specific work)</td><td>Day 40</td></tr>
+      <tr><td>3-chapter excerpt</td><td>PDF (Ch 1: Broken Compass, Ch 13: RIP Moment, Ch 24: Reset in Democracy)</td><td>Day 30</td></tr>
+      <tr><td>Novel synopsis (500 words)</td><td>PDF — the "patient is democracy" angle front and centre</td><td>Day 21</td></tr>
+      <tr><td>The Spine Statement / Blurb</td><td>One powerful paragraph — quotable, shareable</td><td>Day 5</td></tr>
+      <tr><td>Sunday Cinemas film option note</td><td>One line: "Film rights in development — your name adds to that conversation"</td><td>Day 1</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<hr class="divider">
+
+<!-- ─── RISKS ─── -->
+<div class="section" id="risks">
+  <h2 class="section-title">Risks &amp; Blockers</h2>
+  <p style="font-size:13px; color:var(--muted); margin-bottom:20px;">Know these now so they don't surprise you at Day 50.</p>
+
+  <div class="risk-box">
+    <strong>Risk 1 — Writing pace falling behind (most likely)</strong><br>
+    2,500 words/day is ambitious alongside life. Mitigation: set a weekly word count not daily. 17,500 words per week allows for 2 rest days. If Act I is late by a week, compress Act II research (it's already beat-sheeted in the Master Narrative).
+  </div>
+  <div class="risk-box">
+    <strong>Risk 2 — Sunday Cinemas option lapses (24-month window from Feb 2026)</strong><br>
+    The option expires ~Feb 2028. You have time. But deliver the first draft by Jul 18 to trigger the advance conversation before the window is half-done. Don't let silence become a gap.
+  </div>
+  <div class="risk-box">
+    <strong>Risk 3 — Superstar non-response</strong><br>
+    Cold outreach to celebrities has ~5% response rate. Mitigation: identify warm introductions for each name (through Hombale connection, through Malavika Avinash's lawyer network, through Thaara's political contacts). Never cold-email directly — find a mutual name.
+  </div>
+  <div class="risk-box">
+    <strong>Risk 4 — Political sensitivity of the ONOE framing</strong><br>
+    The novel is fictional but the ONOE link is real (per your Appendix B). If the political climate shifts, the funding framing may need adjustment. Keep the pitch flexible: "democracy story" first, "ONOE" only with aligned partners.
+  </div>
+  <div class="risk-box">
+    <strong>Risk 5 — Prabhakar's story needs careful legal review</strong><br>
+    A character who is killed by a system connected to a sitting MP is fiction — but make sure it is unambiguously fictional and no real person can claim defamation. Schedule a 1-hour legal review of the Prabhakar chapters before submission (Day 83).
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+  function setActive(el) {
+    document.querySelectorAll('nav li a').forEach(a => a.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Persist checkboxes in localStorage
+  const checkboxes = document.querySelectorAll('input[type=checkbox]');
+  checkboxes.forEach((cb, i) => {
+    const key = 'ch_' + i;
+    cb.checked = localStorage.getItem(key) === 'true';
+    cb.addEventListener('change', () => {
+      localStorage.setItem(key, cb.checked);
+      updateProgress();
+    });
+  });
+
+  function updateProgress() {
+    const total = checkboxes.length;
+    const done = Array.from(checkboxes).filter(c => c.checked).length;
+    const pct = Math.round(done / total * 100);
+    const bar = document.querySelectorAll('.prog-fill')[1];
+    if (bar) bar.style.width = pct + '%';
+    const label = document.querySelectorAll('.prog-label')[1];
+    if (label) label.querySelector('span:last-child').textContent = pct + '%';
+    document.querySelector('.card.purple .num').textContent = done + ' / ' + total;
+  }
+  updateProgress();
+</script>
+</body>
+</html>
