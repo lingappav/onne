@@ -22,9 +22,9 @@ Reference for how to weave political backdrop into intimate drama. PRS is shorte
 
 ## Differentiators
 
+- reference has 'post-Independence-India', not central to PRS
 - reference has 'religious-tension', not central to PRS
 - reference has 'caste-and-class', not central to PRS
-- reference has 'post-Independence-India', not central to PRS
 
 ## What to Study
 

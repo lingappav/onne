@@ -22,9 +22,9 @@ Direct precedent for PRS's ambition to fictionalise an Indian constitutional mom
 
 ## Differentiators
 
+- reference has 'india-political-history', not central to PRS
 - reference has 'freedom-movement', not central to PRS
 - reference has 'constitutional-crisis', not central to PRS
-- reference has 'india-political-history', not central to PRS
 
 ## What to Study
 

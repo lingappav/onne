@@ -22,10 +22,10 @@ _None inferred. Worth manual review — the heuristic may be missing nuance._
 
 ## Differentiators
 
-- reference has 'scandal-and-resilience', not central to PRS
 - reference has 'charisma-vs-character', not central to PRS
 - reference has 'campaign-machinery', not central to PRS
 - reference has 'media-circus', not central to PRS
+- reference has 'scandal-and-resilience', not central to PRS
 
 ## What to Study
 

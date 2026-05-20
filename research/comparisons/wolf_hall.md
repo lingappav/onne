@@ -23,9 +23,9 @@ _None inferred. Worth manual review — the heuristic may be missing nuance._
 ## Differentiators
 
 - reference has 'court-politics', not central to PRS
+- reference has 'memory-and-strategy', not central to PRS
 - reference has 'outsider-rises-to-power', not central to PRS
 - reference has 'religion-and-statecraft', not central to PRS
-- reference has 'memory-and-strategy', not central to PRS
 
 ## What to Study
 

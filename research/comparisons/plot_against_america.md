@@ -22,9 +22,9 @@ PRS shares the 'constitutional fork in the road' thematic territory. Roth's dome
 
 ## Differentiators
 
-- reference has 'creeping-authoritarianism', not central to PRS
-- reference has 'family-vs-history', not central to PRS
 - reference has 'alt-history-democracy', not central to PRS
+- reference has 'family-vs-history', not central to PRS
+- reference has 'creeping-authoritarianism', not central to PRS
 
 ## What to Study
 

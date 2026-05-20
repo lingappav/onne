@@ -8,8 +8,8 @@ PRS's 'doctor treats democracy' framing is a kinship to Rushdie's 'Saleem is Ind
 
 ## Shared Themes (2)
 
-- memory-as-history
 - nation-as-protagonist
+- memory-as-history
 
 ## Structural Parallels
 
@@ -23,8 +23,8 @@ PRS's 'doctor treats democracy' framing is a kinship to Rushdie's 'Saleem is Ind
 
 ## Differentiators
 
-- reference has 'magical-realism', not central to PRS
 - reference has 'post-colonial-identity', not central to PRS
+- reference has 'magical-realism', not central to PRS
 
 ## What to Study
 

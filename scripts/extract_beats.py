@@ -18,7 +18,7 @@ from onne.parser import parse_master_narrative  # noqa: E402
 from onne.analysis import beat_signature, classify_beat  # noqa: E402
 
 
-MASTER_NARRATIVE = ROOT / "The_Presidents_Rule_Master_Narrative.md"
+MASTER_NARRATIVE = ROOT / "manuscripts" / "The_Presidents_Rule_Master_Narrative.md"
 OUTPUT = ROOT / "data" / "beats.json"
 
 

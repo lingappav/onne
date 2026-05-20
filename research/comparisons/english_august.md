@@ -22,9 +22,9 @@ For texture of how Indian bureaucracy actually feels day to day. PRS Chapter 7 (
 
 ## Differentiators
 
-- reference has 'administrative-absurdity', not central to PRS
-- reference has 'alienation', not central to PRS
 - reference has 'small-town-india', not central to PRS
+- reference has 'alienation', not central to PRS
+- reference has 'administrative-absurdity', not central to PRS
 
 ## What to Study
 

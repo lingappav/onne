@@ -22,9 +22,9 @@ The American canonical political novel. PRS's Sampath could be read as the inver
 
 ## Differentiators
 
+- reference has 'moral-relativism', not central to PRS
 - reference has 'idealist-into-cynic', not central to PRS
 - reference has 'south-american-politics', not central to PRS
-- reference has 'moral-relativism', not central to PRS
 
 ## What to Study
 

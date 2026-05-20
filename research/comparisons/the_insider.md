@@ -22,10 +22,10 @@ _None inferred. Worth manual review — the heuristic may be missing nuance._
 
 ## Differentiators
 
-- reference has 'congress-politics', not central to PRS
-- reference has 'insider-vs-outsider', not central to PRS
 - reference has 'regional-vs-national', not central to PRS
+- reference has 'insider-vs-outsider', not central to PRS
 - reference has 'high-command-culture', not central to PRS
+- reference has 'congress-politics', not central to PRS
 
 ## What to Study
 

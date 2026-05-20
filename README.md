@@ -17,7 +17,9 @@ The Python package (`src/onne/`) and scripts (`scripts/`) are the analysis engin
 onne/
 ├── 90day_plan.html              The dashboard. Open in a browser.
 ├── site/                        Future expansion of the dashboard (chapter pages, beat viewer)
-├── docs/ (root .md/.pdf files)  Source manuscripts — Master Narrative, ToC, chapter PDFs
+├── manuscripts/                 All source manuscripts — .md / .pdf / .pages
+│                                  (Master Narrative, Table of Contents, chapter drafts,
+│                                   Governor PaperWork, Novel Prompts, etc.)
 ├── src/onne/                    Python package
 │   ├── parser.py                Markdown → structured chapter records
 │   ├── analysis.py              Beat-pattern analysis & comparison logic

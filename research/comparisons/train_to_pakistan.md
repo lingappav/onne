@@ -22,10 +22,10 @@ _None inferred. Worth manual review — the heuristic may be missing nuance._
 
 ## Differentiators
 
-- reference has 'moral-compromise', not central to PRS
 - reference has 'communal-conflict', not central to PRS
 - reference has 'partition-violence', not central to PRS
 - reference has 'individual-conscience-vs-mob', not central to PRS
+- reference has 'moral-compromise', not central to PRS
 
 ## What to Study
 
