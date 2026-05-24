@@ -49,5 +49,9 @@ export const routes: Routes = [
   {
     path: 'references',
     loadComponent: () => import('./components/references/references.component').then(m => m.ReferencesComponent)
+  },
+  {
+    path: 'benchmark',
+    loadComponent: () => import('./components/benchmark/benchmark.component').then(m => m.BenchmarkComponent)
   }
 ];

@@ -1,0 +1,316 @@
+<div class="bm-page">
+
+  <!-- ── loading / error ─────────────────────────────────────────────────── -->
+  @if (loading) {
+    <div class="bm-loading">
+      <mat-icon class="spin">donut_large</mat-icon>
+      <span>Running benchmark analysis…</span>
+    </div>
+  }
+  @if (error) {
+    <div class="bm-error"><mat-icon>error_outline</mat-icon> {{ error }}</div>
+  }
+
+  @if (data && !loading) {
+
+    <!-- ── page header ──────────────────────────────────────────────────── -->
+    <div class="bm-header">
+      <div class="bm-header-left">
+        <div class="bm-header-icon"><mat-icon>science</mat-icon></div>
+        <div>
+          <h2>Benchmark Lab</h2>
+          <p class="bm-subtitle">{{ data.tpr.title }} vs. 10 world-class political thrillers</p>
+        </div>
+      </div>
+      <div class="bm-score-pill">
+        <span class="bm-score-num">{{ data.tpr.overall_score }}</span>
+        <span class="bm-score-label">/ 100</span>
+        <span class="bm-tier-badge">{{ data.tpr.tier }}</span>
+      </div>
+    </div>
+
+    <!-- ── tabs ─────────────────────────────────────────────────────────── -->
+    <div class="bm-tabs">
+      <button class="bm-tab" [class.active]="activeTab==='radar'"   (click)="activeTab='radar'">
+        <mat-icon>radar</mat-icon> Radar Chart
+      </button>
+      <button class="bm-tab" [class.active]="activeTab==='table'"   (click)="activeTab='table'">
+        <mat-icon>table_chart</mat-icon> Competitive Table
+      </button>
+      <button class="bm-tab" [class.active]="activeTab==='insights'" (click)="activeTab='insights'">
+        <mat-icon>lightbulb</mat-icon> Gap Analysis
+      </button>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         TAB 1 — RADAR + ALGO SCORES
+    ═══════════════════════════════════════════════════════════════════════ -->
+    @if (activeTab === 'radar') {
+      <div class="bm-radar-layout">
+
+        <!-- radar SVG -->
+        <div class="bm-radar-wrap">
+          <svg viewBox="0 0 580 580" class="bm-radar-svg">
+
+            <!-- grid rings at 25 / 50 / 75 / 100 -->
+            @for (frac of GRID_FRACS; track frac) {
+              <polygon [attr.points]="gridRing(frac)"
+                       fill="none"
+                       [attr.stroke]="frac === 1.0 ? '#444' : '#2e2e33'"
+                       stroke-width="1"/>
+            }
+
+            <!-- axis lines -->
+            @for (dim of DIMS; track dim; let i = $index) {
+              <line [attr.x1]="CX" [attr.y1]="CY"
+                    [attr.x2]="axisEnd(i).x" [attr.y2]="axisEnd(i).y"
+                    stroke="#333" stroke-width="1"/>
+            }
+
+            <!-- benchmark max polygon (green, faintest) -->
+            <polygon [attr.points]="polygon(maxScores)"
+                     fill="rgba(63,185,80,0.06)"
+                     stroke="#3fb950" stroke-width="1.5" stroke-dasharray="5 3"/>
+
+            <!-- benchmark average polygon (blue) -->
+            <polygon [attr.points]="polygon(avgScores)"
+                     fill="rgba(88,166,255,0.10)"
+                     stroke="#58a6ff" stroke-width="1.5"/>
+
+            <!-- TPR polygon (gold) -->
+            <polygon [attr.points]="polygon(tprScores)"
+                     fill="rgba(240,184,64,0.18)"
+                     stroke="#f0b840" stroke-width="2.5"/>
+
+            <!-- data dots — TPR -->
+            @for (dim of DIMS; track dim; let i = $index) {
+              <circle [attr.cx]="dotX(tprScores[i], i)"
+                      [attr.cy]="dotY(tprScores[i], i)"
+                      r="4" fill="#f0b840" stroke="#1c1c1f" stroke-width="1.5"/>
+            }
+
+            <!-- axis labels -->
+            @for (dim of DIMS; track dim; let i = $index) {
+              <text [attr.x]="labelPos(i).x"
+                    [attr.y]="labelPos(i).y"
+                    text-anchor="middle" dominant-baseline="middle"
+                    class="radar-label">{{ dimLabel(dim) }}</text>
+              <text [attr.x]="scoreAnnotX(i)"
+                    [attr.y]="scoreAnnotY(i)"
+                    text-anchor="middle" dominant-baseline="middle"
+                    class="radar-score">{{ tprScores[i] }}</text>
+            }
+
+            <!-- ring labels -->
+            <text [attr.x]="CX + 4" [attr.y]="ringLabelY(0.25)" class="ring-label">25</text>
+            <text [attr.x]="CX + 4" [attr.y]="ringLabelY(0.50)" class="ring-label">50</text>
+            <text [attr.x]="CX + 4" [attr.y]="ringLabelY(0.75)" class="ring-label">75</text>
+            <text [attr.x]="CX + 4" [attr.y]="ringLabelY(1.00)" class="ring-label">100</text>
+          </svg>
+
+          <!-- legend -->
+          <div class="radar-legend">
+            <span class="leg-item"><span class="leg-dot gold"></span> The President's Rule</span>
+            <span class="leg-item"><span class="leg-dot blue"></span> Benchmark average</span>
+            <span class="leg-item"><span class="leg-dot green"></span> Best per dimension</span>
+          </div>
+        </div>
+
+        <!-- algorithm score cards -->
+        <div class="bm-algo-col">
+          <h3 class="bm-col-title">Industry Algorithm Scores</h3>
+          @for (k of algoKeys(); track k) {
+            <div class="algo-card">
+              <div class="algo-card-top">
+                <mat-icon class="algo-icon">{{ ALGO_ICONS[k] }}</mat-icon>
+                <div class="algo-name">{{ ALGO_LABELS[k] }}</div>
+                <div class="algo-rank" [class.rank-top]="rankTPR(k) <= 3">
+                  #{{ rankTPR(k) }} of 11
+                </div>
+              </div>
+              <div class="algo-scores-row">
+                <div class="algo-score-block">
+                  <span class="asb-val tpr">{{ tprAlgo(k) }}</span>
+                  <span class="asb-lbl">TPR</span>
+                </div>
+                <div class="algo-score-block">
+                  <span class="asb-val avg">{{ benchmarkAlgoAvg(k) }}</span>
+                  <span class="asb-lbl">Avg</span>
+                </div>
+                <div class="algo-score-block">
+                  <span class="asb-val max">{{ benchmarkAlgoMax(k) }}</span>
+                  <span class="asb-lbl">Best</span>
+                </div>
+              </div>
+              <div class="algo-bar-track">
+                <div class="algo-bar-avg"  [style.width.%]="benchmarkAlgoAvg(k)"></div>
+                <div class="algo-bar-fill" [style.width.%]="tprAlgo(k)"></div>
+              </div>
+              <p class="algo-desc">{{ data.algo_descriptions[k] }}</p>
+            </div>
+          }
+        </div>
+
+      </div>
+    }
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         TAB 2 — COMPETITIVE TABLE
+    ═══════════════════════════════════════════════════════════════════════ -->
+    @if (activeTab === 'table') {
+      <div class="bm-table-wrap">
+        <table class="bm-table">
+          <thead>
+            <tr>
+              <th class="col-title">Novel</th>
+              @for (dim of DIMS; track dim) {
+                <th class="col-dim" [matTooltip]="dim.replaceAll('_',' ')">{{ dimLabel(dim) }}</th>
+              }
+              <th class="col-dim">Pub.</th>
+              <th class="col-dim">Netflix</th>
+              <th class="col-dim">Studio</th>
+              <th class="col-dim">Awards</th>
+              <th class="col-dim">Stream</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- TPR row — pinned first -->
+            <tr class="tpr-row">
+              <td class="col-title">
+                <strong>{{ data.tpr.title }}</strong>
+                <span class="row-author">{{ data.tpr.author }}</span>
+              </td>
+              @for (dim of DIMS; track dim) {
+                <td class="score-cell"
+                    [class.score-hi]="data.tpr.dimensions[dim] >= data.dim_stats[dim].avg + 3"
+                    [class.score-lo]="data.tpr.dimensions[dim] < data.dim_stats[dim].avg - 8">
+                  {{ data.tpr.dimensions[dim] }}
+                </td>
+              }
+              @for (k of algoKeys(); track k) {
+                <td class="score-cell algo-col">{{ tprAlgo(k) }}</td>
+              }
+            </tr>
+
+            <!-- benchmark rows -->
+            @for (bk of data.benchmarks; track bk.id) {
+              <tr class="bk-row" (click)="toggleNovel(bk.id)" [class.expanded]="expandedNovel===bk.id">
+                <td class="col-title">
+                  <strong>{{ bk.title }}</strong>
+                  <span class="row-author">{{ bk.author }}, {{ bk.year }}</span>
+                </td>
+                @for (dim of DIMS; track dim) {
+                  <td class="score-cell"
+                      [class.score-hi]="bk.dimensions[dim] >= data.dim_stats[dim].avg + 3"
+                      [class.score-lo]="bk.dimensions[dim] < data.dim_stats[dim].avg - 8">
+                    {{ bk.dimensions[dim] }}
+                  </td>
+                }
+                @for (k of algoKeys(); track k) {
+                  <td class="score-cell algo-col">{{ getAlgoScore(bk, k) }}</td>
+                }
+              </tr>
+              @if (expandedNovel === bk.id) {
+                <tr class="bk-expand-row">
+                  <td [attr.colspan]="16">
+                    <div class="bk-expand-body">
+                      <div class="bk-expand-col">
+                        <p class="bk-tag">Why compared</p>
+                        <p>{{ bk.why_compared }}</p>
+                        <p class="bk-tag" style="margin-top:10px">Craft gap vs TPR</p>
+                        <p class="bk-gap-note">{{ bk.craft_gap_vs_tpr }}</p>
+                      </div>
+                      <div class="bk-expand-col">
+                        <p class="bk-tag">Notable craft techniques</p>
+                        <ul>
+                          @for (c of bk.notable_craft; track c) {
+                            <li>{{ c }}</li>
+                          }
+                        </ul>
+                      </div>
+                      <div class="bk-expand-col">
+                        <p class="bk-tag">Adaptation notes</p>
+                        <p>{{ bk.adaptation_note }}</p>
+                        <div class="stream-chips">
+                          @for (sg of bk.streaming_greenlights; track sg) {
+                            <span class="stream-chip">{{ sg }}</span>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              }
+            }
+
+            <!-- averages footer -->
+            <tr class="avg-row">
+              <td class="col-title">Benchmark average</td>
+              @for (dim of DIMS; track dim) {
+                <td class="score-cell avg-cell">{{ data.dim_stats[dim].avg }}</td>
+              }
+              @for (k of algoKeys(); track k) {
+                <td class="score-cell avg-cell">{{ benchmarkAlgoAvg(k) }}</td>
+              }
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    }
+
+    <!-- ════════════════════════════════════════════════════════════════════
+         TAB 3 — GAP ANALYSIS
+    ═══════════════════════════════════════════════════════════════════════ -->
+    @if (activeTab === 'insights') {
+      <div class="bm-insights-grid">
+        @for (ins of data.insights; track ins.dimension) {
+          <div class="ins-card" [style.border-left-color]="statusColor(ins.status)">
+            <div class="ins-header">
+              <div>
+                <span class="ins-dim">{{ DIM_LABELS[ins.dimension] }}</span>
+                <span class="ins-status-badge"
+                      [style.background-color]="statusColor(ins.status) + '22'"
+                      [style.color]="statusColor(ins.status)"
+                      [style.border-color]="statusColor(ins.status) + '55'">
+                  {{ statusLabel(ins.status) }}
+                </span>
+              </div>
+              <div class="ins-scores">
+                <span class="ins-score tpr-s">{{ ins.tpr_score }}</span>
+                <span class="ins-vs">vs</span>
+                <span class="ins-score avg-s">{{ ins.benchmark_avg }} avg</span>
+                <span class="ins-score max-s">{{ ins.benchmark_max }} max</span>
+              </div>
+            </div>
+
+            <div class="ins-bar-row">
+              <div class="ins-bar-track">
+                <div class="ins-bar-avg" [style.width.%]="ins.benchmark_avg"
+                     [matTooltip]="'Avg: ' + ins.benchmark_avg"></div>
+                <div class="ins-bar-tpr" [style.width.%]="ins.tpr_score"
+                     [style.background-color]="statusColor(ins.status)"
+                     [matTooltip]="'TPR: ' + ins.tpr_score"></div>
+              </div>
+            </div>
+
+            @if (ins.gap_from_avg > 0) {
+              <p class="ins-gap-note">
+                <mat-icon class="ins-gap-icon">arrow_upward</mat-icon>
+                +{{ ins.gap_from_avg }} pts to reach average ·
+                best by <em>{{ ins.best_novel }}</em>
+              </p>
+            } @else {
+              <p class="ins-gap-note strength-note">
+                <mat-icon class="ins-gap-icon">check_circle</mat-icon>
+                Above benchmark average by {{ (ins.gap_from_avg * -1) | number:'1.1-1' }} pts
+              </p>
+            }
+
+            <p class="ins-craft-note">{{ ins.craft_note }}</p>
+          </div>
+        }
+      </div>
+    }
+
+  }
+</div>

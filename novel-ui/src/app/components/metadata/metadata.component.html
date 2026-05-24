@@ -1,15 +1,16 @@
 @if (form) {
-<form [formGroup]="form" (ngSubmit)="save()" class="page">
-  <div class="page-header">
+<form [formGroup]="form" (ngSubmit)="save()" class="fd-page">
+  <div class="fd-page-header">
+    <div class="fd-section-icon"><mat-icon>info_outline</mat-icon></div>
     <h2>Metadata</h2>
-    <button mat-raised-button color="primary" type="submit" [disabled]="saving">
-      <mat-icon>save</mat-icon> {{ saving ? 'Saving…' : 'Save' }}
+    <button class="fd-save-btn" type="submit" [disabled]="saving">
+      <mat-icon>save</mat-icon> {{ saving ? 'Saving…' : 'Save Version' }}
     </button>
   </div>
 
   <mat-card>
     <mat-card-header><mat-card-title>Core Details</mat-card-title></mat-card-header>
-    <mat-card-content class="form-grid">
+    <mat-card-content class="fd-form-grid">
       <mat-form-field appearance="outline">
         <mat-label>Title</mat-label>
         <input matInput formControlName="title">
@@ -18,19 +19,19 @@
         <mat-label>Subtitle</mat-label>
         <input matInput formControlName="subtitle">
       </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="fd-full">
         <mat-label>Tagline</mat-label>
         <input matInput formControlName="tagline">
       </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="fd-full">
         <mat-label>Tone</mat-label>
         <textarea matInput formControlName="tone" rows="3"></textarea>
       </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="fd-full">
         <mat-label>Logline</mat-label>
         <textarea matInput formControlName="logline" rows="3"></textarea>
       </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="fd-full">
         <mat-label>Elevator Pitch</mat-label>
         <textarea matInput formControlName="elevator_pitch" rows="5"></textarea>
       </mat-form-field>
@@ -63,34 +64,19 @@
 
   <mat-card>
     <mat-card-header><mat-card-title>Author</mat-card-title></mat-card-header>
-    <mat-card-content class="form-grid">
-      <mat-form-field appearance="outline">
-        <mat-label>Name</mat-label>
-        <input matInput formControlName="author_name">
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Pen Name</mat-label>
-        <input matInput formControlName="author_pen_name">
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>SWA Member No.</mat-label>
-        <input matInput formControlName="author_swa">
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="author_email">
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Country</mat-label>
-        <input matInput formControlName="author_country">
-      </mat-form-field>
+    <mat-card-content class="fd-form-grid">
+      <mat-form-field appearance="outline"><mat-label>Name</mat-label><input matInput formControlName="author_name"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Pen Name</mat-label><input matInput formControlName="author_pen_name"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>SWA Member No.</mat-label><input matInput formControlName="author_swa"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Email</mat-label><input matInput formControlName="author_email"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Country</mat-label><input matInput formControlName="author_country"></mat-form-field>
     </mat-card-content>
   </mat-card>
 
   <mat-card>
     <mat-card-header><mat-card-title>Rights</mat-card-title></mat-card-header>
     <mat-card-content>
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="fd-full" style="width:100%">
         <mat-label>Rights Status</mat-label>
         <textarea matInput formControlName="rights_status" rows="3"></textarea>
       </mat-form-field>
@@ -99,26 +85,12 @@
 
   <mat-card>
     <mat-card-header><mat-card-title>Arrays (one per line)</mat-card-title></mat-card-header>
-    <mat-card-content class="form-grid">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Genre</mat-label>
-        <textarea matInput formControlName="genre" rows="3"></textarea>
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Subgenre Tags</mat-label>
-        <textarea matInput formControlName="subgenre_tags" rows="3"></textarea>
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Comparable Titles</mat-label>
-        <textarea matInput formControlName="comparable_titles" rows="5"></textarea>
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Notes for Revision</mat-label>
-        <textarea matInput formControlName="notes_for_revision" rows="8"></textarea>
-      </mat-form-field>
+    <mat-card-content class="fd-form-grid">
+      <mat-form-field appearance="outline" class="fd-full"><mat-label>Genre</mat-label><textarea matInput formControlName="genre" rows="3"></textarea></mat-form-field>
+      <mat-form-field appearance="outline" class="fd-full"><mat-label>Subgenre Tags</mat-label><textarea matInput formControlName="subgenre_tags" rows="3"></textarea></mat-form-field>
+      <mat-form-field appearance="outline" class="fd-full"><mat-label>Comparable Titles</mat-label><textarea matInput formControlName="comparable_titles" rows="5"></textarea></mat-form-field>
+      <mat-form-field appearance="outline" class="fd-full"><mat-label>Notes for Revision</mat-label><textarea matInput formControlName="notes_for_revision" rows="8"></textarea></mat-form-field>
     </mat-card-content>
   </mat-card>
 </form>
-} @else {
-  <p class="loading">Loading…</p>
 }

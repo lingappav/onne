@@ -1,28 +1,98 @@
-<mat-sidenav-container class="app-container">
-  <mat-sidenav #sidenav [opened]="sidenavOpen" mode="side" class="sidenav">
-    <div class="sidenav-header">
-      <mat-icon class="nav-logo">auto_stories</mat-icon>
-      <span class="nav-title">Novel Editor</span>
-    </div>
-    <mat-nav-list>
-      @for (item of navItems; track item.path) {
-        <a mat-list-item [routerLink]="item.path" routerLinkActive="active-link">
-          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-          <span matListItemTitle>{{ item.label }}</span>
-        </a>
-      }
-    </mat-nav-list>
-  </mat-sidenav>
+<div class="fd-shell">
 
-  <mat-sidenav-content class="main-content">
-    <mat-toolbar color="primary" class="top-toolbar">
-      <button mat-icon-button (click)="sidenavOpen = !sidenavOpen">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span class="toolbar-title">{{ title }}</span>
-    </mat-toolbar>
-    <div class="content-area">
-      <router-outlet />
+  <!-- ── Top Toolbar ──────────────────────────────────────────────────── -->
+  <header class="fd-toolbar">
+    <div class="fd-toolbar-left">
+      <div class="fd-logo">
+        <mat-icon class="logo-icon">auto_stories</mat-icon>
+      </div>
+      <div class="fd-doc-info">
+        <span class="doc-title">{{ novelTitle }}</span>
+        <span class="doc-sub">Novel Master Editor</span>
+      </div>
     </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+
+    <div class="fd-toolbar-center">
+      <!-- version pill -->
+      <div class="version-pill" [class.has-versions]="versions.length > 0">
+        <mat-icon class="vp-icon">commit</mat-icon>
+        <span class="vp-tag">{{ activeVersion || '—' }}</span>
+        <span class="vp-sep">·</span>
+        <span class="vp-count">{{ versions.length }} version{{ versions.length !== 1 ? 's' : '' }}</span>
+      </div>
+    </div>
+
+    <div class="fd-toolbar-right">
+      <!-- Save New Version -->
+      <button class="fd-toolbar-btn primary" (click)="openSaveDialog()" [disabled]="saving"
+              matTooltip="Save as new version">
+        <mat-icon>save</mat-icon>
+        <span>{{ saving ? 'Saving…' : 'Save Version' }}</span>
+      </button>
+      <!-- Toggle version panel -->
+      <button class="fd-toolbar-btn" (click)="toggleVersionPanel()"
+              [class.active]="versionPanelOpen"
+              matTooltip="Version history & diff">
+        <mat-icon>history</mat-icon>
+        <span>History</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ── Body row: left nav + content + right panel ──────────────────── -->
+  <div class="fd-body">
+
+    <!-- Left navigation -->
+    <nav class="fd-leftnav">
+      <div class="fd-leftnav-inner">
+        @for (group of groups; track group.id) {
+          <div class="nav-group">
+            <div class="nav-group-label">{{ group.label }}</div>
+            @for (item of navItemsForGroup(group.id); track item.path) {
+              <a class="nav-item"
+                 [routerLink]="item.path"
+                 routerLinkActive="active">
+                <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
+                <span class="nav-label">{{ item.label }}</span>
+              </a>
+            }
+          </div>
+        }
+      </div>
+      <div class="fd-leftnav-footer">
+        <span class="master-badge">
+          <mat-icon>lock_outline</mat-icon> master protected
+        </span>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="fd-main">
+      <router-outlet />
+    </main>
+
+    <!-- Right version panel (collapsible) -->
+    @if (versionPanelOpen) {
+      <aside class="fd-right-panel">
+        <div class="rp-header">
+          <span>Versions</span>
+          <button class="rp-close" (click)="toggleVersionPanel()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <app-version-panel class="rp-content"></app-version-panel>
+      </aside>
+    }
+
+  </div>
+
+  <!-- ── Status bar ──────────────────────────────────────────────────── -->
+  <footer class="fd-statusbar">
+    <span class="sb-item"><mat-icon>commit</mat-icon> {{ activeVersion || 'no version' }}</span>
+    <span class="sb-sep">|</span>
+    <span class="sb-item sb-master"><mat-icon>lock_outline</mat-icon> master_novel.json — read-only</span>
+    <span class="sb-sep">|</span>
+    <span class="sb-item">{{ versions.length }} snapshots in ./novel_versions/</span>
+  </footer>
+
+</div>

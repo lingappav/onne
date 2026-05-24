@@ -1,58 +1,110 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatListModule } from '@angular/material/list';
+import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { CommonModule } from '@angular/common';
-import { NovelService } from './services/novel.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NovelService, VersionEntry } from './services/novel.service';
+import { VersionPanelComponent } from './components/version-panel/version-panel.component';
+import { SaveDialogComponent } from './components/save-dialog/save-dialog.component';
 
 interface NavItem {
   path: string;
   label: string;
   icon: string;
+  group?: string;
 }
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule,
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatListModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSnackBarModule
+    CommonModule, FormsModule, RouterOutlet, RouterLink, RouterLinkActive,
+    MatIconModule, MatButtonModule, MatSnackBarModule, MatDialogModule, MatTooltipModule,
+    VersionPanelComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-  title = "The President's Rule — Novel Editor";
-  sidenavOpen = true;
+  novelTitle   = "The President's Rule";
+  activeVersion = '';
+  versions: VersionEntry[] = [];
+  versionPanelOpen = false;
+  saving = false;
 
   navItems: NavItem[] = [
-    { path: '/dashboard',  label: 'Dashboard',       icon: 'dashboard' },
-    { path: '/metadata',   label: 'Metadata',         icon: 'info' },
-    { path: '/themes',     label: 'Themes & Motifs',  icon: 'psychology' },
-    { path: '/structure',  label: 'Structure & Beats',icon: 'account_tree' },
-    { path: '/chapters',   label: 'Chapters',         icon: 'menu_book' },
-    { path: '/characters', label: 'Characters',       icon: 'people' },
-    { path: '/narrative',  label: 'Narrative Intel',  icon: 'auto_stories' },
-    { path: '/craft',      label: 'Craft Assessment', icon: 'star' },
-    { path: '/continuity', label: 'Continuity Report',icon: 'report_problem' },
-    { path: '/references', label: 'References',       icon: 'library_books' }
+    { path: '/dashboard',  label: 'Dashboard',        icon: 'grid_view',      group: 'overview' },
+    { path: '/metadata',   label: 'Metadata',          icon: 'info_outline',   group: 'overview' },
+    { path: '/themes',     label: 'Themes & Motifs',   icon: 'psychology',     group: 'craft' },
+    { path: '/structure',  label: 'Structure',         icon: 'account_tree',   group: 'craft' },
+    { path: '/chapters',   label: 'Chapters',          icon: 'menu_book',      group: 'content' },
+    { path: '/characters', label: 'Characters',        icon: 'people_outline', group: 'content' },
+    { path: '/narrative',  label: 'Narrative Intel',   icon: 'auto_stories',   group: 'analysis' },
+    { path: '/craft',      label: 'Craft Score',       icon: 'star_outline',   group: 'analysis' },
+    { path: '/continuity', label: 'Continuity',        icon: 'warning_amber',  group: 'analysis' },
+    { path: '/references', label: 'References',        icon: 'library_books',  group: 'analysis' },
+    { path: '/benchmark', label: 'Benchmark Lab',     icon: 'science',        group: 'intelligence' },
   ];
 
-  constructor(private novelService: NovelService) {}
+  groups = [
+    { id: 'overview',      label: 'Overview' },
+    { id: 'craft',         label: 'Craft' },
+    { id: 'content',       label: 'Content' },
+    { id: 'analysis',      label: 'Analysis' },
+    { id: 'intelligence',  label: 'Intelligence' },
+  ];
+
+  constructor(
+    private novelService: NovelService,
+    private snack: MatSnackBar,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
-    this.novelService.load().subscribe();
+    this.novelService.loadVersions().subscribe(() => {
+      this.novelService.loadNovel().subscribe();
+    });
+    this.novelService.activeVersion$.subscribe(v => this.activeVersion = v);
+    this.novelService.versions$.subscribe(vs => this.versions = vs);
+    this.novelService.novel$.subscribe(n => {
+      if (n?.metadata?.title) this.novelTitle = n.metadata.title;
+    });
+  }
+
+  navItemsForGroup(g: string): NavItem[] {
+    return this.navItems.filter(i => i.group === g);
+  }
+
+  get latestVersion(): string {
+    return this.versions.length ? this.versions[this.versions.length - 1].version : '';
+  }
+
+  openSaveDialog() {
+    const ref = this.dialog.open(SaveDialogComponent, {
+      width: '420px',
+      data: { currentVersion: this.activeVersion }
+    });
+    ref.afterClosed().subscribe((description: string) => {
+      if (!description) return;
+      this.saving = true;
+      this.novelService.saveNewVersion(description).subscribe({
+        next: (res) => {
+          this.saving = false;
+          this.snack.open(`Saved as ${res.version}`, 'OK', { duration: 3000 });
+        },
+        error: () => {
+          this.saving = false;
+          this.snack.open('Save failed', 'OK', { duration: 3000 });
+        }
+      });
+    });
+  }
+
+  toggleVersionPanel() {
+    this.versionPanelOpen = !this.versionPanelOpen;
   }
 }

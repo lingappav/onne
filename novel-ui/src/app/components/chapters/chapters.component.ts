@@ -8,6 +8,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { NovelService } from '../../services/novel.service';
 import { Chapter } from '../../models/novel.model';
 
@@ -15,7 +16,7 @@ import { Chapter } from '../../models/novel.model';
   selector: 'app-chapters',
   standalone: true,
   imports: [CommonModule, RouterLink, MatCardModule, MatButtonModule, MatIconModule,
-    MatSnackBarModule, MatTableModule, MatChipsModule],
+    MatSnackBarModule, MatTableModule, MatChipsModule, MatTooltipModule],
   templateUrl: './chapters.component.html',
   styleUrl: './chapters.component.scss'
 })

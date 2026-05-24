@@ -1,9 +1,10 @@
-<div class="page">
-  <div class="page-header">
-    <h2>Chapters ({{ chapters.length }})</h2>
+<div class="fd-page">
+  <div class="fd-page-header">
+    <div class="fd-section-icon"><mat-icon>menu_book</mat-icon></div>
+    <h2>Chapters <span class="count-badge">{{ chapters.length }}</span></h2>
   </div>
 
-  <table mat-table [dataSource]="chapters" class="chapters-table mat-elevation-z2">
+  <table mat-table [dataSource]="chapters" class="fd-table">
     <ng-container matColumnDef="number">
       <th mat-header-cell *matHeaderCellDef>#</th>
       <td mat-cell *matCellDef="let ch">{{ ch.chapter_number }}</td>
@@ -15,30 +16,29 @@
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef>Title</th>
       <td mat-cell *matCellDef="let ch">
-        <strong>{{ ch.chapter_title }}</strong>
+        <strong class="ch-title">{{ ch.chapter_title }}</strong>
         @if (ch.synopsis?.one_line) {
-          <p class="one-line">{{ ch.synopsis.one_line }}</p>
+          <p class="ch-oneliner">{{ ch.synopsis.one_line }}</p>
         }
       </td>
     </ng-container>
     <ng-container matColumnDef="act">
       <th mat-header-cell *matHeaderCellDef>Act</th>
       <td mat-cell *matCellDef="let ch">
-        <span class="act-badge">{{ getActForChapter(ch) }}</span>
+        <span class="act-badge act-{{ getActForChapter(ch) | lowercase }}">{{ getActForChapter(ch) }}</span>
       </td>
     </ng-container>
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let ch">
-        <a mat-icon-button [routerLink]="['/chapters', ch.chapter_id]" color="primary" title="Edit">
+        <a mat-icon-button [routerLink]="['/chapters', ch.chapter_id]" matTooltip="Edit">
           <mat-icon>edit</mat-icon>
         </a>
-        <button mat-icon-button color="warn" (click)="deleteChapter(ch.chapter_id)" title="Delete">
-          <mat-icon>delete</mat-icon>
+        <button mat-icon-button color="warn" (click)="deleteChapter(ch.chapter_id)" matTooltip="Delete">
+          <mat-icon>delete_outline</mat-icon>
         </button>
       </td>
     </ng-container>
-
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>

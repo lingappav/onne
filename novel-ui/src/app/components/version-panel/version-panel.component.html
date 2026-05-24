@@ -1,0 +1,103 @@
+<div class="vp-root">
+
+  <!-- ── Version History ── -->
+  <section class="vp-section">
+    <h3 class="vp-heading"><mat-icon>history</mat-icon> Version History</h3>
+    <div class="version-list">
+      @for (v of sortedVersions; track v.version) {
+        <div class="version-row" [class.active]="v.version === activeVersion" (click)="switchTo(v.version)">
+          <div class="v-tag">{{ v.version }}</div>
+          <div class="v-meta">
+            <span class="v-desc">{{ v.description }}</span>
+            <span class="v-time">{{ v.timestamp | date:'MMM d, y HH:mm' }}</span>
+          </div>
+          @if (v.version === activeVersion) {
+            <mat-icon class="v-active-icon">radio_button_checked</mat-icon>
+          }
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- ── Diff Viewer ── -->
+  <section class="vp-section">
+    <h3 class="vp-heading"><mat-icon>compare_arrows</mat-icon> Compare Versions</h3>
+
+    <div class="diff-selectors">
+      <div class="diff-sel-wrap">
+        <label>From</label>
+        <select [(ngModel)]="diffV1" class="fd-select">
+          <option value="master">master (original)</option>
+          @for (v of versions; track v.version) {
+            <option [value]="v.version">{{ v.version }} — {{ v.description | slice:0:30 }}</option>
+          }
+        </select>
+      </div>
+      <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+      <div class="diff-sel-wrap">
+        <label>To</label>
+        <select [(ngModel)]="diffV2" class="fd-select">
+          <option value="master">master (original)</option>
+          @for (v of versions; track v.version) {
+            <option [value]="v.version">{{ v.version }} — {{ v.description | slice:0:30 }}</option>
+          }
+        </select>
+      </div>
+      <button mat-flat-button class="compare-btn" (click)="runDiff()" [disabled]="diffLoading || !diffV1 || !diffV2">
+        @if (diffLoading) { <mat-spinner diameter="16"></mat-spinner> }
+        @else { <mat-icon>diff</mat-icon> Compare }
+      </button>
+    </div>
+
+    @if (diffResult) {
+      <div class="diff-summary">
+        <span class="ds-badge added" (click)="filterType='added'" [class.selected]="filterType==='added'">
+          <mat-icon>add_circle</mat-icon> {{ addedCount }} added
+        </span>
+        <span class="ds-badge removed" (click)="filterType='removed'" [class.selected]="filterType==='removed'">
+          <mat-icon>remove_circle</mat-icon> {{ removedCount }} removed
+        </span>
+        <span class="ds-badge changed" (click)="filterType='changed'" [class.selected]="filterType==='changed'">
+          <mat-icon>change_circle</mat-icon> {{ changedCount }} changed
+        </span>
+        <span class="ds-badge all" (click)="filterType='all'" [class.selected]="filterType==='all'">
+          All {{ diffResult.totalChanges }}
+        </span>
+      </div>
+
+      <div class="diff-table">
+        <div class="dt-header">
+          <span>Field</span>
+          <span>{{ diffV1 }}</span>
+          <span>{{ diffV2 }}</span>
+        </div>
+        @for (c of filteredChanges; track c.path) {
+          <div class="dt-row type-{{ c.type }}">
+            <div class="dt-path">
+              <span class="path-parent">{{ parentPath(c.path) }}</span>
+              <span class="path-key">{{ pathLabel(c.path) }}</span>
+            </div>
+            <div class="dt-old" [class.empty]="c.type === 'added'">
+              @if (c.type !== 'added') {
+                <pre>{{ formatValue(c.oldValue) }}</pre>
+              } @else {
+                <span class="empty-cell">—</span>
+              }
+            </div>
+            <div class="dt-new" [class.empty]="c.type === 'removed'">
+              @if (c.type !== 'removed') {
+                <pre>{{ formatValue(c.newValue) }}</pre>
+              } @else {
+                <span class="empty-cell">—</span>
+              }
+            </div>
+          </div>
+        }
+        @if (filteredChanges.length === 0) {
+          <div class="dt-empty">No {{ filterType === 'all' ? '' : filterType + ' ' }}changes found.</div>
+        }
+      </div>
+    }
+  </section>
+
+</div>

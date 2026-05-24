@@ -1,77 +1,70 @@
 @if (novel) {
-  <div class="dashboard">
-    <div class="hero-card">
-      <h1>{{ novel.metadata.title }}</h1>
-      <p class="subtitle">{{ novel.metadata.subtitle }}</p>
-      <p class="tagline">"{{ novel.metadata.tagline }}"</p>
-      <div class="meta-chips">
-        @for (g of novel.metadata.genre; track g) {
-          <span class="chip">{{ g }}</span>
-        }
+  <div class="fd-page">
+    <div class="fd-page-header">
+      <div class="fd-section-icon"><mat-icon>grid_view</mat-icon></div>
+      <h2>Dashboard</h2>
+    </div>
+
+    <div class="hero-banner">
+      <div class="hb-left">
+        <h1>{{ novel.metadata.title }}</h1>
+        <p class="hb-subtitle">{{ novel.metadata.subtitle }}</p>
+        <p class="hb-tagline">"{{ novel.metadata.tagline }}"</p>
+        <div class="hb-chips">
+          @for (g of novel.metadata.genre; track g) { <span class="hb-chip">{{ g }}</span> }
+        </div>
+      </div>
+      <div class="hb-right">
+        <div class="score-ring">
+          <span class="score-val">{{ score }}</span>
+          <span class="score-label">/ 100</span>
+        </div>
+        <div class="score-tier">{{ novel.metadata.sudowrite_quality_tier }}</div>
       </div>
     </div>
 
     <div class="stats-row">
-      <div class="stat">
-        <span class="stat-val">{{ novel.metadata.word_count_estimated | number }}</span>
-        <span class="stat-label">Est. Words</span>
-      </div>
-      <div class="stat">
-        <span class="stat-val">{{ novel.metadata.chapter_count }}</span>
-        <span class="stat-label">Chapters</span>
-      </div>
-      <div class="stat">
-        <span class="stat-val">{{ novel.characters.length }}</span>
-        <span class="stat-label">Characters</span>
-      </div>
-      <div class="stat">
-        <span class="stat-val">{{ novel.metadata.act_count }}</span>
-        <span class="stat-label">Acts</span>
-      </div>
-      <div class="stat score-stat">
-        <span class="stat-val">{{ score }}<small>/100</small></span>
-        <span class="stat-label">Craft Score</span>
-      </div>
-      <div class="stat">
-        <span class="stat-val">{{ novel.metadata.sudowrite_quality_tier }}</span>
-        <span class="stat-label">Tier</span>
-      </div>
+      @for (s of statItems; track s.label) {
+        <div class="stat-tile">
+          <mat-icon class="st-icon" [style.color]="s.color">{{ s.icon }}</mat-icon>
+          <span class="st-val">{{ s.value }}</span>
+          <span class="st-label">{{ s.label }}</span>
+        </div>
+      }
     </div>
 
-    <div class="score-section">
-      <h3>Craft Dimensions</h3>
-      <div class="dims-grid">
+    <div class="two-col">
+      <div class="dims-card">
+        <div class="dc-title">Craft Dimensions</div>
         @for (d of dimensions; track d.key) {
           <div class="dim-row">
-            <span class="dim-key">{{ d.key | titlecase }}</span>
-            <mat-progress-bar mode="determinate" [value]="d.val" class="dim-bar"></mat-progress-bar>
-            <span class="dim-val">{{ d.val }}</span>
+            <span class="dim-key">{{ d.key }}</span>
+            <div class="dim-track">
+              <div class="dim-fill" [style.width.%]="d.val" [class.high]="d.val>=80" [class.mid]="d.val>=65 && d.val<80"></div>
+            </div>
+            <span class="dim-num">{{ d.val }}</span>
           </div>
+        }
+      </div>
+
+      <div class="nav-grid">
+        @for (c of cards; track c.route) {
+          <a [routerLink]="c.route" class="nc-card" [style.--accent]="c.color">
+            <mat-icon [style.color]="c.color">{{ c.icon }}</mat-icon>
+            <span>{{ c.label }}</span>
+          </a>
         }
       </div>
     </div>
 
-    <div class="nav-grid">
-      @for (c of cards; track c.route) {
-        <a [routerLink]="c.route" class="nav-card" [style.border-left-color]="c.color">
-          <mat-icon [style.color]="c.color">{{ c.icon }}</mat-icon>
-          <span>{{ c.label }}</span>
-        </a>
-      }
+    <div class="logline-card">
+      <div class="lc-title"><mat-icon>format_quote</mat-icon> Logline</div>
+      <p>{{ novel.metadata.logline }}</p>
     </div>
-
-    <mat-card class="logline-card">
-      <mat-card-header>
-        <mat-card-title>Logline</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>{{ novel.metadata.logline }}</p>
-      </mat-card-content>
-    </mat-card>
   </div>
 } @else {
-  <div class="loading">
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  <div class="fd-loading">
+    <mat-icon>hourglass_empty</mat-icon>
     <p>Loading novel data…</p>
   </div>
 }
