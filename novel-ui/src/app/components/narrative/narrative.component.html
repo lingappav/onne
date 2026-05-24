@@ -1,0 +1,75 @@
+@if (form && narrative) {
+<form [formGroup]="form" (ngSubmit)="save()" class="page">
+  <div class="page-header">
+    <h2>Narrative Intelligence</h2>
+    <button mat-raised-button color="primary" type="submit" [disabled]="saving">
+      <mat-icon>save</mat-icon> {{ saving ? 'Saving…' : 'Save' }}
+    </button>
+  </div>
+
+  <mat-card>
+    <mat-card-header><mat-card-title>POV & Timeline</mat-card-title></mat-card-header>
+    <mat-card-content class="form-grid">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>POV Strategy</mat-label>
+        <textarea matInput formControlName="pov_strategy" rows="2"></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Timeline Structure</mat-label>
+        <input matInput formControlName="timeline_structure">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Narrator Register</mat-label>
+        <textarea matInput formControlName="narrator_register" rows="3"></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Flashback Count</mat-label>
+        <input matInput type="number" formControlName="flashback_count">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Flashback Potential</mat-label>
+        <textarea matInput formControlName="flashback_potential" rows="2"></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Flashforward Count</mat-label>
+        <input matInput type="number" formControlName="flashforward_count">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Flashforward Locations (one per line)</mat-label>
+        <textarea matInput formControlName="flashforward_locations" rows="2"></textarea>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header><mat-card-title>Subplots ({{ narrative.subplots.length }})</mat-card-title></mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="narrative.subplots" class="subplot-table">
+        <ng-container matColumnDef="subplot_id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let s"><code>{{ s.subplot_id }}</code></td>
+        </ng-container>
+        <ng-container matColumnDef="subplot_name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let s"><strong>{{ s.subplot_name }}</strong><br><small>{{ s.primary_characters.join(', ') }}</small></td>
+        </ng-container>
+        <ng-container matColumnDef="function">
+          <th mat-header-cell *matHeaderCellDef>Function</th>
+          <td mat-cell *matCellDef="let s"><span class="fn-badge">{{ s.function }}</span></td>
+        </ng-container>
+        <ng-container matColumnDef="resolved">
+          <th mat-header-cell *matHeaderCellDef>Resolved?</th>
+          <td mat-cell *matCellDef="let s">
+            <mat-icon [class.resolved]="s.resolved" [class.unresolved]="!s.resolved">
+              {{ s.resolved ? 'check_circle' : 'pending' }}
+            </mat-icon>
+            @if (s.resolution_chapter) { <small>{{ s.resolution_chapter }}</small> }
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="subplotColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: subplotColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</form>
+}

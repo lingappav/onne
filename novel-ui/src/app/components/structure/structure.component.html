@@ -1,0 +1,90 @@
+@if (structuralMap) {
+<div class="page">
+  <div class="page-header">
+    <h2>Structure & Beat Sheet</h2>
+    <span class="framework">{{ structuralMap.structure_framework }}</span>
+  </div>
+
+  <div class="acts-grid">
+    @for (act of structuralMap.acts; track act.act_id) {
+      <mat-card class="act-card act-{{ act.act_id | lowercase }}">
+        <mat-card-header>
+          <mat-card-title>{{ act.act_name }}</mat-card-title>
+          <mat-card-subtitle>{{ act.act_label }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="question"><strong>Q:</strong> {{ act.act_question }}</p>
+          <p class="answer"><strong>A:</strong> {{ act.act_answer }}</p>
+          <p class="emotion">Emotion: <em>{{ act.dominant_emotion }}</em></p>
+          <div class="chapter-chips">
+            @for (c of act.chapter_ids; track c) {
+              <span class="ch-chip">{{ c }}</span>
+            }
+          </div>
+          <p class="function-text">{{ act.dramatic_function }}</p>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+
+  <mat-card class="subplot-card">
+    <mat-card-header><mat-card-title>Subplot Overlay</mat-card-title></mat-card-header>
+    <mat-card-content>
+      <div class="subplot-grid">
+        <div class="subplot-item primary">
+          <span class="subplot-label">Primary Arc</span>
+          <span>{{ structuralMap.subplot_overlay.primary_arc }}</span>
+        </div>
+        <div class="subplot-item b">
+          <span class="subplot-label">B Story</span>
+          <span>{{ structuralMap.subplot_overlay.b_story }}</span>
+        </div>
+        <div class="subplot-item c">
+          <span class="subplot-label">C Story</span>
+          <span>{{ structuralMap.subplot_overlay.c_story }}</span>
+        </div>
+        <div class="subplot-item d">
+          <span class="subplot-label">D Story</span>
+          <span>{{ structuralMap.subplot_overlay.d_story }}</span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Beat Sheet — {{ structuralMap.beat_sheet.framework }}</mat-card-title>
+      <mat-card-subtitle>Coverage: {{ structuralMap.beat_sheet.beat_coverage_score }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="structuralMap.beat_sheet.beats" class="beats-table">
+        <ng-container matColumnDef="beat_number">
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let b">{{ b.beat_number }}</td>
+        </ng-container>
+        <ng-container matColumnDef="beat_name">
+          <th mat-header-cell *matHeaderCellDef>Beat</th>
+          <td mat-cell *matCellDef="let b"><strong>{{ b.beat_name }}</strong></td>
+        </ng-container>
+        <ng-container matColumnDef="chapter_id">
+          <th mat-header-cell *matHeaderCellDef>Chapter</th>
+          <td mat-cell *matCellDef="let b"><code>{{ b.chapter_id }}</code></td>
+        </ng-container>
+        <ng-container matColumnDef="strength_rating">
+          <th mat-header-cell *matHeaderCellDef>Strength</th>
+          <td mat-cell *matCellDef="let b">
+            <mat-progress-bar mode="determinate" [value]="b.strength_rating * 10" class="strength-bar"></mat-progress-bar>
+            <span class="strength-num">{{ b.strength_rating }}/10</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="craft_notes">
+          <th mat-header-cell *matHeaderCellDef>Craft Notes</th>
+          <td mat-cell *matCellDef="let b" class="craft-notes-cell">{{ b.craft_notes }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="beatColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: beatColumns;" class="beat-row"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>
+}

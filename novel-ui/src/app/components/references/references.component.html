@@ -1,0 +1,56 @@
+<div class="page">
+  <div class="page-header">
+    <h2>Reference Documents ({{ refs.length }})</h2>
+  </div>
+
+  <mat-accordion>
+    @for (ref of refs; track ref.doc_id) {
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <code>{{ ref.doc_id }}</code>&nbsp; {{ ref.filename }}
+          </mat-panel-title>
+          <mat-panel-description>
+            <span class="type-badge type-{{ ref.doc_type }}">{{ ref.doc_type }}</span>
+            &nbsp; {{ ref.origin }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <p class="summary">{{ ref.summary }}</p>
+
+        @if (ref.key_facts.length) {
+          <div class="facts-section">
+            <h4>Key Facts</h4>
+            <ul>
+              @for (f of ref.key_facts; track f) {
+                <li>{{ f }}</li>
+              }
+            </ul>
+          </div>
+        }
+
+        @if (ref.contradictions_with_manuscript.length) {
+          <div class="contradictions">
+            <h4><mat-icon class="warn-icon">warning</mat-icon> Contradictions</h4>
+            <ul>
+              @for (c of ref.contradictions_with_manuscript; track c) {
+                <li>{{ c }}</li>
+              }
+            </ul>
+          </div>
+        }
+
+        @if (ref.influences_chapters.length) {
+          <div class="influences">
+            <h4>Influences Chapters</h4>
+            <div class="chip-row">
+              @for (ch of ref.influences_chapters; track ch) {
+                <span class="ch-chip">{{ ch }}</span>
+              }
+            </div>
+          </div>
+        }
+      </mat-expansion-panel>
+    }
+  </mat-accordion>
+</div>

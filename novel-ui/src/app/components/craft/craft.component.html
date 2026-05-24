@@ -1,0 +1,110 @@
+@if (form && craft) {
+<form [formGroup]="form" (ngSubmit)="save()" class="page">
+  <div class="page-header">
+    <h2>Craft Assessment</h2>
+    <button mat-raised-button color="primary" type="submit" [disabled]="saving">
+      <mat-icon>save</mat-icon> {{ saving ? 'Saving…' : 'Save' }}
+    </button>
+  </div>
+
+  <mat-card>
+    <mat-card-header><mat-card-title>Benchmark</mat-card-title></mat-card-header>
+    <mat-card-content class="form-grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Overall Tier</mat-label>
+        <input matInput formControlName="overall_tier">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Score / 100</mat-label>
+        <input matInput type="number" formControlName="score_out_of_100">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Justification</mat-label>
+        <textarea matInput formControlName="justification" rows="5"></textarea>
+      </mat-form-field>
+      <div class="dims-section full-width">
+        <h4>Dimensions</h4>
+        @for (d of dimensions; track d.key) {
+          <div class="dim-row">
+            <span class="dim-key">{{ d.key | titlecase }}</span>
+            <input type="range" min="0" max="100" [formControlName]="d.key">
+            <input type="number" min="0" max="100" [formControlName]="d.key" class="dim-input">
+          </div>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header><mat-card-title>Award Potential</mat-card-title></mat-card-header>
+    <mat-card-content class="form-grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Readiness</mat-label>
+        <input matInput formControlName="readiness">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Closest Category</mat-label>
+        <input matInput formControlName="closest_category">
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header><mat-panel-title>Strengths ({{ craft.strengths.length }})</mat-panel-title></mat-expansion-panel-header>
+      @for (s of craft.strengths; track s.strength) {
+        <div class="strength-card">
+          <h4>{{ s.strength }}</h4>
+          <p>{{ s.evidence }}</p>
+        </div>
+      }
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header><mat-panel-title>Critical Gaps ({{ craft.critical_gaps.length }})</mat-panel-title></mat-expansion-panel-header>
+      <table mat-table [dataSource]="craft.critical_gaps" class="gap-table">
+        <ng-container matColumnDef="severity">
+          <th mat-header-cell *matHeaderCellDef>Severity</th>
+          <td mat-cell *matCellDef="let g">
+            <span class="sev-badge sev-{{ g.severity }}">{{ g.severity }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="gap">
+          <th mat-header-cell *matHeaderCellDef>Gap</th>
+          <td mat-cell *matCellDef="let g">{{ g.gap }}</td>
+        </ng-container>
+        <ng-container matColumnDef="fix">
+          <th mat-header-cell *matHeaderCellDef>Fix</th>
+          <td mat-cell *matCellDef="let g" class="fix-cell">{{ g.fix }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="gapColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: gapColumns;"></tr>
+      </table>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header><mat-panel-title>Revision Priorities ({{ craft.revision_priorities.length }})</mat-panel-title></mat-expansion-panel-header>
+      <table mat-table [dataSource]="craft.revision_priorities" class="priority-table">
+        <ng-container matColumnDef="rank">
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let p"><strong>{{ p.rank }}</strong></td>
+        </ng-container>
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>Category</th>
+          <td mat-cell *matCellDef="let p"><span class="cat-badge">{{ p.category }}</span></td>
+        </ng-container>
+        <ng-container matColumnDef="issue">
+          <th mat-header-cell *matHeaderCellDef>Issue</th>
+          <td mat-cell *matCellDef="let p">{{ p.issue }}</td>
+        </ng-container>
+        <ng-container matColumnDef="fix">
+          <th mat-header-cell *matHeaderCellDef>Fix</th>
+          <td mat-cell *matCellDef="let p" class="fix-cell">{{ p.fix }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="priorityColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: priorityColumns;"></tr>
+      </table>
+    </mat-expansion-panel>
+  </mat-accordion>
+</form>
+}

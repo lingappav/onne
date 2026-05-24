@@ -1,0 +1,48 @@
+<div class="page">
+  <div class="page-header">
+    <h2>Characters ({{ characters.length }})</h2>
+  </div>
+
+  <table mat-table [dataSource]="characters" class="mat-elevation-z2 chars-table">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let c"><code>{{ c.character_id }}</code></td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let c">
+        <strong>{{ c.full_name }}</strong>
+        @if (c.aliases?.length) {
+          <p class="alias">{{ c.aliases.join(', ') }}</p>
+        }
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef>Role</th>
+      <td mat-cell *matCellDef="let c">
+        <span class="role-badge role-{{ c.role | slice:0:4 }}">{{ c.role }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="arc">
+      <th mat-header-cell *matHeaderCellDef>Arc Type</th>
+      <td mat-cell *matCellDef="let c">{{ c.arc?.arc_type }}</td>
+    </ng-container>
+    <ng-container matColumnDef="appearances">
+      <th mat-header-cell *matHeaderCellDef>Chapters</th>
+      <td mat-cell *matCellDef="let c">{{ c.chapters_present?.length ?? 0 }}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let c">
+        <a mat-icon-button [routerLink]="['/characters', c.character_id]" color="primary">
+          <mat-icon>edit</mat-icon>
+        </a>
+        <button mat-icon-button color="warn" (click)="deleteCharacter(c.character_id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

@@ -1,0 +1,7 @@
+.page { display: flex; flex-direction: column; gap: 20px; }
+.page-header { display: flex; justify-content: space-between; align-items: center; h2 { margin: 0; } }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding-top: 8px; }
+.full-width { grid-column: 1 / -1; }
+.toggles { grid-column: 1 / -1; display: flex; gap: 24px; align-items: center; }
+mat-form-field { width: 100%; }
+.loading { color: #666; padding: 24px; }
