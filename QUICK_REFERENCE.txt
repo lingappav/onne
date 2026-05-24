@@ -1,0 +1,210 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    ONNE - DEPLOYMENT QUICK REFERENCE                       ║
+║                         GO LIVE IN 15 MINUTES                              ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│ 📋 START HERE: DEPLOY_CHECKLIST.md                                       │
+│                                                                          │
+│ Step-by-step instructions to deploy everything in 15 minutes             │
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│ 🎯 THREE SERVICES TO DEPLOY                                              │
+├──────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  ① BACKEND (Node.js)                                                   │
+│     Platform: Render                                                    │
+│     Root dir: novel-api                                                │
+│     Build: npm install                                                 │
+│     Start: node server.js                                              │
+│     Cost: $0/month (FREE)                                              │
+│     Result: https://onne-api.onrender.com                              │
+│                                                                          │
+│  ② FRONTEND (Angular)                                                  │
+│     Platform: Vercel                                                   │
+│     Root dir: novel-ui                                                 │
+│     Build: ng build --configuration production                         │
+│     Cost: $0/month (FREE)                                              │
+│     Result: https://onne.vercel.app                                    │
+│                                                                          │
+│  ③ LANDING PAGE (HTML)                                                 │
+│     Platform: Vercel                                                   │
+│     Root dir: site                                                     │
+│     No build needed                                                    │
+│     Cost: $0/month (FREE)                                              │
+│     Result: https://site-onne.vercel.app                               │
+│                                                                          │
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│ 💾 DATABASE STRATEGY                                                      │
+├──────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  PHASE 1 (NOW):      NeDB (local files)                                │
+│  Location:           Render persistent disk (/app/onne-db/)            │
+│  Cost:               $0/month                                           │
+│  Persistence:        ✓ Across restarts, deployments                    │
+│  Best for:           Single user, MVP, testing                         │
+│                                                                          │
+│  PHASE 2 (LATER):    MongoDB Atlas (cloud)                             │
+│  Timeline:           Month 2-3 (after validation)                      │
+│  Cost:               $0/month (free tier) or $57+/month (paid)         │
+│  Benefits:           Automatic backups, team collaboration             │
+│  How:                See DATABASE_MIGRATION_GUIDE.md                   │
+│                                                                          │
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│ 📊 YOUR LIVE URLS (After Deployment)                                     │
+├──────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  🌐 Frontend App:  https://onne.vercel.app                             │
+│  📄 Landing Page:  https://site-onne.vercel.app                        │
+│  ⚙️  API Backend:   https://onne-api.onrender.com                       │
+│                                                                          │
+│  Total Cost: $0/month ✓                                                │
+│                                                                          │
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│ ⏱️  DEPLOYMENT TIMELINE                                                   │
+├──────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  Step 1: Deploy Backend    →  5 minutes                                │
+│  Step 2: Deploy Frontend   →  5 minutes                                │
+│  Step 3: Deploy Landing    →  2 minutes                                │
+│  Step 4: Test Everything   →  5 minutes                                │
+│  ─────────────────────────────────────                                │
+│  TOTAL TIME:                  15 minutes                               │
+│                                                                          │
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│ ✅ VERIFICATION AFTER DEPLOY                                             │
+├──────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  1. Backend responding:  curl https://onne-api.onrender.com/api/plan90 │
+│  2. Frontend loading:    https://onne.vercel.app (no console errors)   │
+│  3. Data persisting:     Add activity → Refresh → Still there ✓        │
+│  4. All tabs working:    Navigate through each feature                 │
+│  5. Mobile responsive:   Test on phone or dev tools                    │
+│                                                                          │
+│  See POST_DEPLOYMENT_TESTS.md for complete verification checklist     │
+│                                                                          │
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│ 📚 DOCUMENTATION REFERENCE                                               │
+├──────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  README_DEPLOYMENT.md          Complete guide & overview               │
+│  DEPLOY_CHECKLIST.md           ← FOLLOW THIS STEP-BY-STEP             │
+│  POST_DEPLOYMENT_TESTS.md      Verification & testing guide            │
+│  ARCHITECTURE.md               Visual diagrams & data flow              │
+│  DEPLOYMENT_GUIDE.md           Detailed strategy & scaling path        │
+│  DATABASE_MIGRATION_GUIDE.md   Future: NeDB → MongoDB                 │
+│  QUICK_START.sh                Automated setup script                 │
+│  QUICK_REFERENCE.txt           This file                              │
+│                                                                          │
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│ 🔧 ENVIRONMENT VARIABLES                                                 │
+├──────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  Frontend (Vercel):                                                    │
+│    API_URL = https://onne-api.onrender.com                             │
+│                                                                          │
+│  Backend (Render):                                                     │
+│    NODE_ENV = production                                               │
+│    PORT = 3001 (auto-assigned)                                         │
+│                                                                          │
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│ 💡 WHAT'S CONFIGURED FOR YOU                                             │
+├──────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  ✓ NeDB database with 5 collections                                   │
+│  ✓ Express API with REST endpoints                                    │
+│  ✓ Angular frontend with lazy-loaded components                       │
+│  ✓ HTML landing page ready to deploy                                  │
+│  ✓ CORS configured correctly                                          │
+│  ✓ Render persistent disk mount (render.yaml)                         │
+│  ✓ Environment variables setup                                        │
+│  ✓ Production builds configured                                       │
+│                                                                          │
+│  Nothing else to set up. Just deploy!                                 │
+│                                                                          │
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│ 🚀 READY TO DEPLOY?                                                      │
+├──────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  ✓ Have GitHub account?         YES / NO                              │
+│  ✓ Have Render account?          YES / NO                              │
+│  ✓ Have Vercel account?          YES / NO                              │
+│  ✓ Code pushed to GitHub?        YES / NO                              │
+│  ✓ Have 15 minutes free?         YES / NO                              │
+│                                                                          │
+│  If all YES → Open DEPLOY_CHECKLIST.md and follow the steps            │
+│  If any NO  → Get those ready first, then start deployment             │
+│                                                                          │
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│ ⚠️  COMMON GOTCHAS (AVOID THESE!)                                         │
+├──────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  ❌ Forgetting API_URL env var in Vercel                               │
+│     → Frontend can't reach backend                                     │
+│     Fix: Add API_URL = https://onne-api.onrender.com in Vercel        │
+│                                                                          │
+│  ❌ Using localhost:3001 in production                                  │
+│     → Won't work on live server                                        │
+│     Fix: Use environment variables (already configured)                │
+│                                                                          │
+│  ❌ Forgetting to commit changes                                       │
+│     → Deploying old code                                              │
+│     Fix: `git add .` → `git commit -m "..."` → `git push`             │
+│                                                                          │
+│  ❌ Not waiting for Render build to complete                           │
+│     → Getting 502 errors                                              │
+│     Fix: Wait for "Live" status in Render dashboard                   │
+│                                                                          │
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│ 🎓 COST BREAKDOWN                                                        │
+├──────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  Backend (Render):              FREE tier            $0/month          │
+│  Frontend (Vercel):             FREE tier            $0/month          │
+│  Landing Page (Vercel):         FREE tier            $0/month          │
+│  Database (NeDB):               Render disk          $0/month          │
+│  Custom Domain (optional):      Your registrar       $5-15/year        │
+│  ────────────────────────────────────────────────────────────          │
+│  TOTAL (initial launch):                            $0/month          │
+│  TOTAL (with custom domain):                        ~$1-2/month       │
+│                                                                          │
+│  Upgrade options (if traffic grows):                                  │
+│    Render paid tier:                                $5-50/month        │
+│    MongoDB Atlas paid tier:                         $57+/month         │
+│                                                                          │
+│  For a novel platform: Expect to stay FREE for 12+ months             │
+│                                                                          │
+└──────────────────────────────────────────────────────────────────────────┘
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║  YOU HAVE EVERYTHING YOU NEED TO GO LIVE TODAY.                           ║
+║                                                                            ║
+║  Step 1: Open DEPLOY_CHECKLIST.md                                         ║
+║  Step 2: Follow the instructions                                          ║
+║  Step 3: Celebrate 🎉                                                     ║
+║                                                                            ║
+║                        Let's make this live! 🚀                            ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝

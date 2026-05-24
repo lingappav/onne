@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: onne-api
+    runtime: node
+    rootDir: novel-api
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+    disk:
+      name: onne-db
+      mountPath: /app/onne-db
+      sizeGB: 1

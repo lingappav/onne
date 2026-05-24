@@ -2,7 +2,11 @@ const Datastore = require('@seald-io/nedb');
 const path = require('path');
 const fs = require('fs');
 
-const DB_DIR = path.resolve(__dirname, '../data/db');
+// Use Render's persistent disk if available, otherwise local ./data
+const DB_DIR = process.env.NODE_ENV === 'production'
+  ? path.resolve('/app/onne-db')
+  : path.resolve(__dirname, '../data/db');
+
 if (!fs.existsSync(DB_DIR)) fs.mkdirSync(DB_DIR, { recursive: true });
 
 function makeStore(name) {
