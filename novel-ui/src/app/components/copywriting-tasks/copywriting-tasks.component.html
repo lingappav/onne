@@ -1,0 +1,180 @@
+<div class="tasks-shell" *ngIf="!loading; else loader">
+  <!-- ── topbar ── -->
+  <div class="tasks-topbar">
+    <div class="tasks-title">
+      <mat-icon>task_alt</mat-icon>
+      <span>Copywriting Tasks</span>
+    </div>
+
+    <!-- summary pills -->
+    <div class="summary-pills">
+      <div class="s-pill" [class.active]="filterStatus==='all'" (click)="filterStatus='all'">
+        All <span class="pill-count">{{tasks.length}}</span>
+      </div>
+      <div class="s-pill todo" [class.active]="filterStatus==='todo'" (click)="filterStatus='todo'">
+        To Do <span class="pill-count">{{countByStatus('todo')}}</span>
+      </div>
+      <div class="s-pill in-progress" [class.active]="filterStatus==='in_progress'" (click)="filterStatus='in_progress'">
+        In Progress <span class="pill-count">{{countByStatus('in_progress')}}</span>
+      </div>
+      <div class="s-pill done" [class.active]="filterStatus==='done'" (click)="filterStatus='done'">
+        Done <span class="pill-count">{{countByStatus('done')}}</span>
+      </div>
+      <div class="s-pill blocked" [class.active]="filterStatus==='blocked'" (click)="filterStatus='blocked'">
+        Blocked <span class="pill-count">{{countByStatus('blocked')}}</span>
+      </div>
+    </div>
+
+    <div class="topbar-right">
+      <select class="cat-filter" [(ngModel)]="filterCategory">
+        <option value="all">All categories</option>
+        <option *ngFor="let c of categories" [value]="c">{{c}}</option>
+      </select>
+      <button class="add-btn" (click)="addingNew=true">
+        <mat-icon>add</mat-icon> New Task
+      </button>
+    </div>
+  </div>
+
+  <!-- ── progress bar ── -->
+  <div class="overall-progress">
+    <div class="progress-fill" [style.width.%]="countByStatus('done') / tasks.length * 100"></div>
+  </div>
+
+  <!-- ── task list ── -->
+  <div class="tasks-body">
+    @for (entry of (groupedTasks() | keyvalue); track entry.key) {
+      <div class="category-section">
+        <div class="category-header">
+          <span class="cat-name">{{entry.key}}</span>
+          <span class="cat-count">{{entry.value.length}} tasks</span>
+        </div>
+
+        @for (task of entry.value; track task._id) {
+          <div class="task-row" [class.done]="task.status==='done'" [class.blocked]="task.status==='blocked'">
+            <!-- status toggle -->
+            <button class="status-dot" [style.background]="statusColor(task.status)"
+              (click)="cycleStatus(task)" [matTooltip]="'Status: ' + statusLabel(task.status) + ' — click to advance'">
+            </button>
+
+            <div class="task-main" *ngIf="editingId !== task._id">
+              <div class="task-title-row">
+                <span class="task-title">{{task.title}}</span>
+                <span class="priority-badge" [style.color]="priorityColor(task.priority)" [style.borderColor]="priorityColor(task.priority)+'55'">
+                  {{task.priority}}
+                </span>
+              </div>
+              <div class="task-meta">
+                <span *ngIf="task.due" [class.overdue]="task.status !== 'done' && isOverdue(task.due)">
+                  <mat-icon>event</mat-icon> {{task.due | date:'mediumDate'}}
+                  <span class="overdue-tag" *ngIf="task.status !== 'done' && isOverdue(task.due)"> overdue</span>
+                </span>
+                <span *ngIf="task.notes" class="task-notes">{{task.notes}}</span>
+              </div>
+            </div>
+
+            <!-- inline edit form -->
+            <div class="task-edit-form" *ngIf="editingId === task._id">
+              <div class="edit-grid">
+                <div class="edit-row">
+                  <label>Title</label>
+                  <input [(ngModel)]="editItem.title" type="text">
+                </div>
+                <div class="edit-row">
+                  <label>Category</label>
+                  <input [(ngModel)]="editItem.category" type="text">
+                </div>
+                <div class="edit-row">
+                  <label>Status</label>
+                  <select [(ngModel)]="editItem.status">
+                    <option *ngFor="let s of STATUSES" [value]="s">{{statusLabel(s)}}</option>
+                  </select>
+                </div>
+                <div class="edit-row">
+                  <label>Priority</label>
+                  <select [(ngModel)]="editItem.priority">
+                    <option *ngFor="let p of PRIORITIES" [value]="p">{{p}}</option>
+                  </select>
+                </div>
+                <div class="edit-row">
+                  <label>Due</label>
+                  <input [(ngModel)]="editItem.due" type="date">
+                </div>
+                <div class="edit-row full">
+                  <label>Notes</label>
+                  <textarea [(ngModel)]="editItem.notes" rows="2"></textarea>
+                </div>
+              </div>
+              <div class="edit-actions">
+                <button class="btn-save" (click)="saveEdit()">Save</button>
+                <button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+              </div>
+            </div>
+
+            <div class="task-actions" *ngIf="editingId !== task._id">
+              <button class="act-btn" (click)="startEdit(task)" matTooltip="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button class="act-btn danger" (click)="deleteTask(task._id)" matTooltip="Delete">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <div class="empty-state" *ngIf="filteredTasks.length === 0">
+      <mat-icon>check_circle_outline</mat-icon>
+      <span>No tasks matching this filter</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── add new task modal ── -->
+<div class="modal-overlay" *ngIf="addingNew" (click)="addingNew=false">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-title"><mat-icon>add_task</mat-icon> New Copywriting Task</div>
+    <div class="edit-grid">
+      <div class="edit-row full">
+        <label>Title *</label>
+        <input [(ngModel)]="newTask.title" type="text" placeholder="What needs to be written…" autofocus>
+      </div>
+      <div class="edit-row">
+        <label>Category</label>
+        <input [(ngModel)]="newTask.category" type="text" placeholder="Publisher Pitch, Marketing…">
+      </div>
+      <div class="edit-row">
+        <label>Priority</label>
+        <select [(ngModel)]="newTask.priority">
+          <option *ngFor="let p of PRIORITIES" [value]="p">{{p}}</option>
+        </select>
+      </div>
+      <div class="edit-row">
+        <label>Status</label>
+        <select [(ngModel)]="newTask.status">
+          <option *ngFor="let s of STATUSES" [value]="s">{{statusLabel(s)}}</option>
+        </select>
+      </div>
+      <div class="edit-row">
+        <label>Due date</label>
+        <input [(ngModel)]="newTask.due" type="date">
+      </div>
+      <div class="edit-row full">
+        <label>Notes</label>
+        <textarea [(ngModel)]="newTask.notes" rows="3" placeholder="Additional context…"></textarea>
+      </div>
+    </div>
+    <div class="edit-actions">
+      <button class="btn-save" (click)="submitNew()" [disabled]="!newTask.title?.trim()">Add Task</button>
+      <button class="btn-cancel" (click)="addingNew=false">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #loader>
+  <div class="loading-state">
+    <mat-icon class="spin">sync</mat-icon>
+    <span>Loading tasks…</span>
+  </div>
+</ng-template>

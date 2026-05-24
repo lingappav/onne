@@ -1,0 +1,260 @@
+<div class="pitch-shell" *ngIf="!loading; else loader">
+  <!-- ── topbar ── -->
+  <div class="pitch-topbar">
+    <div class="pitch-title">
+      <mat-icon>send</mat-icon>
+      <span>Pitch Status &amp; Fundraise</span>
+    </div>
+    <div class="pitch-tabs">
+      <button [class.active]="activeTab==='publishers'" (click)="activeTab='publishers'">
+        <mat-icon>business</mat-icon> Publishers
+      </button>
+      <button [class.active]="activeTab==='agents'" (click)="activeTab='agents'">
+        <mat-icon>person_search</mat-icon> Agents
+      </button>
+      <button [class.active]="activeTab==='fundraise'" (click)="activeTab='fundraise'">
+        <mat-icon>account_balance</mat-icon> Fundraise
+      </button>
+      <button [class.active]="activeTab==='suggested'" (click)="activeTab='suggested'">
+        <mat-icon>lightbulb</mat-icon> Opportunities
+      </button>
+    </div>
+  </div>
+
+  <!-- ── fundraise dashboard strip ── -->
+  <div class="fundraise-strip" *ngIf="data">
+    <div class="strip-item">
+      <div class="strip-label">Raised</div>
+      <div class="strip-value green">${{data.summary.raised_usd | number}}</div>
+      <div class="strip-sub">of ${{data.summary.target_usd | number}}</div>
+    </div>
+    <div class="strip-item">
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" [style.width.%]="fundRaisePct()"></div>
+      </div>
+      <div class="strip-sub">{{fundRaisePct()}}% complete — Day {{data.summary.day_of_90}} of 90</div>
+    </div>
+    <div class="strip-item">
+      <div class="strip-label">Publishers pitched</div>
+      <div class="strip-value">{{sentCount(data.publishers)}} / {{data.publishers.length}}</div>
+    </div>
+    <div class="strip-item">
+      <div class="strip-label">Positive responses</div>
+      <div class="strip-value gold">{{positiveCount(data.publishers) + positiveCount(data.agents)}}</div>
+    </div>
+    <button class="strip-edit-btn" (click)="startSummaryEdit()" matTooltip="Update fundraise metrics">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+
+  <!-- ── summary note ── -->
+  <div class="status-note" *ngIf="data?.summary?.notes">
+    <mat-icon>info</mat-icon> {{data!.summary.notes}}
+  </div>
+
+  <!-- ── PUBLISHERS tab ── -->
+  <div class="pitch-content" *ngIf="activeTab==='publishers' && data">
+    <div class="pitch-card" *ngFor="let p of data.publishers">
+      <div class="card-header">
+        <div class="card-title-row">
+          <mat-icon class="priority-icon" [style.color]="priorityColor(p.priority)">{{priorityIcon(p.priority)}}</mat-icon>
+          <span class="card-name">{{p.name}}</span>
+          <span class="tier-badge">{{p.tier}}</span>
+        </div>
+        <div class="status-badge" [style.background]="statusColor(p.status)+'22'" [style.color]="statusColor(p.status)" [style.borderColor]="statusColor(p.status)">
+          {{statusLabel(p.status)}}
+        </div>
+      </div>
+      <div class="card-contact">{{p.contact}}</div>
+      <div class="card-notes">{{p.notes}}</div>
+      <div class="card-dates" *ngIf="p.submitted || p.last_contact">
+        <span *ngIf="p.submitted"><mat-icon>send</mat-icon> Submitted: {{p.submitted}}</span>
+        <span *ngIf="p.last_contact"><mat-icon>history</mat-icon> Last contact: {{p.last_contact}}</span>
+      </div>
+
+      <!-- inline edit -->
+      <div class="card-edit" *ngIf="editingId === p._id">
+        <div class="edit-row">
+          <label>Status</label>
+          <select [(ngModel)]="editingItem.status">
+            <option *ngFor="let s of STATUS_OPTIONS" [value]="s">{{statusLabel(s)}}</option>
+          </select>
+        </div>
+        <div class="edit-row">
+          <label>Submitted</label>
+          <input type="date" [(ngModel)]="editingItem.submitted">
+        </div>
+        <div class="edit-row">
+          <label>Last contact</label>
+          <input type="date" [(ngModel)]="editingItem.last_contact">
+        </div>
+        <div class="edit-row">
+          <label>Notes</label>
+          <textarea [(ngModel)]="editingItem.notes" rows="2"></textarea>
+        </div>
+        <div class="edit-actions">
+          <button class="btn-save" (click)="saveEdit(p)">Save</button>
+          <button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+        </div>
+      </div>
+      <button class="card-edit-btn" *ngIf="editingId !== p._id" (click)="startEdit(p)">
+        <mat-icon>edit</mat-icon> Update
+      </button>
+    </div>
+  </div>
+
+  <!-- ── AGENTS tab ── -->
+  <div class="pitch-content" *ngIf="activeTab==='agents' && data">
+    <div class="pitch-card" *ngFor="let a of data.agents">
+      <div class="card-header">
+        <div class="card-title-row">
+          <mat-icon class="priority-icon" [style.color]="priorityColor(a.priority)">{{priorityIcon(a.priority)}}</mat-icon>
+          <span class="card-name">{{a.name}}</span>
+          <span class="tier-badge">{{a.tier}}</span>
+        </div>
+        <div class="status-badge" [style.background]="statusColor(a.status)+'22'" [style.color]="statusColor(a.status)" [style.borderColor]="statusColor(a.status)">
+          {{statusLabel(a.status)}}
+        </div>
+      </div>
+      <div class="card-contact">{{a.contact}}</div>
+      <div class="card-notes">{{a.notes}}</div>
+
+      <div class="card-edit" *ngIf="editingId === a._id">
+        <div class="edit-row">
+          <label>Status</label>
+          <select [(ngModel)]="editingItem.status">
+            <option *ngFor="let s of STATUS_OPTIONS" [value]="s">{{statusLabel(s)}}</option>
+          </select>
+        </div>
+        <div class="edit-row">
+          <label>Submitted</label>
+          <input type="date" [(ngModel)]="editingItem.submitted">
+        </div>
+        <div class="edit-row">
+          <label>Last contact</label>
+          <input type="date" [(ngModel)]="editingItem.last_contact">
+        </div>
+        <div class="edit-row">
+          <label>Notes</label>
+          <textarea [(ngModel)]="editingItem.notes" rows="2"></textarea>
+        </div>
+        <div class="edit-actions">
+          <button class="btn-save" (click)="saveEdit(a)">Save</button>
+          <button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+        </div>
+      </div>
+      <button class="card-edit-btn" *ngIf="editingId !== a._id" (click)="startEdit(a)">
+        <mat-icon>edit</mat-icon> Update
+      </button>
+    </div>
+  </div>
+
+  <!-- ── FUNDRAISE tab ── -->
+  <div class="pitch-content" *ngIf="activeTab==='fundraise' && data">
+    @for (entry of (groupedFundraise() | keyvalue); track entry.key) {
+      <div class="group-header">{{entry.key}}</div>
+      @for (f of entry.value; track f._id) {
+        <div class="pitch-card">
+          <div class="card-header">
+            <div class="card-title-row">
+              <mat-icon class="priority-icon" [style.color]="priorityColor(f.priority)">{{priorityIcon(f.priority)}}</mat-icon>
+              <span class="card-name">{{f.name}}</span>
+              @if (f.ask_inr) {
+                <span class="ask-badge">₹{{f.ask_inr | number}}</span>
+              }
+            </div>
+            <div class="status-badge" [style.background]="statusColor(f.status)+'22'" [style.color]="statusColor(f.status)" [style.borderColor]="statusColor(f.status)">
+              {{statusLabel(f.status)}}
+            </div>
+          </div>
+          <div class="card-contact" *ngIf="f.org">{{f.org}} · {{f.channel}}</div>
+          <div class="card-notes">{{f.notes}}</div>
+
+          <div class="card-edit" *ngIf="editingId === f._id">
+            <div class="edit-row">
+              <label>Status</label>
+              <select [(ngModel)]="editingItem.status">
+                <option *ngFor="let s of STATUS_OPTIONS" [value]="s">{{statusLabel(s)}}</option>
+              </select>
+            </div>
+            <div class="edit-row">
+              <label>Last contact</label>
+              <input type="date" [(ngModel)]="editingItem.last_contact">
+            </div>
+            <div class="edit-row">
+              <label>Notes</label>
+              <textarea [(ngModel)]="editingItem.notes" rows="2"></textarea>
+            </div>
+            <div class="edit-actions">
+              <button class="btn-save" (click)="saveEdit(f)">Save</button>
+              <button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+            </div>
+          </div>
+          <button class="card-edit-btn" *ngIf="editingId !== f._id" (click)="startEdit(f)">
+            <mat-icon>edit</mat-icon> Update
+          </button>
+        </div>
+      }
+    }
+  </div>
+
+  <!-- ── SUGGESTED tab ── -->
+  <div class="pitch-content" *ngIf="activeTab==='suggested' && data">
+    @for (entry of (groupedSuggested() | keyvalue); track entry.key) {
+      <div class="group-header">{{entry.key}}</div>
+      @for (s of entry.value; track s._id) {
+        <div class="pitch-card suggested-card">
+          <div class="card-name">{{s.name}}</div>
+          <div class="card-reason"><strong>Why:</strong> {{s.reason}}</div>
+          <div class="card-action"><mat-icon>arrow_forward</mat-icon> {{s.action}}</div>
+        </div>
+      }
+    }
+  </div>
+</div>
+
+<!-- ── summary edit modal ── -->
+<div class="modal-overlay" *ngIf="editingSummary" (click)="editingSummary=false">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-title">Update Fundraise Metrics</div>
+    <div class="edit-row">
+      <label>Raised (USD)</label>
+      <input type="number" [(ngModel)]="summaryEdit.raised_usd">
+    </div>
+    <div class="edit-row">
+      <label>Stream A — Patrons ($)</label>
+      <input type="number" [(ngModel)]="summaryEdit.stream_a_patrons">
+    </div>
+    <div class="edit-row">
+      <label>Stream B — Sponsors ($)</label>
+      <input type="number" [(ngModel)]="summaryEdit.stream_b_sponsors">
+    </div>
+    <div class="edit-row">
+      <label>Stream C — Big tickets ($)</label>
+      <input type="number" [(ngModel)]="summaryEdit.stream_c_big">
+    </div>
+    <div class="edit-row">
+      <label>Substack paid subscribers</label>
+      <input type="number" [(ngModel)]="summaryEdit.substack_paid">
+    </div>
+    <div class="edit-row">
+      <label>Day of 90</label>
+      <input type="number" [(ngModel)]="summaryEdit.day_of_90">
+    </div>
+    <div class="edit-row">
+      <label>Notes</label>
+      <textarea [(ngModel)]="summaryEdit.notes" rows="3"></textarea>
+    </div>
+    <div class="edit-actions">
+      <button class="btn-save" (click)="saveSummary()">Save</button>
+      <button class="btn-cancel" (click)="editingSummary=false">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #loader>
+  <div class="loading-state">
+    <mat-icon class="spin">sync</mat-icon>
+    <span>Loading pitch status…</span>
+  </div>
+</ng-template>

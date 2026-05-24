@@ -1,0 +1,183 @@
+<div class="film-shell" *ngIf="!loading && data; else loader">
+  <!-- ── topbar ── -->
+  <div class="film-topbar">
+    <div class="film-title">
+      <mat-icon>movie</mat-icon>
+      <div>
+        <div class="title-main">Sunday Cinemas — Film Option Agreement</div>
+        <div class="title-sub">{{data.option_type}}</div>
+      </div>
+    </div>
+    <div class="topbar-stats">
+      <div class="stat-pill green">
+        <mat-icon>check_circle</mat-icon>
+        Option Secured
+      </div>
+      <div class="stat-pill" [style.color]="expiryColor()" [style.borderColor]="expiryColor()+'44'" [style.background]="expiryColor()+'11'">
+        <mat-icon>schedule</mat-icon>
+        {{daysUntilExpiry()}} days remaining
+      </div>
+      <div class="stat-pill gold">
+        <mat-icon>attach_money</mat-icon>
+        ${{data.budget_min_usd/1000000 | number:'1.0-1'}}–${{data.budget_max_usd/1000000 | number:'1.0-1'}}M Budget
+      </div>
+    </div>
+  </div>
+
+  <div class="film-body">
+    <!-- ── left column ── -->
+    <div class="film-left">
+
+      <!-- Key facts card -->
+      <div class="info-card">
+        <div class="card-section-title"><mat-icon>info</mat-icon> Agreement Details</div>
+        <div class="fact-grid">
+          <div class="fact-row">
+            <span class="fact-label">Production Company</span>
+            <span class="fact-value highlight">{{data.production_company}}</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Option Period</span>
+            <span class="fact-value">{{data.option_start}} → {{data.option_expiry}}</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Format</span>
+            <span class="fact-value">{{data.format}}</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Language</span>
+            <span class="fact-value">{{data.language_primary}} / {{data.language_secondary}}</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Star Attachment</span>
+            <span class="fact-value star">⭐ {{data.star_attachment}}</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Director</span>
+            <span class="fact-value dimmed">{{data.director_status}}</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Budget Range</span>
+            <span class="fact-value gold">${{data.budget_min_usd | number}} – ${{data.budget_max_usd | number}} USD</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Screenplay Credit</span>
+            <span class="fact-value">{{data.screenplay_credit}}</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Royalty on Exercise</span>
+            <span class="fact-value dimmed">{{data.royalty_on_exercise}}</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Last Updated</span>
+            <span class="fact-value dimmed">{{data.last_updated | date:'mediumDate'}}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rights granted -->
+      <div class="info-card">
+        <div class="card-section-title"><mat-icon>lock_open</mat-icon> Rights Granted to Sunday Cinemas</div>
+        <ul class="rights-list granted">
+          <li *ngFor="let r of data.rights_granted">
+            <mat-icon>check</mat-icon> {{r}}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Rights reserved -->
+      <div class="info-card">
+        <div class="card-section-title"><mat-icon>lock</mat-icon> Rights Reserved by Author</div>
+        <ul class="rights-list reserved">
+          <li *ngFor="let r of data.rights_reserved">
+            <mat-icon>shield</mat-icon> {{r}}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Commercial notes -->
+      <div class="info-card">
+        <div class="card-section-title"><mat-icon>campaign</mat-icon> Commercial Context</div>
+        <p class="commercial-text">{{data.commercial_notes}}</p>
+      </div>
+
+      <!-- Key contacts -->
+      <div class="info-card">
+        <div class="card-section-title"><mat-icon>contacts</mat-icon> Key Contacts</div>
+        <div class="contact-row" *ngFor="let c of data.key_contacts">
+          <div class="contact-role">{{c.role}}</div>
+          <div class="contact-name">{{c.name}}</div>
+          <div class="contact-detail" *ngIf="c.email">{{c.email}}</div>
+          <div class="contact-detail" *ngIf="c.phone">{{c.phone}}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── right column: milestones ── -->
+    <div class="film-right">
+      <div class="milestones-header">
+        <div class="card-section-title"><mat-icon>timeline</mat-icon> Production Milestones</div>
+        <div class="milestone-progress">
+          <div class="mp-text">{{completedMilestones()}} / {{data.milestones.length}} complete</div>
+          <div class="mp-bar-wrap">
+            <div class="mp-bar" [style.width.%]="milestonePct()"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="milestones-list">
+        @for (m of data.milestones; track $index) {
+          <div class="milestone-item" [class.completed]="m.status==='completed'" [class.active]="m.status==='in_progress'">
+            <div class="milestone-connector">
+              <div class="milestone-dot" [style.background]="statusColor(m.status)"></div>
+              @if (!$last) {
+                <div class="connector-line"></div>
+              }
+            </div>
+            <div class="milestone-content">
+              <div class="milestone-row">
+                <span class="milestone-title">{{m.milestone}}</span>
+                <span class="milestone-status" [style.color]="statusColor(m.status)">{{statusLabel(m.status)}}</span>
+              </div>
+              <div class="milestone-date">{{m.date | date:'mediumDate'}}</div>
+              <div class="milestone-notes" *ngIf="m.notes">{{m.notes}}</div>
+
+              <!-- milestone edit -->
+              <div class="milestone-edit-form" *ngIf="editingMilestoneIdx === $index">
+                <div class="edit-row">
+                  <label>Status</label>
+                  <select [(ngModel)]="milestoneEdit.status">
+                    <option *ngFor="let s of STATUS_OPTIONS" [value]="s">{{statusLabel(s)}}</option>
+                  </select>
+                </div>
+                <div class="edit-row">
+                  <label>Date</label>
+                  <input type="date" [(ngModel)]="milestoneEdit.date">
+                </div>
+                <div class="edit-row">
+                  <label>Notes</label>
+                  <textarea [(ngModel)]="milestoneEdit.notes" rows="2"></textarea>
+                </div>
+                <div class="edit-actions">
+                  <button class="btn-save" (click)="saveMilestone($index)">Save</button>
+                  <button class="btn-cancel" (click)="cancelMilestone()">Cancel</button>
+                </div>
+              </div>
+
+              <button class="milestone-edit-btn" *ngIf="editingMilestoneIdx !== $index" (click)="startMilestoneEdit($index)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loader>
+  <div class="loading-state">
+    <mat-icon class="spin">sync</mat-icon>
+    <span>Loading film agreement…</span>
+  </div>
+</ng-template>

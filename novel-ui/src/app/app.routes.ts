@@ -53,5 +53,25 @@ export const routes: Routes = [
   {
     path: 'benchmark',
     loadComponent: () => import('./components/benchmark/benchmark.component').then(m => m.BenchmarkComponent)
+  },
+  {
+    path: 'chapter-workshop',
+    loadComponent: () => import('./components/chapter-workshop/chapter-workshop.component').then(m => m.ChapterWorkshopComponent)
+  },
+  {
+    path: 'pitch-status',
+    loadComponent: () => import('./components/pitch-status/pitch-status.component').then(m => m.PitchStatusComponent)
+  },
+  {
+    path: 'film-agreement',
+    loadComponent: () => import('./components/film-agreement/film-agreement.component').then(m => m.FilmAgreementComponent)
+  },
+  {
+    path: 'copywriting-tasks',
+    loadComponent: () => import('./components/copywriting-tasks/copywriting-tasks.component').then(m => m.CopywritingTasksComponent)
+  },
+  {
+    path: 'plan90',
+    loadComponent: () => import('./components/plan90/plan90.component').then(m => m.Plan90Component)
   }
 ];

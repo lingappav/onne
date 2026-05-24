@@ -3,7 +3,42 @@
     "version": "v001",
     "filename": "v001_2026-05-24T05-12-47.json",
     "timestamp": "2026-05-24T05:12:47.383Z",
-    "description": "Initial \u2014 imported from master_novel.json",
+    "description": "Initial — imported from master_novel.json",
     "parent": null
+  },
+  {
+    "version": "v002",
+    "filename": "v002_2026-05-24T08-10-15.json",
+    "timestamp": "2026-05-24T08:10:15.483Z",
+    "description": "Imported full chapter prose from manuscripts (24 added, 1 enriched)",
+    "parent": "v001"
+  },
+  {
+    "version": "v003",
+    "filename": "v003_2026-05-24T08-15-58.json",
+    "timestamp": "2026-05-24T08:15:58.353Z",
+    "description": "Updated chapter CH_06",
+    "parent": "v002"
+  },
+  {
+    "version": "v004",
+    "filename": "v004_2026-05-24T08-16-20.json",
+    "timestamp": "2026-05-24T08:16:20.381Z",
+    "description": "Updated chapter CH_06",
+    "parent": "v003"
+  },
+  {
+    "version": "v005",
+    "filename": "v005_2026-05-24T08-16-27.json",
+    "timestamp": "2026-05-24T08:16:27.974Z",
+    "description": "Tested Version -3",
+    "parent": "v004"
+  },
+  {
+    "version": "v006",
+    "filename": "v006_2026-05-24T08-17-03.json",
+    "timestamp": "2026-05-24T08:17:03.860Z",
+    "description": "Updated chapter CH_06",
+    "parent": "v005"
   }
 ]

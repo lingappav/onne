@@ -1,0 +1,514 @@
+<div class="plan-shell" *ngIf="!loading && data; else loader">
+  <!-- ── topbar ── -->
+  <div class="plan-topbar">
+    <div class="plan-title">
+      <mat-icon>rocket_launch</mat-icon>
+      <div>
+        <div class="title-main">90-Day Command Centre</div>
+        <div class="title-sub">{{data.meta.author}} · Start {{data.meta.start_date}} · Target {{data.meta.target_date}}</div>
+      </div>
+    </div>
+    <div class="day-counter">
+      <div class="day-num">Day {{daysSinceStart()}}</div>
+      <div class="day-sub">{{daysToTarget()}} days to target</div>
+    </div>
+    <div class="plan-tabs">
+      <button [class.active]="activeTab==='dashboard'" (click)="activeTab='dashboard'"><mat-icon>dashboard</mat-icon> Dashboard</button>
+      <button [class.active]="activeTab==='chapters'"  (click)="activeTab='chapters'"><mat-icon>menu_book</mat-icon> Chapters</button>
+      <button [class.active]="activeTab==='milestones'"(click)="activeTab='milestones'"><mat-icon>flag</mat-icon> Milestones</button>
+      <button [class.active]="activeTab==='funding'"   (click)="activeTab='funding'"><mat-icon>attach_money</mat-icon> Funding</button>
+      <button [class.active]="activeTab==='activity'"  (click)="activeTab='activity'"><mat-icon>edit_calendar</mat-icon> Activity Log</button>
+      <button [class.active]="activeTab==='returns'"   (click)="activeTab='returns'"><mat-icon>trending_up</mat-icon> Investor Returns</button>
+    </div>
+  </div>
+
+  <!-- ── progress rail ── -->
+  <div class="progress-rail">
+    <div class="rail-segment phase1" [style.width.%]="33.3">
+      <div class="rail-fill" [style.width.%]="daysSinceStart() < 45 ? (daysSinceStart()/45*100) : 100"></div>
+      <span>Phase 1 · Research + Act I</span>
+    </div>
+    <div class="rail-segment phase2" [style.width.%]="33.3">
+      <div class="rail-fill" [style.width.%]="daysSinceStart() < 45 ? 0 : daysSinceStart() < 90 ? ((daysSinceStart()-45)/45*100) : 100"></div>
+      <span>Phase 2 · Act II + III Draft</span>
+    </div>
+    <div class="rail-segment phase3" [style.width.%]="33.4">
+      <div class="rail-fill" [style.width.%]="daysSinceStart() < 90 ? 0 : ((daysSinceStart()-90)/43*100)"></div>
+      <span>Phase 3 · Polish + Launch</span>
+    </div>
+  </div>
+
+  <!-- ──────────── DASHBOARD ──────────── -->
+  <div class="tab-body" *ngIf="activeTab==='dashboard'">
+    <div class="kpi-row">
+      <div class="kpi-card blue">
+        <div class="kpi-icon"><mat-icon>edit</mat-icon></div>
+        <div class="kpi-value">{{totalWordCount() | number}}</div>
+        <div class="kpi-label">Words Written</div>
+        <div class="kpi-sub">{{wordPct()}}% of {{data.meta.words_total_target | number}} target</div>
+        <div class="kpi-bar"><div [style.width.%]="wordPct()"></div></div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-icon"><mat-icon>check_circle</mat-icon></div>
+        <div class="kpi-value">{{chaptersDone()}} / {{data.chapters.length}}</div>
+        <div class="kpi-label">Chapters Complete</div>
+        <div class="kpi-sub">{{chaptersStarted()}} in progress or drafted</div>
+        <div class="kpi-bar"><div [style.width.%]="chaptersDone()/data.chapters.length*100"></div></div>
+      </div>
+      <div class="kpi-card gold">
+        <div class="kpi-icon"><mat-icon>attach_money</mat-icon></div>
+        <div class="kpi-value">${{totalFundingRaised() | number}}</div>
+        <div class="kpi-label">Funding Raised</div>
+        <div class="kpi-sub">of ${{totalFundingTarget() | number}} target ({{fundingPct()}}%)</div>
+        <div class="kpi-bar"><div [style.width.%]="fundingPct()"></div></div>
+      </div>
+      <div class="kpi-card purple">
+        <div class="kpi-icon"><mat-icon>flag</mat-icon></div>
+        <div class="kpi-value">{{milestonesDone()}} / {{data.milestones.length}}</div>
+        <div class="kpi-label">Milestones Hit</div>
+        <div class="kpi-sub">{{daysToTarget()}} days remaining</div>
+        <div class="kpi-bar"><div [style.width.%]="milestonesDone()/data.milestones.length*100"></div></div>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-icon"><mat-icon>local_fire_department</mat-icon></div>
+        <div class="kpi-value">{{activityStreak()}}</div>
+        <div class="kpi-label">Day Streak</div>
+        <div class="kpi-sub">{{totalWordsLogged() | number}} words logged in activity</div>
+      </div>
+    </div>
+
+    <!-- Next milestone -->
+    <div class="next-milestone" *ngIf="currentMilestone() as m">
+      <div class="nm-label"><mat-icon>flag</mat-icon> NEXT MILESTONE</div>
+      <div class="nm-title">{{m.title}}</div>
+      <div class="nm-desc">{{m.desc}}</div>
+      <div class="nm-day">Day {{m.day}}</div>
+    </div>
+
+    <!-- Recent activity -->
+    <div class="recent-section">
+      <div class="section-hdr">
+        <span><mat-icon>history</mat-icon> Recent Activity</span>
+        <button class="log-btn" (click)="activeTab='activity'; addingActivity=true"><mat-icon>add</mat-icon> Log Today</button>
+      </div>
+      <div class="activity-list" *ngIf="recentActivities().length; else noActivity">
+        <div class="act-row" *ngFor="let a of recentActivities()">
+          <div class="act-type-dot" [style.background]="activityTypeColor(a.type)"></div>
+          <div class="act-info">
+            <div class="act-date">{{a.date}}</div>
+            <div class="act-note">{{a.note}}</div>
+          </div>
+          <div class="act-words" *ngIf="a.words_written">+{{a.words_written | number}}w</div>
+        </div>
+      </div>
+      <ng-template #noActivity>
+        <div class="empty-note">No activity logged yet. Click "Log Today" to start your first entry.</div>
+      </ng-template>
+    </div>
+
+    <!-- Phase overview -->
+    <div class="phases-overview">
+      <div class="phase-block p1">
+        <div class="phase-label">Phase 1 · Days 1–45 · Research + Act I</div>
+        <ul>
+          <li>Character Bible + World Bible + Beat Sheets (Week 1)</li>
+          <li>Legal Framework Note + Research Gap List</li>
+          <li>All 8 Act I chapters drafted (Chapters 1–8)</li>
+          <li>IFA grant application submitted</li>
+          <li>Publisher pitch materials ready</li>
+        </ul>
+      </div>
+      <div class="phase-block p2">
+        <div class="phase-label">Phase 2 · Days 46–90 · Act II + Act III First Draft</div>
+        <ul>
+          <li>All 9 Act II chapters drafted (Chapters 9–17)</li>
+          <li>All 7 Act III chapters + Epilogue drafted</li>
+          <li>First superstar outreach emails sent</li>
+          <li>Sunday Cinemas advance conversation triggered</li>
+          <li>First draft COMPLETE (~72,000 words)</li>
+        </ul>
+      </div>
+      <div class="phase-block p3">
+        <div class="phase-label">Phase 3 · Days 91–133 · Polish + Fund + Launch</div>
+        <ul>
+          <li>Full self-edit pass + beta reader feedback</li>
+          <li>Crowdfunding campaign live</li>
+          <li>All 5 superstar approaches sent</li>
+          <li>Publisher/agent query batch submitted</li>
+          <li>Query-ready manuscript + $10K pipeline locked by Sep 30</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ──────────── CHAPTERS ──────────── -->
+  <div class="tab-body" *ngIf="activeTab==='chapters'">
+    <div class="word-progress-bar">
+      <div class="wpb-label">Total Word Count: {{totalWordCount() | number}} / {{data.meta.words_total_target | number}}</div>
+      <div class="wpb-track"><div class="wpb-fill" [style.width.%]="wordPct()"></div></div>
+      <div class="wpb-pct">{{wordPct()}}%</div>
+    </div>
+
+    @for (act of ['act1','act2','act3']; track act) {
+      <div class="act-section">
+        <div class="act-hdr" [class]="act">
+          <span class="act-badge">
+            @if (act==='act1') { Act I · Ch 1–8 · Research + Inciting Incident }
+            @else if (act==='act2') { Act II · Ch 9–17 · Escalation + Legal Siege }
+            @else { Act III + Epilogue · Ch 18–25 · Climax + Legacy Reset }
+          </span>
+          <span class="act-stat">
+            {{actChaptersDone(act)}} / {{actChapters(act).length}} done
+          </span>
+        </div>
+
+        @for (ch of actChapters(act); track ch._id) {
+          <div class="ch-card" [class.ch-done]="ch.status==='done'">
+            <button class="ch-status-btn" [style.background]="statusColor(ch.status)"
+              (click)="cycleChapterStatus(ch)" [matTooltip]="statusLabel(ch.status)+' — click to advance'">
+            </button>
+            <div class="ch-body" *ngIf="editingChapterId !== ch._id">
+              <div class="ch-row1">
+                <span class="ch-num">{{ch.num}}</span>
+                <span class="ch-title">{{ch.title}}</span>
+                <span class="ch-status-tag" [style.color]="statusColor(ch.status)">{{statusLabel(ch.status)}}</span>
+              </div>
+              <div class="ch-sub">{{ch.sub}}</div>
+              <div class="ch-meta">
+                <span><mat-icon>text_fields</mat-icon> Target: {{ch.words_target | number}}w</span>
+                @if (ch.word_count_actual) {
+                  <span class="words-actual"><mat-icon>done</mat-icon> Written: {{ch.word_count_actual | number}}w</span>
+                }
+                @if (ch.started_date) {
+                  <span><mat-icon>calendar_today</mat-icon> Started: {{ch.started_date}}</span>
+                }
+                @if (ch.completed_date) {
+                  <span class="green"><mat-icon>check</mat-icon> Completed: {{ch.completed_date}}</span>
+                }
+                @if (ch.notes) {
+                  <span class="ch-notes">{{ch.notes}}</span>
+                }
+              </div>
+            </div>
+            <!-- chapter inline edit -->
+            <div class="ch-edit-form" *ngIf="editingChapterId === ch._id">
+              <div class="edit-grid">
+                <div class="edit-field">
+                  <label>Status</label>
+                  <select [(ngModel)]="chapterEdit.status">
+                    <option *ngFor="let s of CHAPTER_STATUSES" [value]="s">{{statusLabel(s)}}</option>
+                  </select>
+                </div>
+                <div class="edit-field">
+                  <label>Words Written</label>
+                  <input type="number" [(ngModel)]="chapterEdit.word_count_actual">
+                </div>
+                <div class="edit-field">
+                  <label>Started (date you jotted/wrote)</label>
+                  <input type="date" [(ngModel)]="chapterEdit.started_date">
+                </div>
+                <div class="edit-field">
+                  <label>Completed</label>
+                  <input type="date" [(ngModel)]="chapterEdit.completed_date">
+                </div>
+                <div class="edit-field full">
+                  <label>Notes / Ideas</label>
+                  <textarea [(ngModel)]="chapterEdit.notes" rows="2" placeholder="What you jotted, ideas, blockers…"></textarea>
+                </div>
+              </div>
+              <div class="edit-actions">
+                <button class="btn-save" (click)="saveChapter(ch._id)">Save</button>
+                <button class="btn-cancel" (click)="cancelChapter()">Cancel</button>
+              </div>
+            </div>
+            <button class="ch-edit-btn" *ngIf="editingChapterId !== ch._id" (click)="startChapterEdit(ch)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- ──────────── MILESTONES ──────────── -->
+  <div class="tab-body" *ngIf="activeTab==='milestones'">
+    <div class="milestones-list">
+      @for (m of data.milestones; track m._id) {
+        <div class="ms-row" [class.ms-key]="m.is_key" [class.ms-done]="m.status==='done'">
+          <div class="ms-connector">
+            <div class="ms-dot" [style.background]="mColor(m.status)"></div>
+            @if (!$last) { <div class="ms-line"></div> }
+          </div>
+          <div class="ms-content">
+            <div class="ms-top">
+              <span class="ms-title">{{m.title}}</span>
+              <span class="ms-status" [style.color]="mColor(m.status)">{{m.status}}</span>
+              <span class="ms-day-badge">Day {{m.day}}</span>
+            </div>
+            <div class="ms-desc">{{m.desc}}</div>
+            @if (m.completed_date) {
+              <div class="ms-completed"><mat-icon>check_circle</mat-icon> Completed {{m.completed_date}}</div>
+            }
+            @if (m.notes) {
+              <div class="ms-notes">{{m.notes}}</div>
+            }
+
+            <div class="ms-edit-form" *ngIf="editingMilestoneId === m._id">
+              <div class="edit-grid">
+                <div class="edit-field">
+                  <label>Status</label>
+                  <select [(ngModel)]="milestoneEdit.status">
+                    <option *ngFor="let s of MILESTONE_STATUSES" [value]="s">{{s}}</option>
+                  </select>
+                </div>
+                <div class="edit-field">
+                  <label>Date completed / noted</label>
+                  <input type="date" [(ngModel)]="milestoneEdit.completed_date">
+                </div>
+                <div class="edit-field full">
+                  <label>Notes</label>
+                  <textarea [(ngModel)]="milestoneEdit.notes" rows="2"></textarea>
+                </div>
+              </div>
+              <div class="edit-actions">
+                <button class="btn-save" (click)="saveMilestone(m._id)">Save</button>
+                <button class="btn-cancel" (click)="cancelMilestone()">Cancel</button>
+              </div>
+            </div>
+            <button class="ms-edit-btn" *ngIf="editingMilestoneId !== m._id" (click)="startMilestoneEdit(m)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- ──────────── FUNDING ──────────── -->
+  <div class="tab-body" *ngIf="activeTab==='funding'">
+    <div class="funding-header">
+      <div class="fh-total">
+        <div class="fh-raised">${{totalFundingRaised() | number}}</div>
+        <div class="fh-label">raised of ${{totalFundingTarget() | number}} target</div>
+      </div>
+      <div class="fh-bar-wrap">
+        <div class="fh-bar" [style.width.%]="fundingPct()"></div>
+      </div>
+    </div>
+
+    <div class="funding-note">
+      <mat-icon>lightbulb</mat-icon>
+      <span><strong>Key principle:</strong> Frame distribution sponsorship as "sponsoring a policy idea" — not "buying a book." Political organisations are 10x more likely to fund content that advances a policy they believe in (ONOE, democratic stability). Use this framing from Day 45 onward.</span>
+    </div>
+
+    <div class="funding-list">
+      @for (f of data.funding; track f._id) {
+        <div class="fund-card">
+          <div class="fund-icon">{{f.icon}}</div>
+          <div class="fund-body">
+            <div class="fund-row1">
+              <span class="fund-name">{{f.name}}</span>
+              <span class="fund-status" [style.color]="fColor(f.status)" [style.borderColor]="fColor(f.status)+'44'">{{fLabel(f.status)}}</span>
+            </div>
+            <div class="fund-progress-row">
+              <div class="fund-track"><div class="fund-fill" [style.width.%]="f.raised_usd/f.target_usd*100" [style.background]="fColor(f.status)"></div></div>
+              <span class="fund-nums">${{f.raised_usd | number}} / ${{f.target_usd | number}}</span>
+            </div>
+            <div class="fund-angle">{{f.pitch_angle}}</div>
+            <div class="fund-when"><mat-icon>schedule</mat-icon> Activate: Day {{f.activate_day}}</div>
+            @if (f.notes) { <div class="fund-notes">{{f.notes}}</div> }
+
+            <div class="fund-edit-form" *ngIf="editingFundingId === f._id">
+              <div class="edit-grid">
+                <div class="edit-field">
+                  <label>Raised (USD)</label>
+                  <input type="number" [(ngModel)]="fundingEdit.raised_usd">
+                </div>
+                <div class="edit-field">
+                  <label>Status</label>
+                  <select [(ngModel)]="fundingEdit.status">
+                    <option *ngFor="let s of FUNDING_STATUSES" [value]="s">{{fLabel(s)}}</option>
+                  </select>
+                </div>
+                <div class="edit-field full">
+                  <label>Notes</label>
+                  <textarea [(ngModel)]="fundingEdit.notes" rows="2"></textarea>
+                </div>
+              </div>
+              <div class="edit-actions">
+                <button class="btn-save" (click)="saveFunding(f._id)">Save</button>
+                <button class="btn-cancel" (click)="cancelFunding()">Cancel</button>
+              </div>
+            </div>
+            <button class="fund-edit-btn" *ngIf="editingFundingId !== f._id" (click)="startFundingEdit(f)">
+              <mat-icon>edit</mat-icon> Update
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- ──────────── ACTIVITY LOG ──────────── -->
+  <div class="tab-body" *ngIf="activeTab==='activity'">
+    <div class="activity-topbar">
+      <div class="act-stats">
+        <span><mat-icon>local_fire_department</mat-icon> {{activityStreak()}} day streak</span>
+        <span><mat-icon>text_fields</mat-icon> {{totalWordsLogged() | number}} words logged</span>
+        <span><mat-icon>event_note</mat-icon> {{data.activities.length}} log entries</span>
+      </div>
+      <button class="log-btn" (click)="addingActivity=!addingActivity">
+        <mat-icon>add</mat-icon> Log Activity
+      </button>
+    </div>
+
+    <!-- add form -->
+    <div class="add-activity-form" *ngIf="addingActivity">
+      <div class="edit-grid">
+        <div class="edit-field">
+          <label>Date (when you wrote / jotted this)</label>
+          <input type="date" [(ngModel)]="newActivity.date">
+        </div>
+        <div class="edit-field">
+          <label>Activity type</label>
+          <select [(ngModel)]="newActivity.type">
+            <option *ngFor="let t of ACTIVITY_TYPES" [value]="t">{{t}}</option>
+          </select>
+        </div>
+        <div class="edit-field">
+          <label>Words written (0 if not writing)</label>
+          <input type="number" [(ngModel)]="newActivity.words_written">
+        </div>
+        <div class="edit-field full">
+          <label>What you did / what idea you jotted</label>
+          <textarea [(ngModel)]="newActivity.note" rows="3" placeholder="e.g. Wrote 1,200 words for Ch 5 Triple Agenda. Jotted idea: the bribe arrives as a government tender, not a suitcase."></textarea>
+        </div>
+      </div>
+      <div class="edit-actions">
+        <button class="btn-save" (click)="submitActivity()" [disabled]="!newActivity.note?.trim()">Log</button>
+        <button class="btn-cancel" (click)="addingActivity=false">Cancel</button>
+      </div>
+    </div>
+
+    <!-- grouped by date -->
+    <div class="activity-log">
+      @for (entry of (groupedActivities() | keyvalue); track entry.key) {
+        <div class="log-date-group">
+          <div class="log-date-hdr">{{entry.key | date:'EEEE, d MMMM yyyy'}}</div>
+          @for (a of entry.value; track a._id) {
+            <div class="log-entry">
+              <div class="log-type" [style.background]="activityTypeColor(a.type)+'22'" [style.color]="activityTypeColor(a.type)">{{a.type}}</div>
+              <div class="log-note">{{a.note}}</div>
+              @if (a.words_written) {
+                <div class="log-words">+{{a.words_written | number}}w</div>
+              }
+              <button class="log-del" (click)="deleteActivity(a._id)" matTooltip="Delete entry">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+      }
+      <div class="empty-note" *ngIf="!data.activities.length">
+        No activity logged yet. Every day you write something, log it here — date + what you did. This replaces static planning with real history.
+      </div>
+    </div>
+  </div>
+
+  <!-- ──────────── INVESTOR RETURNS ──────────── -->
+  <div class="tab-body" *ngIf="activeTab==='returns' && data.meta.investor_returns as r">
+    <div class="returns-hero">
+      <div class="rh-label">Projected Total Return to Author</div>
+      <div class="rh-range">${{r.total_low | number}} – ${{r.total_high | number}} USD</div>
+      <div class="rh-note">{{r.notes}}</div>
+      <button class="strip-edit-btn" (click)="startReturnsEdit()"><mat-icon>edit</mat-icon> Edit Projections</button>
+    </div>
+
+    <div class="returns-grid">
+      <div class="return-card">
+        <div class="rc-icon">📖</div>
+        <div class="rc-name">Publishing Advance</div>
+        <div class="rc-range">${{r.publishing_advance_low | number}} – ${{r.publishing_advance_high | number}}</div>
+        <div class="rc-desc">Upfront advance against royalties from Indian publisher (Juggernaut, Westland, Aleph). Comparable: Chetan Bhagat type advances for political fiction.</div>
+      </div>
+      <div class="return-card highlight">
+        <div class="rc-icon">🎬</div>
+        <div class="rc-name">Film Option + Production Royalty</div>
+        <div class="rc-range">${{r.film_option_value | number}} + ${{filmRoyalty() | number}}</div>
+        <div class="rc-desc">Sunday Cinemas option (active). If film goes into production at ${{r.film_budget_mid/1000000 | number:'1.0-1'}}M budget, author royalty at {{r.film_production_royalty_pct}}% = ${{filmRoyalty() | number}}.</div>
+      </div>
+      <div class="return-card">
+        <div class="rc-icon">📺</div>
+        <div class="rc-name">OTT Series Rights</div>
+        <div class="rc-range">${{r.ott_rights_low | number}} – ${{r.ott_rights_high | number}}</div>
+        <div class="rc-desc">Netflix India / Amazon Prime series adaptation rights. Political thrillers command premium rates post-Scam 1992 / Delhi Crime.</div>
+      </div>
+      <div class="return-card">
+        <div class="rc-icon">💰</div>
+        <div class="rc-name">Royalties (5-Year)</div>
+        <div class="rc-range">${{r.royalties_5yr_low | number}} – ${{r.royalties_5yr_high | number}}</div>
+        <div class="rc-desc">Print + digital royalties across 5 years. Assumes 5,000–20,000 copies sold in India at 10–15% royalty rate.</div>
+      </div>
+      <div class="return-card">
+        <div class="rc-icon">🌍</div>
+        <div class="rc-name">Translation / International Rights</div>
+        <div class="rc-range">${{r.translation_rights | number}}</div>
+        <div class="rc-desc">Kannada + Hindi translation rights. Potentially UK/US rights through Granta / Europa Editions after Indian deal.</div>
+      </div>
+    </div>
+
+    <div class="returns-total-card">
+      <div class="rt-label">Conservative Scenario (Low)</div>
+      <div class="rt-value low">${{r.total_low | number}}</div>
+      <div class="rt-breakdown">
+        Publishing ${{r.publishing_advance_low | number}} · OTT ${{r.ott_rights_low | number}} · Royalties ${{r.royalties_5yr_low | number}} · Translation ${{r.translation_rights | number}}
+      </div>
+    </div>
+    <div class="returns-total-card highlight-card">
+      <div class="rt-label">Upside Scenario (High) — Film Produced</div>
+      <div class="rt-value high">${{r.total_high | number}}</div>
+      <div class="rt-breakdown">
+        Publishing ${{r.publishing_advance_high | number}} · Film option ${{r.film_option_value | number}} · Production royalty ${{filmRoyalty() | number}} · OTT ${{r.ott_rights_high | number}} · Royalties ${{r.royalties_5yr_high | number}} · Translation ${{r.translation_rights | number}}
+      </div>
+    </div>
+
+    <div class="returns-risks">
+      <div class="rr-title"><mat-icon>warning</mat-icon> Key Risk Factors for Investors</div>
+      <div class="rr-items">
+        <div class="rr-item"><span class="rr-bullet">1</span> First-time author advance may be lower ($1,500–$3,000 range). Mitigated by Sunday Cinemas option as credibility signal.</div>
+        <div class="rr-item"><span class="rr-bullet">2</span> Film production is contingent on Sunday Cinemas exercising the option by Feb 2028. Option is active — not guaranteed.</div>
+        <div class="rr-item"><span class="rr-bullet">3</span> OTT rights are reserved by author. Realisation depends on post-publication streaming acquisition interest.</div>
+        <div class="rr-item"><span class="rr-bullet">4</span> Political sensitivity of ONOE framing may limit certain distribution channels if political climate shifts.</div>
+        <div class="rr-item"><span class="rr-bullet">5</span> Timeline risk: September 2026 completion target is achievable but requires 500+ words/day consistently.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── investor returns edit modal ── -->
+<div class="modal-overlay" *ngIf="editingReturns" (click)="editingReturns=false">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-title"><mat-icon>trending_up</mat-icon> Edit Investor Return Projections</div>
+    <div class="edit-grid">
+      <div class="edit-field"><label>Publishing Advance Low ($)</label><input type="number" [(ngModel)]="returnsEdit.publishing_advance_low"></div>
+      <div class="edit-field"><label>Publishing Advance High ($)</label><input type="number" [(ngModel)]="returnsEdit.publishing_advance_high"></div>
+      <div class="edit-field"><label>Film Option Value ($)</label><input type="number" [(ngModel)]="returnsEdit.film_option_value"></div>
+      <div class="edit-field"><label>Film Production Royalty %</label><input type="number" step="0.5" [(ngModel)]="returnsEdit.film_production_royalty_pct"></div>
+      <div class="edit-field"><label>Film Budget (mid, $)</label><input type="number" [(ngModel)]="returnsEdit.film_budget_mid"></div>
+      <div class="edit-field"><label>OTT Rights Low ($)</label><input type="number" [(ngModel)]="returnsEdit.ott_rights_low"></div>
+      <div class="edit-field"><label>OTT Rights High ($)</label><input type="number" [(ngModel)]="returnsEdit.ott_rights_high"></div>
+      <div class="edit-field"><label>Royalties 5yr Low ($)</label><input type="number" [(ngModel)]="returnsEdit.royalties_5yr_low"></div>
+      <div class="edit-field"><label>Royalties 5yr High ($)</label><input type="number" [(ngModel)]="returnsEdit.royalties_5yr_high"></div>
+      <div class="edit-field"><label>Translation Rights ($)</label><input type="number" [(ngModel)]="returnsEdit.translation_rights"></div>
+      <div class="edit-field full"><label>Notes</label><textarea [(ngModel)]="returnsEdit.notes" rows="2"></textarea></div>
+    </div>
+    <div class="edit-actions">
+      <button class="btn-save" (click)="saveReturns()">Save & Recalculate</button>
+      <button class="btn-cancel" (click)="editingReturns=false">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #loader>
+  <div class="loading-state"><mat-icon class="spin">sync</mat-icon><span>Loading 90-day plan…</span></div>
+</ng-template>

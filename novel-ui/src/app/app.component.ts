@@ -47,7 +47,12 @@ export class AppComponent implements OnInit {
     { path: '/craft',      label: 'Craft Score',       icon: 'star_outline',   group: 'analysis' },
     { path: '/continuity', label: 'Continuity',        icon: 'warning_amber',  group: 'analysis' },
     { path: '/references', label: 'References',        icon: 'library_books',  group: 'analysis' },
-    { path: '/benchmark', label: 'Benchmark Lab',     icon: 'science',        group: 'intelligence' },
+    { path: '/benchmark',         label: 'Benchmark Lab',     icon: 'science',        group: 'intelligence' },
+    { path: '/chapter-workshop',  label: 'Chapter Workshop',  icon: 'edit_note',      group: 'intelligence' },
+    { path: '/pitch-status',      label: 'Pitch Status',      icon: 'send',           group: 'business' },
+    { path: '/film-agreement',    label: 'Sunday Cinemas',    icon: 'movie',          group: 'business' },
+    { path: '/copywriting-tasks', label: 'Copywriting Tasks', icon: 'task_alt',       group: 'business' },
+    { path: '/plan90',            label: '90-Day Plan',       icon: 'rocket_launch',  group: 'business' },
   ];
 
   groups = [
@@ -56,6 +61,7 @@ export class AppComponent implements OnInit {
     { id: 'content',       label: 'Content' },
     { id: 'analysis',      label: 'Analysis' },
     { id: 'intelligence',  label: 'Intelligence' },
+    { id: 'business',      label: 'Business' },
   ];
 
   constructor(

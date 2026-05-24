@@ -1,0 +1,529 @@
+<div class="cw-shell">
+
+  <!-- ══ TOP BAR ═══════════════════════════════════════════════════════════ -->
+  <div class="cw-topbar">
+    <div class="cw-topbar-left">
+      <mat-icon class="cw-icon">edit_note</mat-icon>
+      <span class="cw-title">Chapter Workshop</span>
+
+      <div class="cw-selector-wrap">
+        <select class="cw-chapter-select" [value]="selectedId"
+                (change)="onChapterSelect($any($event.target).value)">
+          @if (data) {
+            @for (ch of data.all_chapters; track ch.chapter_id) {
+              <option [value]="ch.chapter_id">
+                {{ ch.chapter_number === 0 ? 'Prologue' : 'Ch ' + ch.chapter_number }}
+                — {{ ch.chapter_title }}{{ ch.is_drafted ? '' : ' [draft]' }}
+              </option>
+            }
+          } @else {
+            <option [value]="selectedId">{{ selectedId }}</option>
+          }
+        </select>
+      </div>
+
+      @if (data) {
+        <span class="act-badge" [style.background-color]="actColor(data.act) + '22'"
+              [style.color]="actColor(data.act)"
+              [style.border-color]="actColor(data.act) + '55'">
+          {{ data.act }}
+        </span>
+        @for (beat of data.beats; track beat) {
+          <span class="beat-chip">{{ beat }}</span>
+        }
+        @if (!data.is_drafted) {
+          <span class="draft-badge">Not yet drafted</span>
+        }
+      }
+    </div>
+
+    <div class="cw-topbar-right">
+      @if (data) {
+        <div class="health-pill" [matTooltip]="'Chapter completeness: ' + data.health_score + '%'">
+          <div class="health-ring">
+            <svg viewBox="0 0 36 36" class="health-svg">
+              <circle cx="18" cy="18" r="14" fill="none" stroke="#2e2e33" stroke-width="3"/>
+              <circle cx="18" cy="18" r="14" fill="none"
+                      [attr.stroke]="healthColor(data.health_score)"
+                      stroke-width="3" stroke-linecap="round"
+                      [attr.stroke-dasharray]="(data.health_score / 100) * 87.96 + ' 87.96'"
+                      stroke-dashoffset="21.99"
+                      transform="rotate(-90 18 18)"/>
+            </svg>
+            <span class="health-num" [style.color]="healthColor(data.health_score)">
+              {{ data.health_score }}
+            </span>
+          </div>
+          <span class="health-label">Health</span>
+        </div>
+
+        <div class="potential-pill" [matTooltip]="'Implementing all tasks can lift benchmark scores by this many points'">
+          <mat-icon>trending_up</mat-icon>
+          <span>{{ scorePotentialText }}</span>
+        </div>
+      }
+
+      <button class="cw-save-btn" (click)="save()" [disabled]="saving || !form">
+        <mat-icon>{{ saving ? 'hourglass_empty' : 'save' }}</mat-icon>
+        {{ saving ? 'Saving…' : (data?.is_drafted ? 'Save Version' : 'Create Chapter') }}
+      </button>
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="cw-loading"><mat-icon class="spin">donut_large</mat-icon> Loading chapter…</div>
+  }
+
+  @if (data && !loading) {
+    <div class="cw-body">
+
+      <!-- ══ LEFT: INTELLIGENCE PANEL ══════════════════════════════════════ -->
+      <div class="cw-intel">
+
+        <!-- score impact summary -->
+        <div class="intel-section">
+          <div class="intel-section-title">
+            <mat-icon>bar_chart</mat-icon> Benchmark Impact
+          </div>
+          @for (imp of data.intelligence.dimension_impacts; track imp.dimension) {
+            <div class="dim-impact-row">
+              <div class="dim-impact-header">
+                <span class="dim-name">{{ DIM_LABELS[imp.dimension] }}</span>
+                <span class="dim-priority-dot" [style.background-color]="priorityColor(imp.priority)"
+                      [matTooltip]="priorityLabel(imp.priority) + ' priority'"></span>
+              </div>
+              <div class="dim-scores-line">
+                <span class="dim-score current">{{ imp.current_score }}</span>
+                <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+                <span class="dim-score projected">{{ imp.projected_score }}</span>
+                <span class="dim-delta" [class.positive]="projectionDelta(imp) > 0">
+                  +{{ projectionDelta(imp) }}</span>
+                <span class="dim-avg-note">avg {{ imp.benchmark_avg }}</span>
+              </div>
+              <div class="dim-bar-wrap">
+                <div class="dim-bar-track">
+                  <div class="dim-bar-current"  [style.width.%]="imp.current_score"></div>
+                  <div class="dim-bar-projected" [style.width.%]="imp.projected_score"></div>
+                  <div class="dim-bar-avg-line"  [style.left.%]="imp.benchmark_avg"></div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- critical tasks -->
+        @if (criticalTasks.length) {
+          <div class="intel-section">
+            <div class="intel-section-title crit">
+              <mat-icon>error</mat-icon> Critical Revisions
+            </div>
+            @for (task of criticalTasks; track task.dim) {
+              <div class="task-card" style="border-left-color: #f85149">
+                <div class="task-dim-row">
+                  <span class="task-dim-label">{{ DIM_LABELS[task.dim] }}</span>
+                  <span class="task-impact">+{{ task.score_impact }} pts</span>
+                </div>
+                <p class="task-text">{{ task.task }}</p>
+                <div class="task-ref">
+                  <mat-icon>menu_book</mat-icon> Learn from: <em>{{ task.benchmark_ref }}</em>
+                </div>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- high tasks -->
+        @if (highTasks.length) {
+          <div class="intel-section">
+            <div class="intel-section-title high">
+              <mat-icon>priority_high</mat-icon> High Priority
+            </div>
+            @for (task of highTasks; track task.dim + task.task.slice(0,20)) {
+              <div class="task-card" style="border-left-color: #f0883e">
+                <div class="task-dim-row">
+                  <span class="task-dim-label">{{ DIM_LABELS[task.dim] }}</span>
+                  <span class="task-impact">+{{ task.score_impact }} pts</span>
+                </div>
+                <p class="task-text">{{ task.task }}</p>
+                <div class="task-ref">
+                  <mat-icon>menu_book</mat-icon> Learn from: <em>{{ task.benchmark_ref }}</em>
+                </div>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- medium tasks -->
+        @if (mediumTasks.length) {
+          <div class="intel-section">
+            <div class="intel-section-title med">
+              <mat-icon>info</mat-icon> Medium Priority
+            </div>
+            @for (task of mediumTasks; track task.dim + task.task.slice(0,20)) {
+              <div class="task-card" style="border-left-color: #d29922">
+                <div class="task-dim-row">
+                  <span class="task-dim-label">{{ DIM_LABELS[task.dim] }}</span>
+                  <span class="task-impact">+{{ task.score_impact }} pts</span>
+                </div>
+                <p class="task-text">{{ task.task }}</p>
+                <div class="task-ref">
+                  <mat-icon>menu_book</mat-icon> Learn from: <em>{{ task.benchmark_ref }}</em>
+                </div>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- continuity issues -->
+        @if (data.intelligence.continuity_issues.length) {
+          <div class="intel-section">
+            <div class="intel-section-title warn">
+              <mat-icon>warning_amber</mat-icon> Continuity Issues
+            </div>
+            @for (issue of data.intelligence.continuity_issues; track issue.id || issue.description) {
+              <div class="continuity-card">
+                <span class="cont-sev" [class.sev-minor]="issue.severity==='minor'"
+                      [class.sev-major]="issue.severity==='major'" [class.sev-mod]="issue.severity==='moderate'">
+                  {{ issue.severity || 'issue' }}
+                </span>
+                <p class="cont-desc">{{ issue.description }}</p>
+                @if (issue.fix) {
+                  <p class="cont-fix"><mat-icon class="fix-icon">build</mat-icon> {{ issue.fix }}</p>
+                }
+              </div>
+            }
+          </div>
+        }
+
+        <!-- elevation notes from award assessment -->
+        @if (data.intelligence.elevation_notes.length) {
+          <div class="intel-section">
+            <div class="intel-section-title award">
+              <mat-icon>emoji_events</mat-icon> Award Elevation Notes
+            </div>
+            @for (note of data.intelligence.elevation_notes; track note) {
+              <div class="elevation-card">
+                <mat-icon class="elev-icon">star_border</mat-icon>
+                <p>{{ note }}</p>
+              </div>
+            }
+          </div>
+        }
+
+      </div><!-- /cw-intel -->
+
+      <!-- ══ RIGHT: EDITOR ══════════════════════════════════════════════════ -->
+      <div class="cw-editor">
+
+        <!-- editor tab bar -->
+        <div class="editor-tabs">
+          <button class="ed-tab" [class.active]="activeEditorTab==='prose'"
+                  (click)="activeEditorTab='prose'">
+            <mat-icon>description</mat-icon> Prose
+            @if (data.chapter?.content?.word_count) {
+              <span class="tab-badge">{{ data.chapter.content.word_count }}w</span>
+            }
+          </button>
+          <button class="ed-tab" [class.active]="activeEditorTab==='overview'"
+                  (click)="activeEditorTab='overview'">
+            <mat-icon>subject</mat-icon> Overview
+          </button>
+          <button class="ed-tab" [class.active]="activeEditorTab==='scenes'"
+                  (click)="activeEditorTab='scenes'">
+            <mat-icon>movie</mat-icon> Scenes
+          </button>
+          <button class="ed-tab" [class.active]="activeEditorTab==='beats'"
+                  (click)="activeEditorTab='beats'">
+            <mat-icon>timeline</mat-icon> Beat Patterns
+          </button>
+          <button class="ed-tab" [class.active]="activeEditorTab==='threads'"
+                  (click)="activeEditorTab='threads'">
+            <mat-icon>account_tree</mat-icon> Threads
+          </button>
+        </div>
+
+        @if (form) {
+          <div class="editor-body" [formGroup]="form">
+
+            <!-- ── PROSE TAB ──────────────────────────────────────────── -->
+            @if (activeEditorTab === 'prose') {
+              <div class="prose-toolbar">
+                <div class="prose-stat">
+                  <mat-icon>text_snippet</mat-icon>
+                  <span><strong>{{ proseWordCount() }}</strong> words</span>
+                </div>
+                @if (data.chapter?.content?.source_file) {
+                  <div class="prose-stat">
+                    <mat-icon>folder_open</mat-icon>
+                    <span>Source: <em>{{ data.chapter.content.source_file }}</em></span>
+                  </div>
+                }
+                <div class="prose-stat hint">
+                  <mat-icon>lightbulb</mat-icon>
+                  <span>Markdown supported. Edits create a new version.</span>
+                </div>
+              </div>
+
+              <div class="ed-field prose-field">
+                <label class="ed-label">Full Chapter Prose</label>
+                <textarea class="ed-textarea prose-textarea" formControlName="full_prose"
+                          placeholder="Write or paste the full chapter content here…"
+                          spellcheck="true"></textarea>
+              </div>
+
+              <div class="ed-section">
+                <div class="ed-section-head">Unique Details Retained <span class="ed-hint">(one per line — preserved details from source files)</span></div>
+                <textarea class="ed-textarea details-textarea" formControlName="unique_details" rows="6"
+                          placeholder="e.g. PRIMARY: Wife's name as 'Priyadarshini'"></textarea>
+              </div>
+
+              <div class="ed-section">
+                <div class="ed-section-head">Key Insight</div>
+                <textarea class="ed-textarea insight-textarea" formControlName="key_insight" rows="4"
+                          placeholder="The chapter's thematic takeaway — what the reader should leave understanding…"></textarea>
+              </div>
+            }
+
+            <!-- ── OVERVIEW TAB ────────────────────────────────────────── -->
+            @if (activeEditorTab === 'overview') {
+              <div class="ed-section">
+                <div class="ed-row-2">
+                  <div class="ed-field">
+                    <label class="ed-label">Chapter Title</label>
+                    <input class="ed-input" formControlName="chapter_title" placeholder="Chapter title…">
+                  </div>
+                  <div class="ed-field sm">
+                    <label class="ed-label">Number</label>
+                    <input class="ed-input" type="number" formControlName="chapter_number">
+                  </div>
+                </div>
+
+                <div class="ed-row-2">
+                  <div class="ed-field">
+                    <label class="ed-label">Act Position</label>
+                    <select class="ed-select" formControlName="act_position">
+                      <option value="">— select —</option>
+                      <option value="ACT_1">Act I — Setup</option>
+                      <option value="ACT_2">Act II — Confrontation</option>
+                      <option value="ACT_3">Act III — Resolution</option>
+                    </select>
+                  </div>
+                  <div class="ed-field">
+                    <label class="ed-label">Beat Sheet Position</label>
+                    <input class="ed-input" formControlName="beat_sheet_position" placeholder="e.g. All Is Lost">
+                  </div>
+                </div>
+              </div>
+
+              <div class="ed-section">
+                <div class="ed-section-head">Synopsis</div>
+                <div class="ed-field">
+                  <label class="ed-label">One-Line</label>
+                  <input class="ed-input" formControlName="one_line" placeholder="Single-sentence summary…">
+                </div>
+                <div class="ed-field">
+                  <label class="ed-label">Plot Summary</label>
+                  <textarea class="ed-textarea" rows="4" formControlName="plot_summary"
+                            placeholder="What happens in this chapter…"></textarea>
+                </div>
+                <div class="ed-field">
+                  <label class="ed-label">Dramatic Summary</label>
+                  <textarea class="ed-textarea" rows="3" formControlName="dramatic_summary"
+                            placeholder="Why it matters dramatically…"></textarea>
+                </div>
+              </div>
+
+              <div class="ed-section">
+                <div class="ed-section-head">Intention</div>
+                <div class="ed-field">
+                  <label class="ed-label">Narrative Purpose</label>
+                  <textarea class="ed-textarea" rows="3" formControlName="narrative_purpose"
+                            placeholder="What this chapter achieves in the story architecture…"></textarea>
+                </div>
+                <div class="ed-row-2">
+                  <div class="ed-field">
+                    <label class="ed-label">Emotional Target</label>
+                    <textarea class="ed-textarea" rows="2" formControlName="emotional_target"
+                              placeholder="How the reader should feel at the end…"></textarea>
+                  </div>
+                  <div class="ed-field">
+                    <label class="ed-label">Thematic Payload</label>
+                    <textarea class="ed-textarea" rows="2" formControlName="thematic_payload"
+                              placeholder="What theme this chapter carries…"></textarea>
+                  </div>
+                </div>
+                <div class="ed-row-2">
+                  <div class="ed-field">
+                    <label class="ed-label">Setup Elements <span class="ed-hint">(one per line)</span></label>
+                    <textarea class="ed-textarea" rows="3" formControlName="setup_elements"
+                              placeholder="things introduced here that pay off later…"></textarea>
+                  </div>
+                  <div class="ed-field">
+                    <label class="ed-label">Payoff Elements <span class="ed-hint">(one per line)</span></label>
+                    <textarea class="ed-textarea" rows="3" formControlName="payoff_elements"
+                              placeholder="things from earlier chapters that resolve here…"></textarea>
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- ── SCENES TAB ────────────────────────────────────────── -->
+            @if (activeEditorTab === 'scenes') {
+              @if (data.chapter?.scenes?.length) {
+                @for (scene of data.chapter.scenes; track scene.scene_id) {
+                  <div class="scene-card">
+                    <div class="scene-header">
+                      <span class="scene-id">{{ scene.scene_id }}</span>
+                      <span class="scene-pacing">{{ scene.pacing_rhythm }}</span>
+                      <span class="scene-outcome">{{ scene.scene_outcome }}</span>
+                    </div>
+                    <div class="scene-row">
+                      <div class="scene-col">
+                        <div class="ed-section-head">Setting</div>
+                        <p class="scene-detail"><strong>Location:</strong> {{ scene.setting?.location }}</p>
+                        <p class="scene-detail"><strong>Time:</strong> {{ scene.setting?.time_of_day }}</p>
+                        <p class="scene-detail"><strong>Atmosphere:</strong> {{ scene.setting?.atmosphere }}</p>
+                      </div>
+                      <div class="scene-col">
+                        <div class="ed-section-head">Narrative</div>
+                        <p class="scene-detail"><strong>Goal:</strong> {{ scene.scene_goal }}</p>
+                        <p class="scene-detail"><strong>Conflict:</strong> {{ scene.scene_conflict }}</p>
+                        <p class="scene-detail"><strong>Disaster/Hook:</strong> {{ scene.disaster_or_hook }}</p>
+                      </div>
+                    </div>
+                    <div class="scene-tension-row">
+                      @for (key of ['dramatic','emotional','philosophical','pacing']; track key) {
+                        <div class="tension-chip">
+                          <span class="tc-label">{{ key }}</span>
+                          <span class="tc-val"
+                                [class.t-high]="scene.tension_scores?.[key] >= 8"
+                                [class.t-mid]="scene.tension_scores?.[key] >= 5 && scene.tension_scores?.[key] < 8"
+                                [class.t-low]="scene.tension_scores?.[key] < 5">
+                            {{ scene.tension_scores?.[key] ?? '—' }}/10
+                          </span>
+                        </div>
+                      }
+                    </div>
+                    <div class="scene-lines">
+                      <div class="scene-line-block">
+                        <span class="line-label">Opening line</span>
+                        <p class="line-text open">{{ scene.opening_line || '—' }}</p>
+                      </div>
+                      <div class="scene-line-block">
+                        <span class="line-label">Closing line</span>
+                        <p class="line-text close">{{ scene.closing_line || '—' }}</p>
+                      </div>
+                    </div>
+                  </div>
+                }
+              } @else {
+                <div class="no-scenes">
+                  <mat-icon>movie_creation</mat-icon>
+                  <p>No scenes drafted yet for this chapter.</p>
+                  <p class="no-scenes-hint">Use the Overview tab to fill in synopsis and intention first, then scenes can be drafted inline.</p>
+                </div>
+              }
+            }
+
+            <!-- ── BEAT PATTERNS TAB ─────────────────────────────────── -->
+            @if (activeEditorTab === 'beats') {
+              <div class="ed-section">
+                <div class="ed-row-2">
+                  <div class="ed-field">
+                    <label class="ed-label">Dominant Beat Type</label>
+                    <input class="ed-input" formControlName="dominant_beat_type"
+                           placeholder="e.g. inciting_incident + debate">
+                  </div>
+                  <div class="ed-field">
+                    <label class="ed-label">Emotional Arc</label>
+                    <input class="ed-input" formControlName="emotional_arc"
+                           placeholder="e.g. ordinariness → disbelief → resolve">
+                  </div>
+                </div>
+                <div class="ed-field">
+                  <label class="ed-label">Tension Arc</label>
+                  <input class="ed-input" formControlName="tension_arc"
+                         placeholder="e.g. rising → spike → controlled descent">
+                </div>
+                <div class="ed-row-2">
+                  <div class="ed-field">
+                    <label class="ed-label">Opening Hook Strength
+                      <span class="slider-val">{{ form.get('opening_hook_strength')?.value }}/10</span>
+                    </label>
+                    <input type="range" min="1" max="10" formControlName="opening_hook_strength" class="ed-slider">
+                  </div>
+                  <div class="ed-field">
+                    <label class="ed-label">Closing Hook Strength
+                      <span class="slider-val">{{ form.get('closing_hook_strength')?.value }}/10</span>
+                    </label>
+                    <input type="range" min="1" max="10" formControlName="closing_hook_strength" class="ed-slider">
+                  </div>
+                </div>
+
+                @if (data.beats.length) {
+                  <div class="beat-positions-info">
+                    <div class="ed-section-head">Beat Sheet Positions</div>
+                    @for (beat of data.beats; track beat) {
+                      <div class="beat-position-chip">
+                        <mat-icon>bookmark</mat-icon>
+                        <strong>{{ beat }}</strong> — This chapter carries this structural beat.
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            }
+
+            <!-- ── THREADS TAB ───────────────────────────────────────── -->
+            @if (activeEditorTab === 'threads') {
+              <div class="ed-section">
+                <div class="ed-row-2">
+                  <div class="ed-field">
+                    <label class="ed-label">Cliffhanger</label>
+                    <select class="ed-select" formControlName="cliffhanger">
+                      <option [value]="true">Yes</option>
+                      <option [value]="false">No</option>
+                    </select>
+                  </div>
+                  <div class="ed-field">
+                    <label class="ed-label">Cliffhanger Description</label>
+                    <input class="ed-input" formControlName="cliffhanger_description"
+                           placeholder="What does the chapter end on?">
+                  </div>
+                </div>
+              </div>
+
+              @if (data.chapter?.threads) {
+                <div class="ed-section">
+                  @if (data.chapter.threads.introduced?.length) {
+                    <div class="ed-section-head">Threads Introduced</div>
+                    @for (t of data.chapter.threads.introduced; track t.thread_id) {
+                      <div class="thread-row">
+                        <span class="thread-type" [class.plot]="t.type==='plot'"
+                              [class.thematic]="t.type==='thematic'" [class.rel]="t.type==='relationship'">
+                          {{ t.type }}
+                        </span>
+                        <span class="thread-id">{{ t.thread_id }}</span>
+                        <p class="thread-desc">{{ t.description }}</p>
+                        <span class="thread-urgency u-{{ t.urgency }}">{{ t.urgency }}</span>
+                      </div>
+                    }
+                  }
+                  @if (data.chapter.threads.advanced?.length) {
+                    <div class="ed-section-head" style="margin-top:16px">Threads Advanced</div>
+                    @for (tid of data.chapter.threads.advanced; track tid) {
+                      <div class="thread-row compact"><span class="thread-id">{{ tid }}</span></div>
+                    }
+                  }
+                </div>
+              }
+            }
+
+          </div><!-- /editor-body -->
+        }
+      </div><!-- /cw-editor -->
+
+    </div><!-- /cw-body -->
+  }
+
+</div>
