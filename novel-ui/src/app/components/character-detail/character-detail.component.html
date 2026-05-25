@@ -133,7 +133,7 @@
       </div>
     </mat-expansion-panel>
 
-    @if (character.chapter_moods?.length) {
+    @if (character.chapter_moods?.length ?? 0) {
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>Chapter Moods ({{ character.chapter_moods.length }})</mat-panel-title>
@@ -161,7 +161,7 @@
     </mat-expansion-panel>
     }
 
-    @if (character.relationships?.length) {
+    @if (character.relationships?.length ?? 0) {
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>Relationships</mat-panel-title>

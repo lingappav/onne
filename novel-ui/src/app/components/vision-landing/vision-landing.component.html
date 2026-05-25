@@ -1,241 +1,469 @@
 <div class="vl-shell">
 
+  <!-- ══ NAV ══════════════════════════════════════════════════════════════ -->
+  <nav class="vl-nav">
+    <div class="nav-brand">
+      <mat-icon>movie_filter</mat-icon>
+      <span>Sunday Cinemas</span>
+    </div>
+    <div class="nav-links">
+      <a href="#mission">Mission</a>
+      <a href="#novel">The Novel</a>
+      <a href="#model">Revenue Model</a>
+      <a href="#roadmap">Roadmap</a>
+      <a routerLink="/storyboard">Storyboard</a>
+    </div>
+    <a class="nav-cta" routerLink="/login">Join the 1,000</a>
+  </nav>
+
   <!-- ══ HERO ══════════════════════════════════════════════════════════════ -->
-  <section class="vl-hero">
-    <div class="hero-bg-grid"></div>
-    <div class="hero-content">
-
+  <section class="vl-hero" id="hero">
+    <div class="hero-inner">
       <div class="hero-eyebrow">
-        <span class="eyebrow-pill">
-          <mat-icon>movie</mat-icon>
-          Sunday Cinemas × The President's Rule
-        </span>
+        <mat-icon>verified</mat-icon>
+        <span>Sunday Cinemas · Novel-First Film Initiative · 2026</span>
       </div>
-
-      <h1 class="hero-headline">
-        A Novel Written to Become<br>
-        <span class="headline-gold">a Feature Film.</span>
+      <h1 class="hero-title">
+        A ₹1,000 Crore Film<br>
+        <span class="hero-title-accent">Begins with a Novel.</span>
       </h1>
-
-      <p class="hero-subline">
-        Sunday Cinemas has acquired the film rights to a work-in-progress political thriller —
-        not despite it being unfinished, but <em>because</em> of it.
-        The writer's creative process is the pre-production.
+      <p class="hero-sub">
+        Director Ramenahalli Jagannatha has adopted <em>The President's Rule</em> and will direct it himself —
+        personally mentoring the writer, guiding the research team, and overseeing the screenplay adaptation.
+        The novel must be complete before any of that begins. That is the Sunday Cinemas model.
       </p>
-
-      <div class="hero-stats-row">
-        <div class="hs-stat">
-          <span class="hs-num">1,000</span>
-          <span class="hs-label">Early backers needed</span>
-        </div>
-        <div class="hs-sep">×</div>
-        <div class="hs-stat">
-          <span class="hs-num">$10</span>
-          <span class="hs-label">Book pre-order</span>
-        </div>
-        <div class="hs-sep">=</div>
-        <div class="hs-stat gold">
-          <span class="hs-num">$10K</span>
-          <span class="hs-label">Full animated film</span>
-        </div>
+      <div class="hero-stats">
+        @for (s of novelStats; track s.label) {
+          <div class="hero-stat">
+            <span class="hs-num">{{ s.num }}</span>
+            <span class="hs-label">{{ s.label }}</span>
+          </div>
+        }
       </div>
-
-      <div class="hero-cta-row">
-        <a class="btn-cta-primary" routerLink="/login">
-          <mat-icon>shopping_cart</mat-icon>
-          Pre-Order the Book · $10
+      <div class="hero-actions">
+        <a class="btn-cta-primary large" routerLink="/login">
+          <mat-icon>people</mat-icon>
+          Become a Founding Reader · ₹1,000
         </a>
-        <a class="btn-cta-ghost" href="#vision">
+        <a class="btn-cta-ghost" href="#mission">
           <mat-icon>expand_more</mat-icon>
-          Learn the Vision
+          Read the Vision
         </a>
       </div>
-
     </div>
+    <div class="hero-bg-text">THE PATIENT IS DEMOCRACY</div>
+  </section>
 
-    <div class="hero-book-visual">
-      <div class="book-cover">
-        <div class="book-spine"></div>
-        <div class="book-face">
-          <div class="book-title-text">The President's<br>Rule</div>
-          <div class="book-author-text">A Novel</div>
-          <div class="book-badge">
-            <mat-icon>movie</mat-icon>
-            Film Option · Sunday Cinemas
+  <!-- ══ MISSION STATEMENT ════════════════════════════════════════════════ -->
+  <section class="vl-mission" id="mission">
+    <div class="section-inner">
+      <div class="section-label">
+        <mat-icon>flag</mat-icon>
+        Sunday Cinemas · Mission Statement
+      </div>
+
+      <div class="mission-layout">
+        <div class="mission-quote">
+          <blockquote>
+            "The most expensive mistake in Indian cinema is taking a half-baked idea to a director's table.
+            We fix that problem at the source — by finishing the story first."
+          </blockquote>
+          <cite>— Ramenahalli Jagannatha, Director &amp; Founder, Sunday Cinemas</cite>
+        </div>
+
+        <div class="mission-body">
+          <p>
+            Sunday Cinemas was built on a single conviction: <strong>the writer is the most underprotected
+            creative in Indian film</strong>. Scripts get rewritten by producers, diluted by stars,
+            mutilated by committees. Stories die in development. The writer loses credit, rights, and
+            sometimes the will to create again.
+          </p>
+          <p>
+            Ramenahalli Jagannatha — producer of two Kannada feature films and director of
+            <em>Hondisi Bareyiri</em>, <em>Teerataroopa Tandeyavarge</em>, and
+            <em>Tamma Sukhagamana Bayasuva</em> — built Sunday Cinemas to reverse this.
+            He has personally adopted <em>The President's Rule</em> and will direct it himself,
+            mentoring Vishwa Shambhulingappa autonomously through the writing process and guiding
+            the research team every step of the way.
+          </p>
+          <p>
+            The model is simple: <strong>finish the novel first, at the highest literary standard possible,
+            before a single frame is planned</strong>. Once the manuscript is complete, Ramenahalli
+            brings in experienced screenplay writers to adapt it into film language — ensuring the
+            political authenticity of the novel translates into box-office scale. The writer owns
+            the work. The director owns the vision. Nobody compromises.
+          </p>
+          <p>
+            <em>The President's Rule</em> is the first novel in this initiative. What it builds —
+            the community, the credibility, the proof-of-concept — becomes the platform for every
+            writer who comes after.
+          </p>
+        </div>
+      </div>
+
+      <div class="mission-pillars">
+        @for (p of pillars; track p.label) {
+          <div class="mp-card">
+            <mat-icon>{{ p.icon }}</mat-icon>
+            <h4>{{ p.label }}</h4>
+            <p>{{ p.detail }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ THE NOVEL ════════════════════════════════════════════════════════ -->
+  <section class="vl-novel" id="novel">
+    <div class="section-inner">
+      <div class="section-label">
+        <mat-icon>auto_stories</mat-icon>
+        The Novel · The President's Rule
+      </div>
+
+      <div class="novel-layout">
+        <div class="novel-left">
+          <div class="novel-badge">Craft Score: Accomplished · 78/100</div>
+          <h2 class="novel-title">The President's Rule</h2>
+          <p class="novel-author">A Novel by Vishwa Shambhulingappa</p>
+          <p class="novel-tagline">"The patient is democracy."</p>
+
+          <div class="novel-meta-row">
+            <span><mat-icon>menu_book</mat-icon> Political Fiction · Literary Fiction</span>
+            <span><mat-icon>location_on</mat-icon> Karnataka, India</span>
+            <span><mat-icon>schedule</mat-icon> Contemporary</span>
+          </div>
+
+          <p class="novel-logline">
+            When a renowned oncologist from Jharkhand is unwillingly appointed Special Administrator
+            of Karnataka during President's Rule, he treats a fevered democracy with the same surgical
+            precision he brought to his patients — and discovers that the most dangerous thing a man
+            of integrity can do is refuse to be the system's sacrificial goat.
+          </p>
+
+          <div class="novel-award-row">
+            <div class="award-tag">
+              <mat-icon>emoji_events</mat-icon>
+              JCB Prize Candidate
+            </div>
+            <div class="award-tag">
+              <mat-icon>emoji_events</mat-icon>
+              Crossword Book Award
+            </div>
+            <div class="award-tag">
+              <mat-icon>emoji_events</mat-icon>
+              Sahitya Akademi Eligible
+            </div>
+          </div>
+        </div>
+
+        <div class="novel-right">
+          <h3>What This Novel Contains</h3>
+          <div class="novel-contents">
+            <div class="nc-item">
+              <mat-icon>person</mat-icon>
+              <div>
+                <strong>Dr. Sampath Kumar</strong>
+                <p>Oncologist turned Special Administrator. Mid-50s, Ranchi-born, surgically calm. The Clinician-as-Reformer — Wolf Hall's Cromwell rewritten as a Jharkhand doctor who refuses every exit.</p>
+              </div>
+            </div>
+            <div class="nc-item">
+              <mat-icon>account_balance</mat-icon>
+              <div>
+                <strong>The Rs. 36,000-Crore Shadow Economy</strong>
+                <p>The first file placed on Sampath's desk. Three years on that desk before him. He opens it with the same face he uses to deliver terminal diagnoses.</p>
+              </div>
+            </div>
+            <div class="nc-item">
+              <mat-icon>gavel</mat-icon>
+              <div>
+                <strong>The Rs. 500-Crore Bribe</strong>
+                <p>Delivered not as a threat but as reasonable advice over coffee in a five-star hotel suite. The most elegant corruption Sampath has ever seen.</p>
+              </div>
+            </div>
+            <div class="nc-item">
+              <mat-icon>forest</mat-icon>
+              <div>
+                <strong>30,000 Acres · The Coffee Plantation Fraud</strong>
+                <p>A 47-page pitch deck proposing to reclassify protected Western Ghats plantation as an economic development zone. Legal language so perfect it should have worked.</p>
+              </div>
+            </div>
+            <div class="nc-item">
+              <mat-icon>mic</mat-icon>
+              <div>
+                <strong>The Fabricated Audio Clip</strong>
+                <p>Breaking news. Sampath's face on every screen. The audio is convincing — it is designed to be. He watches it on a small television and takes notes.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="book-shadow"></div>
-    </div>
-  </section>
 
-  <!-- ══ SUNDAY CINEMAS STATEMENT ══════════════════════════════════════════ -->
-  <section class="vl-statement" id="vision">
-    <div class="statement-inner">
-      <div class="statement-label">
-        <mat-icon>format_quote</mat-icon>
-        Sunday Cinemas — Official Position
-      </div>
-      <blockquote class="statement-quote">
-        We don't wait for a polished manuscript. We back writers at the edge of their
-        creative peak — when the story is alive in their hands and hasn't yet been
-        flattened by committee. <strong>"The President's Rule"</strong> is exactly that story.
-        High-stakes political drama, deeply human characters, and a structure
-        that fits the modern cinematic language perfectly.
-      </blockquote>
-      <div class="statement-sig">
-        <div class="sig-role">Sunday Cinemas · Film Acquisitions</div>
-        <div class="sig-note">Film option secured · Rights agreement on file</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ JOURNEY TIMELINE ═══════════════════════════════════════════════════ -->
-  <section class="vl-journey">
-    <div class="section-header">
-      <h2>The Path from Page to Screen</h2>
-      <p>How a novel becomes the most valuable pre-production asset a director can receive</p>
-    </div>
-
-    <div class="journey-timeline">
-      @for (step of journey; track step.phase) {
-        <div class="jt-step">
-          <div class="jt-phase-col">
-            <div class="jt-phase-num">{{ step.phase }}</div>
-            <div class="jt-phase-line"></div>
-          </div>
-          <div class="jt-content">
-            <div class="jt-icon-wrap">
-              <mat-icon>{{ step.icon }}</mat-icon>
-            </div>
-            <div class="jt-text">
-              <h3>{{ step.title }}</h3>
-              <p>{{ step.body }}</p>
-            </div>
-          </div>
-        </div>
-      }
-    </div>
-  </section>
-
-  <!-- ══ WHY A NOVEL BEATS A SCRIPT ════════════════════════════════════════ -->
-  <section class="vl-novel-value">
-    <div class="nv-inner">
-      <div class="nv-text">
-        <div class="section-eyebrow">Pre-Production Value</div>
-        <h2>A Novel Contains<br>Everything a Film Needs</h2>
-        <p>
-          A screenplay is a blueprint. A novel is a fully inhabited world.
-          When a director receives a complete, literary-quality novel, they receive
-          character psychology, subtext, atmosphere, pacing, and the author's full
-          moral vision — none of which can be extracted from a treatment.
-        </p>
-        <p>
-          This cuts months of back-and-forth from the development process.
-          The novel is not a step toward the film — it <em>is</em> the pre-production.
-        </p>
-        <div class="nv-asset-list">
-          @for (asset of ['Character psychology & inner life', 'Scene-by-scene atmosphere & tone', 'Dialogue voice already established', 'Thematic architecture mapped out', 'Act structure & beat sheet embedded', 'World-building depth no script provides']; track asset) {
-            <div class="nv-asset-row">
-              <mat-icon>check_circle</mat-icon>
-              <span>{{ asset }}</span>
+      <!-- Themes -->
+      <div class="themes-section">
+        <h3>What This Story Says</h3>
+        <div class="themes-grid">
+          @for (t of themes; track t.title) {
+            <div class="theme-card">
+              <mat-icon>{{ t.icon }}</mat-icon>
+              <h4>{{ t.title }}</h4>
+              <p>{{ t.body }}</p>
             </div>
           }
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="nv-comparison">
-        <div class="nvc-card script">
-          <div class="nvc-label">Standard Script Package</div>
-          <div class="nvc-items">
-            @for (item of ['90-page screenplay', 'One-page treatment', 'Verbal pitch', 'Months of notes & rewrites']; track item) {
-              <div class="nvc-item limited">
-                <mat-icon>remove_circle_outline</mat-icon>
-                <span>{{ item }}</span>
-              </div>
-            }
+  <!-- ══ THE PROCESS ════════════════════════════════════════════════════════ -->
+  <section class="vl-process" id="process">
+    <div class="section-inner">
+      <div class="section-label">
+        <mat-icon>route</mat-icon>
+        The Novel-First Process · From Writer to Director's Table
+      </div>
+      <h2 class="section-h2">How a ₹1,000Cr Film Gets Made<br><span>Without Compromising a Single Word</span></h2>
+
+      <div class="process-timeline">
+        @for (step of journey; track step.phase) {
+          <div class="pt-step">
+            <div class="pt-phase">{{ step.phase }}</div>
+            <div class="pt-connector"></div>
+            <div class="pt-card">
+              <mat-icon>{{ step.icon }}</mat-icon>
+              <h4>{{ step.title }}</h4>
+              <p>{{ step.body }}</p>
+            </div>
           </div>
-          <div class="nvc-verdict limited">High development overhead</div>
-        </div>
+        }
+      </div>
+    </div>
+  </section>
 
-        <div class="nvc-vs">VS</div>
+  <!-- ══ REVENUE MODEL ════════════════════════════════════════════════════ -->
+  <section class="vl-revenue" id="model">
+    <div class="section-inner">
+      <div class="section-label">
+        <mat-icon>trending_up</mat-icon>
+        Revenue Model · ₹1,000 Today → ₹1,000Cr Potential
+      </div>
+      <h2 class="section-h2">Why ₹1,000 Is the Most Leveraged<br><span>Investment in Indian Cinema Right Now</span></h2>
+      <p class="section-desc">
+        You are not donating to a dream. You are buying a provable position in a structured value chain
+        that starts with a ₹10L community fund and has a credible, comparable-backed path to ₹1,000Cr.
+        Here is how.
+      </p>
 
-        <div class="nvc-card novel">
-          <div class="nvc-label">This Novel-to-Film Approach</div>
-          <div class="nvc-items">
-            @for (item of ['Full novel with all characters complete', 'Scene-level detail throughout', 'Author\'s voice preserved', 'Director walks in ready to shoot']; track item) {
-              <div class="nvc-item">
-                <mat-icon>check_circle</mat-icon>
-                <span>{{ item }}</span>
-              </div>
-            }
+      <div class="revenue-chain">
+        @for (r of revenueModel; track r.stage) {
+          <div class="rc-stage">
+            <div class="rc-badge">{{ r.stage }}</div>
+            <div class="rc-body">
+              <div class="rc-amount">{{ r.amount }}</div>
+              <h4>{{ r.label }}</h4>
+              <p>{{ r.detail }}</p>
+            </div>
+            <mat-icon class="rc-arrow">arrow_forward</mat-icon>
           </div>
-          <div class="nvc-verdict">Minimal pre-production gap</div>
+        }
+      </div>
+
+      <div class="comparable-section">
+        <h3>Comparable Films That Validate the Ceiling</h3>
+        <div class="comparable-grid">
+          @for (c of comparables; track c.title) {
+            <div class="comp-card">
+              <span class="comp-flag">{{ c.flag }}</span>
+              <h4>{{ c.title }}</h4>
+              <p>{{ c.detail }}</p>
+            </div>
+          }
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ══ FOUR PILLARS ══════════════════════════════════════════════════════ -->
-  <section class="vl-pillars">
-    <div class="section-header">
-      <h2>What Makes This Deal Different</h2>
-      <p>A new model for writer-studio collaboration</p>
-    </div>
-    <div class="pillars-grid">
-      @for (p of pillars; track p.label) {
-        <div class="pillar-card">
-          <div class="pillar-icon">
-            <mat-icon>{{ p.icon }}</mat-icon>
-          </div>
-          <div class="pillar-label">{{ p.label }}</div>
-          <div class="pillar-detail">{{ p.detail }}</div>
+  <!-- ══ FOUNDING READERS ════════════════════════════════════════════════ -->
+  <section class="vl-founders" id="founders">
+    <div class="section-inner">
+      <div class="section-label">
+        <mat-icon>groups</mat-icon>
+        The 1,000 Founding Film Enthusiasts · Your ₹1,000 Return
+      </div>
+
+      <div class="founders-intro">
+        <div class="fi-left">
+          <h2>₹1,000 Buys You a Seat<br><span>Inside the Making.</span></h2>
+          <p>
+            This is not a donation. This is not a pre-order form.
+            This is an invitation — to 1,000 film enthusiasts who want to be
+            <strong>inside the room where a ₹1,000Cr film begins</strong>.
+          </p>
+          <p>
+            In Indian cinema, the creative process is a closed industry.
+            Directors don't share storyboards. Screenplays don't circulate before shoot.
+            On-set is invitation-only. Sunday Cinemas is opening every one of those doors —
+            exclusively and permanently — to the first 1,000 people who back this novel.
+          </p>
+          <p>
+            Every return listed below is real, specific, and tied to a moment in production.
+            You are not waiting for a film to release before you get something.
+            <strong>You get returns at every phase — starting today.</strong>
+          </p>
         </div>
-      }
+        <div class="fi-right">
+          <div class="fi-value-box">
+            <div class="fv-row">
+              <span class="fv-label">Your investment</span>
+              <span class="fv-num">₹1,000</span>
+            </div>
+            <div class="fv-divider"></div>
+            <div class="fv-row">
+              <span class="fv-label">Signed first-edition book alone</span>
+              <span class="fv-num">₹800</span>
+            </div>
+            <div class="fv-row">
+              <span class="fv-label">On-set access pass (market equiv.)</span>
+              <span class="fv-num">₹50,000+</span>
+            </div>
+            <div class="fv-row">
+              <span class="fv-label">Director's screenplay session</span>
+              <span class="fv-num">Closed industry</span>
+            </div>
+            <div class="fv-row">
+              <span class="fv-label">Premiere invitation</span>
+              <span class="fv-num">By invitation only</span>
+            </div>
+            <div class="fv-row">
+              <span class="fv-label">Permanent film & book credit</span>
+              <span class="fv-num">Forever</span>
+            </div>
+            <div class="fv-divider"></div>
+            <div class="fv-row highlight">
+              <span class="fv-label">Spots remaining</span>
+              <span class="fv-num">1,000</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Returns by phase -->
+      <div class="returns-header">
+        <h3>What You Get — Phase by Phase</h3>
+        <p>Returns start the moment you join. Not when the film releases.</p>
+      </div>
+
+      <div class="returns-grid">
+        @for (r of founderReturns; track r.title) {
+          <div class="return-card">
+            <div class="rc-top">
+              <span class="rc-tier">{{ r.tier }}</span>
+              <mat-icon>{{ r.icon }}</mat-icon>
+            </div>
+            <h4>{{ r.title }}</h4>
+            <span class="rc-value">{{ r.value }}</span>
+            <p>{{ r.body }}</p>
+          </div>
+        }
+      </div>
+
+      <div class="founders-cta-strip">
+        <div class="fcs-text">
+          <strong>Only 1,000 spots.</strong> The author reviews every request personally.
+          Once the founding 1,000 is complete, this access closes — permanently.
+        </div>
+        <a class="btn-cta-primary" routerLink="/login">
+          <mat-icon>how_to_reg</mat-icon>
+          Claim Your Spot
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- ══ FUNDING MECHANICS ═════════════════════════════════════════════════ -->
-  <section class="vl-funding">
-    <div class="funding-inner">
-      <div class="section-header light">
-        <h2>How the $10K Film Gets Made</h2>
-        <p>No investors. No crowdfunding platform fees. Just 1,000 readers who become the founding audience.</p>
+  <!-- ══ ROADMAP ════════════════════════════════════════════════════════ -->
+  <section class="vl-roadmap" id="roadmap">
+    <div class="section-inner">
+      <div class="section-label">
+        <mat-icon>calendar_month</mat-icon>
+        6-Month Roadmap · Novel to Director's Table
+      </div>
+      <h2 class="section-h2">The Schedule That Takes This<br><span>From Page to Screen</span></h2>
+
+      <div class="roadmap-list">
+        @for (m of milestones; track m.date) {
+          <div class="rm-item" [class.active]="m.status === 'active'">
+            <div class="rm-date">{{ m.date }}</div>
+            <div class="rm-line">
+              <div class="rm-dot" [class.active]="m.status === 'active'"></div>
+            </div>
+            <div class="rm-content">
+              <h4>{{ m.label }}</h4>
+              <p>{{ m.detail }}</p>
+              @if (m.status === 'active') {
+                <span class="rm-live-badge">
+                  <mat-icon>fiber_manual_record</mat-icon>
+                  Happening Now
+                </span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ WRITERS PLATFORM ════════════════════════════════════════════════ -->
+  <section class="vl-platform">
+    <div class="section-inner">
+      <div class="section-label">
+        <mat-icon>hub</mat-icon>
+        The Bigger Vision · A Platform for Indian Writers
       </div>
 
-      <div class="funding-flow">
-        <div class="ff-step">
-          <div class="ff-circle">
-            <mat-icon>people</mat-icon>
-          </div>
-          <div class="ff-arrow"><mat-icon>arrow_forward</mat-icon></div>
-          <div class="ff-label">1,000 readers<br>from your circle</div>
+      <div class="platform-layout">
+        <div class="platform-statement">
+          <h2>This Novel is the Proof.<br>The Platform is the Prize.</h2>
+          <p>
+            <em>The President's Rule</em> is Sunday Cinemas' first novel-to-film execution —
+            but it is designed to be repeatable. Every step taken here, every tool built,
+            every community conversation held becomes the infrastructure for the next writer.
+          </p>
+          <p>
+            India has no shortage of stories. It has a shortage of systems that protect
+            writers while delivering to directors. Sunday Cinemas is building that system —
+            one novel at a time, starting here.
+          </p>
         </div>
-        <div class="ff-step">
-          <div class="ff-circle">
-            <mat-icon>shopping_cart</mat-icon>
+        <div class="platform-features">
+          <div class="pf-item">
+            <mat-icon>create</mat-icon>
+            <div>
+              <h4>Writers' Community</h4>
+              <p>A structured platform where writers develop ideas into novels and screenplays with community feedback — without losing creative ownership.</p>
+            </div>
           </div>
-          <div class="ff-arrow"><mat-icon>arrow_forward</mat-icon></div>
-          <div class="ff-label">Pre-order book<br>at $10 each</div>
-        </div>
-        <div class="ff-step">
-          <div class="ff-circle gold">
-            <mat-icon>attach_money</mat-icon>
+          <div class="pf-item">
+            <mat-icon>smart_toy</mat-icon>
+            <div>
+              <h4>AI-Assisted Production</h4>
+              <p>From storyboard generation to scene design, Sunday Cinemas integrates AI tools to reduce pre-production cost and timelines by 80%.</p>
+            </div>
           </div>
-          <div class="ff-arrow"><mat-icon>arrow_forward</mat-icon></div>
-          <div class="ff-label">$10,000<br>production fund</div>
-        </div>
-        <div class="ff-step">
-          <div class="ff-circle film">
-            <mat-icon>animation</mat-icon>
+          <div class="pf-item">
+            <mat-icon>handshake</mat-icon>
+            <div>
+              <h4>Rights-First Deal Structure</h4>
+              <p>Every project begins with a contract that explicitly protects the writer. No exceptions. The writer negotiates from a finished work, not a hope.</p>
+            </div>
           </div>
-          <div class="ff-label">100% AI-animated<br>feature film</div>
+          <div class="pf-item">
+            <mat-icon>diversity_3</mat-icon>
+            <div>
+              <h4>Audience-Before-Production Model</h4>
+              <p>1,000 readers before the first pitch. Proof of audience is the most powerful thing any creator can bring to a production meeting.</p>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div class="funding-note">
-        Payment is not charged at pre-order. Once your request is approved by the author,
-        you'll receive payment details. Every approved order is a confirmed production commitment.
       </div>
     </div>
   </section>
@@ -245,18 +473,18 @@
     <div class="fcta-inner">
       <div class="fcta-badge">
         <mat-icon>rocket_launch</mat-icon>
-        Limited to 1,000 founding copies
+        Limited to 1,000 Founding Members
       </div>
-      <h2>Be Part of the First 1,000.</h2>
+      <h2>The First Frame Starts Here.</h2>
       <p>
-        Pre-order the book, join the founding audience, and directly fund the
-        production of a fully AI-animated feature film.
-        The author reviews every request personally.
+        A superstar. A director. A ₹1,000Cr release. All of it begins with
+        1,000 people who believed in the story before it was finished.
+        The author reviews every request personally. There are no exceptions.
       </p>
       <div class="fcta-btn-row">
         <a class="btn-cta-primary large" routerLink="/login">
-          <mat-icon>shopping_cart</mat-icon>
-          Request Your Copy · $10
+          <mat-icon>people</mat-icon>
+          Join the Founding 1,000 · ₹1,000
         </a>
         <a class="btn-cta-ghost" routerLink="/storyboard">
           <mat-icon>movie_filter</mat-icon>
@@ -264,7 +492,7 @@
         </a>
       </div>
       <div class="fcta-sub">
-        Already have access? <a routerLink="/presale">Go to Presale →</a>
+        Already a member? <a routerLink="/presale">Go to your dashboard →</a>
       </div>
     </div>
   </section>
@@ -273,8 +501,8 @@
   <footer class="vl-footer">
     <div class="footer-inner">
       <div class="footer-left">
-        <mat-icon>auto_stories</mat-icon>
-        <span>The President's Rule · A Novel by Sunday Cinemas partner author</span>
+        <mat-icon>movie_filter</mat-icon>
+        <span>Sunday Cinemas · Novel-First Film Initiative · Est. 2026</span>
       </div>
       <div class="footer-right">
         <a routerLink="/login">Sign In</a>
@@ -283,8 +511,13 @@
         <span>·</span>
         <a routerLink="/film-agreement">Film Agreement</a>
         <span>·</span>
-        <span>© 2025 Sunday Cinemas</span>
+        <a routerLink="/dashboard">Novel Editor</a>
       </div>
+    </div>
+    <div class="footer-legal">
+      Film option held by Sunday Cinemas under 24-month exclusivity from Feb 16, 2026.
+      Auto-revert clause active. Author retains all print and prose rights.
+      SWA Member No. 46108.
     </div>
   </footer>
 
