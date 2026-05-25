@@ -1,15 +1,112 @@
 @if (form && chapter) {
 <form [formGroup]="form" (ngSubmit)="save()" class="page">
+
+  <!-- ── Header ──────────────────────────────────────────────────────── -->
   <div class="page-header">
-    <div>
+    <div class="header-left">
       <a routerLink="/chapters" class="back-link">← Chapters</a>
-      <h2>{{ chapter.chapter_id }} — {{ form.get('chapter_title')?.value }}</h2>
+      <div class="chapter-nav">
+        @if (prevChapterId) {
+          <a class="nav-arrow" [routerLink]="['/chapters', prevChapterId]" matTooltip="Previous chapter">
+            <mat-icon>chevron_left</mat-icon>
+          </a>
+        }
+        <h2>{{ chapter.chapter_id }} — {{ form.get('chapter_title')?.value }}</h2>
+        @if (nextChapterId) {
+          <a class="nav-arrow" [routerLink]="['/chapters', nextChapterId]" matTooltip="Next chapter">
+            <mat-icon>chevron_right</mat-icon>
+          </a>
+        }
+      </div>
     </div>
     <button mat-raised-button color="primary" type="submit" [disabled]="saving">
       <mat-icon>save</mat-icon> {{ saving ? 'Saving…' : 'Save' }}
     </button>
   </div>
 
+  <!-- ── Strength & Beat Intelligence Card ───────────────────────────── -->
+  @if (beatForChapter) {
+  <mat-card class="strength-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon class="card-icon">analytics</mat-icon>
+        Beat Strength Check
+      </mat-card-title>
+      <mat-card-subtitle>{{ beatForChapter.beat_name }} — Beat #{{ beatForChapter.beat_number }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="strength-row">
+        <div class="strength-meter">
+          <div class="strength-score" [style.color]="strengthColor(beatForChapter.strength_rating)">
+            {{ beatForChapter.strength_rating }}<span class="strength-denom">/10</span>
+          </div>
+          <div class="strength-label" [style.color]="strengthColor(beatForChapter.strength_rating)">
+            {{ strengthLabel(beatForChapter.strength_rating) }}
+          </div>
+          <mat-progress-bar
+            mode="determinate"
+            [value]="beatForChapter.strength_rating * 10"
+            class="strength-bar">
+          </mat-progress-bar>
+        </div>
+        <div class="strength-detail">
+          <p class="beat-function"><strong>Thematic function:</strong> {{ beatForChapter.thematic_function }}</p>
+          <div class="craft-note-box">
+            <mat-icon class="note-icon">edit_note</mat-icon>
+            <p>{{ beatForChapter.craft_notes }}</p>
+          </div>
+          <p class="beat-scene"><strong>Scene:</strong> {{ beatForChapter.scene_description }}</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  }
+
+  <!-- ── Craft Gaps for this chapter ────────────────────────────────── -->
+  @if (craftGaps.length) {
+  <mat-card class="gaps-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon class="card-icon warn-icon">warning_amber</mat-icon>
+        Known Craft Gaps
+      </mat-card-title>
+      <mat-card-subtitle>Issues flagged in the craft assessment that affect this chapter</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      @for (g of craftGaps; track g.gap) {
+        <div class="gap-row">
+          <span class="severity-badge" [style.background]="severityColor(g.severity) + '22'" [style.color]="severityColor(g.severity)">{{ g.severity }}</span>
+          <div class="gap-body">
+            <p class="gap-text">{{ g.gap }}</p>
+            <p class="gap-fix"><mat-icon class="fix-icon">build</mat-icon> {{ g.fix }}</p>
+          </div>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+  }
+
+  <!-- ── Revision Notes ──────────────────────────────────────────────── -->
+  @if (revisionNotes.length) {
+  <mat-card class="revision-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon class="card-icon">rate_review</mat-icon>
+        Revision Notes
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @for (note of revisionNotes; track $index) {
+        <div class="revision-note">
+          <mat-icon class="bullet-icon">arrow_right</mat-icon>
+          <p>{{ note }}</p>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+  }
+
+  <!-- ── Core edit fields ────────────────────────────────────────────── -->
   <mat-card>
     <mat-card-header><mat-card-title>Core</mat-card-title></mat-card-header>
     <mat-card-content class="form-grid">
@@ -160,6 +257,86 @@
       }
     </mat-expansion-panel>
     }
+
+    <!-- ── Reference Documents panel ───────────────────────────────── -->
+    @if (referenceDocs.length) {
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon class="panel-icon">folder_open</mat-icon>
+          Source Documents ({{ referenceDocs.length }})
+        </mat-panel-title>
+        <mat-panel-description>Manuscript files that influence this chapter</mat-panel-description>
+      </mat-expansion-panel-header>
+      @for (doc of referenceDocs; track doc.doc_id) {
+        <div class="ref-doc-card">
+          <div class="ref-doc-header">
+            <mat-icon class="doc-icon">description</mat-icon>
+            <div>
+              <p class="ref-doc-file">{{ doc.filename }}</p>
+              <p class="ref-doc-type">{{ doc.doc_type }} · {{ doc.origin }}</p>
+            </div>
+          </div>
+          <p class="ref-doc-summary">{{ doc.summary }}</p>
+          @if (doc.key_facts.length) {
+            <ul class="ref-doc-facts">
+              @for (f of doc.key_facts; track $index) {
+                <li>{{ f }}</li>
+              }
+            </ul>
+          }
+          @if (doc.contradictions_with_manuscript.length) {
+            <div class="ref-contradiction">
+              <mat-icon>warning</mat-icon>
+              <div>
+                @for (c of doc.contradictions_with_manuscript; track $index) {
+                  <p>{{ c }}</p>
+                }
+              </div>
+            </div>
+          }
+        </div>
+        <mat-divider></mat-divider>
+      }
+    </mat-expansion-panel>
+    }
+
+    <!-- ── Benchmark Comparable Titles ─────────────────────────────── -->
+    @if (benchmarkComps.length) {
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon class="panel-icon">science</mat-icon>
+          Benchmark References ({{ benchmarkComps.length }})
+        </mat-panel-title>
+        <mat-panel-description>Real-world comparable works to study while writing this chapter</mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="bench-grid">
+        @for (b of benchmarkComps; track b.id) {
+          <div class="bench-card">
+            <div class="bench-header">
+              <div class="bench-year">{{ b.year }}</div>
+              <div class="bench-title-block">
+                <p class="bench-title">{{ b.title }}</p>
+                <p class="bench-author">{{ b.author }}</p>
+              </div>
+            </div>
+            <div class="bench-themes">
+              @for (t of b.themes; track t) {
+                <span class="bench-chip">{{ t }}</span>
+              }
+            </div>
+            <p class="bench-notes">{{ b.notes }}</p>
+            <div class="bench-why">
+              <mat-icon class="why-icon">link</mat-icon>
+              <span>{{ b.why }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </mat-expansion-panel>
+    }
+
   </mat-accordion>
 </form>
 } @else {

@@ -1,0 +1,158 @@
+<div class="ps-shell">
+
+  <!-- Header -->
+  <div class="ps-header">
+    <div class="ps-header-left">
+      <mat-icon class="ps-logo-icon">auto_stories</mat-icon>
+      <div>
+        <div class="ps-title">The President's Rule</div>
+        <div class="ps-subtitle">Book Pre-sale · AI Animated Film Fund</div>
+      </div>
+    </div>
+    @if (user) {
+      <div class="ps-user">
+        @if (user.photoURL) {
+          <img class="ps-avatar" [src]="user.photoURL" [alt]="user.displayName || 'User'" />
+        } @else {
+          <div class="ps-avatar-placeholder"><mat-icon>person</mat-icon></div>
+        }
+        <span class="ps-user-name">{{ user.displayName }}</span>
+        @if (user.role === 'admin') {
+          <a class="ps-admin-link" routerLink="/admin-panel">Admin Panel</a>
+        }
+        <button class="ps-signout" (click)="signOut()" matTooltip="Sign out">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </div>
+    }
+  </div>
+
+  <div class="ps-body">
+
+    <!-- Funding progress -->
+    @if (stats) {
+      <div class="ps-funding-card">
+        <div class="pf-top">
+          <div class="pf-headline">
+            <span class="pf-copies">{{ stats.totalApproved }}</span>
+            <span class="pf-of">/ {{ goal }} copies pre-sold</span>
+          </div>
+          <div class="pf-revenue">${{ stats.totalRevenue | number }} raised toward ${{ goal * 10 | number }} goal</div>
+        </div>
+        <div class="pf-bar-track">
+          <div class="pf-bar-fill" [style.width.%]="stats.percentFunded"></div>
+          @if (stats.totalPending > 0) {
+            <div class="pf-bar-pending"
+                 [style.width.%]="(stats.totalPending / goal) * 100"
+                 [style.left.%]="stats.percentFunded"
+                 matTooltip="{{ stats.totalPending }} copies pending approval"></div>
+          }
+        </div>
+        <div class="pf-labels">
+          <span class="pf-pct">{{ stats.percentFunded }}% funded</span>
+          <span class="pf-pending">{{ stats.totalPending }} pending review</span>
+        </div>
+        <div class="pf-mission">
+          Every $10 book sold goes directly toward producing a 100% AI-animated movie of this novel.
+          1,000 backers = $10,000 production budget.
+        </div>
+      </div>
+    }
+
+    <div class="ps-two-col">
+
+      <!-- Pre-order form -->
+      <div class="ps-form-card">
+        <div class="card-header">
+          <mat-icon>shopping_cart</mat-icon>
+          <span>Pre-Order Your Copy</span>
+        </div>
+
+        @if (hasPendingOrApproved) {
+          <div class="ps-already-ordered">
+            <mat-icon>info</mat-icon>
+            <span>You already have an active pre-order. Check your order status below.</span>
+          </div>
+        } @else {
+          <div class="ps-form">
+            <div class="form-row">
+              <label>Copies (1–10)</label>
+              <div class="copy-stepper">
+                <button class="step-btn" (click)="copies = copies > 1 ? copies - 1 : 1">
+                  <mat-icon>remove</mat-icon>
+                </button>
+                <span class="copy-count">{{ copies }}</span>
+                <button class="step-btn" (click)="copies = copies < 10 ? copies + 1 : 10">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-total">
+              <span>Total</span>
+              <span class="total-amount">${{ totalCost }}</span>
+            </div>
+
+            <div class="form-row col">
+              <label>Message to author <span class="optional">(optional)</span></label>
+              <textarea
+                [(ngModel)]="message"
+                placeholder="Why this story resonates with you, or anything you'd like to share…"
+                rows="4"
+                maxlength="500"
+              ></textarea>
+              <span class="char-count">{{ message.length }}/500</span>
+            </div>
+
+            <button class="btn-order" (click)="submit()" [disabled]="submitting">
+              @if (submitting) {
+                <span class="btn-spinner"></span> Submitting…
+              } @else {
+                <mat-icon>send</mat-icon> Request Pre-Order
+              }
+            </button>
+
+            <p class="form-note">
+              Payment is <strong>not charged now</strong>. Once the author approves your request,
+              you'll receive payment instructions via email.
+            </p>
+          </div>
+        }
+      </div>
+
+      <!-- Order history -->
+      <div class="ps-orders-card">
+        <div class="card-header">
+          <mat-icon>receipt_long</mat-icon>
+          <span>Your Orders</span>
+        </div>
+
+        @if (userOrders.length === 0) {
+          <div class="ps-empty">
+            <mat-icon>inbox</mat-icon>
+            <span>No orders yet</span>
+          </div>
+        } @else {
+          <div class="orders-list">
+            @for (order of userOrders; track order.orderId) {
+              <div class="order-row">
+                <div class="order-status-icon" [class]="statusColor(order.status)">
+                  <mat-icon>{{ statusIcon(order.status) }}</mat-icon>
+                </div>
+                <div class="order-info">
+                  <div class="order-copies">{{ order.copies }} copy{{ order.copies > 1 ? 'ies' : '' }} · ${{ order.totalUsd }}</div>
+                  <div class="order-status-label" [class]="statusColor(order.status)">{{ order.status | titlecase }}</div>
+                  @if (order.adminNote) {
+                    <div class="order-admin-note">{{ order.adminNote }}</div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+    </div>
+
+  </div>
+</div>

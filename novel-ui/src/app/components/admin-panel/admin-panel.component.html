@@ -1,0 +1,173 @@
+<div class="ap-shell">
+
+  <!-- Header -->
+  <div class="ap-header">
+    <div class="ap-header-left">
+      <mat-icon class="ap-logo">shield</mat-icon>
+      <div>
+        <div class="ap-title">Admin Panel</div>
+        <div class="ap-subtitle">Presale Order Management</div>
+      </div>
+    </div>
+    <div class="ap-header-right">
+      <a class="ap-nav-link" routerLink="/presale">
+        <mat-icon>storefront</mat-icon> Presale Page
+      </a>
+      <button class="ap-signout" (click)="signOut()" matTooltip="Sign out">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="ap-body">
+
+    <!-- Stats row -->
+    @if (stats) {
+      <div class="ap-stats-row">
+        <div class="stat-card gold">
+          <mat-icon>check_circle</mat-icon>
+          <div class="sc-value">{{ stats.totalApproved }}</div>
+          <div class="sc-label">Copies Approved</div>
+        </div>
+        <div class="stat-card amber">
+          <mat-icon>schedule</mat-icon>
+          <div class="sc-value">{{ stats.totalPending }}</div>
+          <div class="sc-label">Awaiting Review</div>
+        </div>
+        <div class="stat-card green">
+          <mat-icon>attach_money</mat-icon>
+          <div class="sc-value">${{ stats.totalRevenue | number }}</div>
+          <div class="sc-label">Revenue Confirmed</div>
+        </div>
+        <div class="stat-card blue">
+          <mat-icon>percent</mat-icon>
+          <div class="sc-value">{{ stats.percentFunded }}%</div>
+          <div class="sc-label">of $10K Film Goal</div>
+        </div>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="ap-progress-card">
+        <div class="apc-labels">
+          <span>{{ stats.totalApproved }} / {{ goal }} copies to fund the animated film</span>
+          <span class="apc-pct">{{ stats.percentFunded }}%</span>
+        </div>
+        <div class="apc-track">
+          <div class="apc-fill" [style.width.%]="stats.percentFunded"></div>
+          @if (stats.totalPending > 0) {
+            <div class="apc-pending"
+                 [style.width.%]="(stats.totalPending / goal) * 100"
+                 [style.left.%]="stats.percentFunded"></div>
+          }
+        </div>
+        <div class="apc-sub">
+          Each approved copy = $10 · 1,000 copies = $10,000 = 100% AI-animated movie production budget
+        </div>
+      </div>
+    }
+
+    <!-- Orders table -->
+    <div class="ap-orders-card">
+
+      <!-- Tabs -->
+      <div class="ap-tabs">
+        @for (tab of ['pending','all','approved','denied']; track tab) {
+          <button class="ap-tab" [class.active]="activeTab === tab" (click)="activeTab = $any(tab)">
+            {{ tab | titlecase }}
+            <span class="tab-badge" [class]="tab">{{ tabCount($any(tab)) }}</span>
+          </button>
+        }
+      </div>
+
+      <!-- Table -->
+      @if (filteredOrders.length === 0) {
+        <div class="ap-empty">
+          <mat-icon>inbox</mat-icon>
+          <span>No {{ activeTab === 'all' ? '' : activeTab + ' ' }}orders</span>
+        </div>
+      } @else {
+        <div class="ap-table">
+          <div class="at-head">
+            <span>Buyer</span>
+            <span>Copies</span>
+            <span>Total</span>
+            <span>Message</span>
+            <span>Status</span>
+            <span>Admin Note</span>
+            <span>Actions</span>
+          </div>
+          @for (order of filteredOrders; track order.orderId) {
+            <div class="at-row" [class]="statusClass(order.status)">
+              <!-- Buyer -->
+              <div class="at-cell buyer-cell">
+                @if (order.photoURL) {
+                  <img class="buyer-avatar" [src]="order.photoURL" />
+                }
+                <div>
+                  <div class="buyer-name">{{ order.displayName }}</div>
+                  <div class="buyer-email">{{ order.email }}</div>
+                </div>
+              </div>
+              <!-- Copies -->
+              <div class="at-cell">
+                <span class="copies-badge">{{ order.copies }}</span>
+              </div>
+              <!-- Total -->
+              <div class="at-cell money">${{ order.totalUsd }}</div>
+              <!-- Message -->
+              <div class="at-cell msg-cell">
+                @if (order.message) {
+                  <span matTooltip="{{ order.message }}" class="msg-preview">{{ order.message }}</span>
+                } @else {
+                  <span class="no-msg">—</span>
+                }
+              </div>
+              <!-- Status -->
+              <div class="at-cell">
+                <span class="status-pill" [class]="statusClass(order.status)">
+                  <mat-icon>{{ statusIcon(order.status) }}</mat-icon>
+                  {{ order.status | titlecase }}
+                </span>
+              </div>
+              <!-- Admin note input -->
+              <div class="at-cell note-cell">
+                <input
+                  type="text"
+                  [(ngModel)]="adminNoteInputs[order.orderId]"
+                  placeholder="Note to buyer…"
+                  class="note-input"
+                  maxlength="200"
+                />
+              </div>
+              <!-- Actions -->
+              <div class="at-cell actions-cell">
+                @if (order.status !== 'approved') {
+                  <button class="action-btn approve"
+                          (click)="updateStatus(order, 'approved')"
+                          matTooltip="Approve order">
+                    <mat-icon>check</mat-icon>
+                  </button>
+                }
+                @if (order.status !== 'denied') {
+                  <button class="action-btn deny"
+                          (click)="updateStatus(order, 'denied')"
+                          matTooltip="Deny order">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                }
+                @if (order.status !== 'pending') {
+                  <button class="action-btn reset"
+                          (click)="updateStatus(order, 'pending')"
+                          matTooltip="Reset to pending">
+                    <mat-icon>refresh</mat-icon>
+                  </button>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+  </div>
+</div>

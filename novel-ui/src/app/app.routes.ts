@@ -1,7 +1,26 @@
 import { Routes } from '@angular/router';
+import { authGuard, adminGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  {
+    path: 'vision',
+    loadComponent: () => import('./components/vision-landing/vision-landing.component').then(m => m.VisionLandingComponent)
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent)
+  },
+  {
+    path: 'presale',
+    loadComponent: () => import('./components/presale/presale.component').then(m => m.PresaleComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'admin-panel',
+    loadComponent: () => import('./components/admin-panel/admin-panel.component').then(m => m.AdminPanelComponent),
+    canActivate: [adminGuard]
+  },
+  { path: '', redirectTo: 'vision', pathMatch: 'full' },
   {
     path: 'dashboard',
     loadComponent: () => import('./components/dashboard/dashboard.component').then(m => m.DashboardComponent)
@@ -73,5 +92,9 @@ export const routes: Routes = [
   {
     path: 'plan90',
     loadComponent: () => import('./components/plan90/plan90.component').then(m => m.Plan90Component)
+  },
+  {
+    path: 'storyboard',
+    loadComponent: () => import('./components/storyboard/storyboard.component').then(m => m.StoryboardComponent)
   }
 ];

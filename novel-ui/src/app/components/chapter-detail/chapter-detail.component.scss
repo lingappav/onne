@@ -1,9 +1,70 @@
 .page { display: flex; flex-direction: column; gap: 16px; }
+
+// ── header ──────────────────────────────────────────────────────────────────
 .page-header {
   display: flex; justify-content: space-between; align-items: flex-start;
   h2 { margin: 4px 0 0; }
 }
+.header-left { display: flex; flex-direction: column; gap: 4px; }
 .back-link { color: #666; text-decoration: none; font-size: 13px; &:hover { color: #333; } }
+.chapter-nav { display: flex; align-items: center; gap: 4px; }
+.nav-arrow {
+  display: flex; align-items: center; color: #1976d2; text-decoration: none;
+  border-radius: 50%; padding: 2px;
+  &:hover { background: #e3f2fd; }
+}
+
+// ── strength card ────────────────────────────────────────────────────────────
+.strength-card { border-left: 4px solid #1976d2; }
+.card-icon { vertical-align: middle; margin-right: 6px; font-size: 18px; }
+.warn-icon { color: #e65100; }
+.strength-row { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+.strength-meter {
+  min-width: 110px; text-align: center;
+  mat-progress-bar { margin-top: 8px; height: 8px; border-radius: 4px; }
+}
+.strength-score { font-size: 42px; font-weight: 700; line-height: 1; }
+.strength-denom { font-size: 18px; font-weight: 400; }
+.strength-label { font-size: 13px; font-weight: 600; margin-top: 4px; }
+.strength-detail { flex: 1; min-width: 240px; }
+.beat-function { font-size: 13px; margin: 0 0 10px; }
+.beat-scene { font-size: 12px; color: #555; margin: 10px 0 0; line-height: 1.5; }
+.craft-note-box {
+  display: flex; gap: 8px; align-items: flex-start;
+  background: #f3f6ff; border-radius: 6px; padding: 10px 12px;
+  .note-icon { color: #1565c0; font-size: 18px; margin-top: 2px; flex-shrink: 0; }
+  p { margin: 0; font-size: 13px; line-height: 1.5; color: #333; }
+}
+
+// ── craft gaps card ──────────────────────────────────────────────────────────
+.gaps-card { border-left: 4px solid #e65100; }
+.gap-row {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 10px 0; border-bottom: 1px solid #f0f0f0;
+  &:last-child { border-bottom: none; }
+}
+.severity-badge {
+  padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600;
+  text-transform: capitalize; white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+}
+.gap-body { flex: 1; }
+.gap-text { margin: 0 0 6px; font-size: 13px; }
+.gap-fix {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 12px; color: #555; margin: 0;
+  .fix-icon { font-size: 14px; }
+}
+
+// ── revision notes card ──────────────────────────────────────────────────────
+.revision-card { border-left: 4px solid #7b1fa2; }
+.revision-note {
+  display: flex; align-items: flex-start; gap: 4px;
+  padding: 6px 0;
+  .bullet-icon { color: #7b1fa2; font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  p { margin: 0; font-size: 13px; line-height: 1.5; }
+}
+
+// ── edit form ────────────────────────────────────────────────────────────────
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding-top: 8px; }
 .full-width { grid-column: 1 / -1; }
 mat-form-field { width: 100%; }
@@ -28,3 +89,48 @@ mat-form-field { width: 100%; }
 .urgency-medium { background: #f1f8e9; color: #33691e; }
 code { background: #f5f5f5; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
 .loading { color: #666; padding: 24px; }
+
+// ── panel icon ───────────────────────────────────────────────────────────────
+.panel-icon { font-size: 18px; vertical-align: middle; margin-right: 6px; }
+
+// ── source documents ─────────────────────────────────────────────────────────
+.ref-doc-card { padding: 12px 0; }
+.ref-doc-header { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 8px; }
+.doc-icon { color: #555; flex-shrink: 0; }
+.ref-doc-file { margin: 0; font-size: 13px; font-weight: 600; }
+.ref-doc-type { margin: 2px 0 0; font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.04em; }
+.ref-doc-summary { font-size: 13px; line-height: 1.5; color: #333; margin: 0 0 8px; }
+.ref-doc-facts {
+  margin: 0 0 8px 16px; padding: 0;
+  li { font-size: 12px; color: #555; line-height: 1.5; }
+}
+.ref-contradiction {
+  display: flex; gap: 8px; align-items: flex-start;
+  background: #fff3e0; border-radius: 6px; padding: 8px 12px;
+  mat-icon { color: #e65100; font-size: 18px; flex-shrink: 0; }
+  p { margin: 0; font-size: 12px; color: #555; line-height: 1.4; }
+}
+
+// ── benchmark comps ──────────────────────────────────────────────────────────
+.bench-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; padding: 8px 0; }
+.bench-card {
+  border: 1px solid #e0e0e0; border-radius: 8px; padding: 14px 16px;
+  background: #fafcff;
+  &:hover { border-color: #1976d2; box-shadow: 0 2px 8px rgba(25,118,210,0.1); }
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.bench-header { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 8px; }
+.bench-year {
+  background: #1976d2; color: #fff; border-radius: 6px;
+  padding: 4px 8px; font-size: 12px; font-weight: 700; flex-shrink: 0; line-height: 1.4;
+}
+.bench-title { margin: 0; font-size: 14px; font-weight: 700; color: #1a1a2e; }
+.bench-author { margin: 2px 0 0; font-size: 12px; color: #666; }
+.bench-themes { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+.bench-chip { background: #e8f4fd; color: #1565c0; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
+.bench-notes { font-size: 12px; color: #444; line-height: 1.5; margin: 0 0 8px; }
+.bench-why {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 11px; color: #888; font-style: italic;
+  .why-icon { font-size: 14px; color: #1976d2; }
+}

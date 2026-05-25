@@ -1,0 +1,233 @@
+.login-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--fd-bg-main);
+  padding: 24px;
+  position: relative;
+}
+
+.login-back {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--fd-text-muted);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--fd-border);
+  background: var(--fd-bg-panel);
+  mat-icon { font-size: 16px; width: 16px; height: 16px; }
+  &:hover { color: var(--fd-gold); border-color: var(--fd-gold); }
+}
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--fd-bg-panel);
+  border: 1px solid var(--fd-border);
+  border-radius: 12px;
+  padding: 40px 36px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+// Brand
+.login-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.brand-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--fd-gold), #8b5e1a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mat-icon { color: #1a1a1a; font-size: 28px; width: 28px; height: 28px; }
+}
+
+.brand-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--fd-text-primary);
+  margin: 0;
+}
+
+.brand-sub {
+  font-size: 12px;
+  color: var(--fd-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+// Pitch stats bar
+.login-pitch {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--fd-bg-deep);
+  border: 1px solid var(--fd-border);
+  border-radius: 8px;
+  padding: 14px 20px;
+  width: 100%;
+  justify-content: center;
+}
+
+.pitch-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+
+  .stat-num {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--fd-text-primary);
+    font-family: var(--fd-mono);
+  }
+  .stat-label {
+    font-size: 10px;
+    color: var(--fd-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  &.highlight .stat-num { color: var(--fd-gold); }
+}
+
+.pitch-divider {
+  font-size: 16px;
+  color: var(--fd-text-muted);
+  font-weight: 300;
+}
+
+// Setup banner (shown when Firebase not configured)
+.setup-banner {
+  width: 100%;
+  background: var(--fd-bg-deep);
+  border: 1px solid var(--fd-border);
+  border-radius: 8px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.setup-banner-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--fd-gold);
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+}
+
+.setup-banner p {
+  font-size: 12px;
+  color: var(--fd-text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.setup-steps {
+  margin: 4px 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  li {
+    font-size: 12px;
+    color: var(--fd-text-secondary);
+    line-height: 1.5;
+    code {
+      font-family: var(--fd-mono);
+      font-size: 11px;
+      background: var(--fd-bg-panel);
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: var(--fd-gold);
+    }
+    strong { color: var(--fd-text-primary); }
+  }
+}
+
+.setup-note {
+  font-size: 11px !important;
+  color: var(--fd-text-muted) !important;
+  border-top: 1px solid var(--fd-border);
+  padding-top: 8px;
+  margin-top: 2px !important;
+}
+
+// Description
+.login-desc {
+  font-size: 13px;
+  color: var(--fd-text-secondary);
+  line-height: 1.6;
+  text-align: center;
+  margin: 0;
+}
+
+// Google button
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 6px;
+  border: 1px solid var(--fd-border-strong);
+  background: var(--fd-bg-raised);
+  color: var(--fd-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, transform 0.1s;
+
+  &:hover:not(:disabled) {
+    background: var(--fd-hover);
+    border-color: var(--fd-gold);
+    transform: translateY(-1px);
+  }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.google-logo { flex-shrink: 0; }
+
+// Spinner
+.btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--fd-border-strong);
+  border-top-color: var(--fd-gold);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.login-note {
+  font-size: 11px;
+  color: var(--fd-text-muted);
+  text-align: center;
+  margin: 0;
+}

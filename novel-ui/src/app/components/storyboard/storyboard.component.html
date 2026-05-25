@@ -1,0 +1,137 @@
+<div class="sb-shell">
+
+  <header class="sb-header">
+    <a class="sb-back" routerLink="/vision">
+      <mat-icon>arrow_back</mat-icon>
+      Vision & Film
+    </a>
+    <div class="sb-header-center">
+      <span class="sb-eyebrow">AI Storyboard</span>
+      <h1 class="sb-title">The President's Rule</h1>
+      <p class="sb-sub">6 Key Scenes · Pre-Production Visual Direction</p>
+    </div>
+    <button class="sb-regen-btn" (click)="generate()" [disabled]="loading" title="Regenerate storyboard">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </header>
+
+  @if (!isApiConfigured) {
+    <div class="sb-api-notice">
+      <mat-icon>info_outline</mat-icon>
+      <div>
+        <strong>Demo Mode</strong> — storyboard panels are pre-written samples.
+        Add your Anthropic API key to <code>environments/environment.ts → anthropicApiKey</code> to generate live AI-directed storyboards via Claude.
+      </div>
+    </div>
+  }
+
+  @if (loading) {
+    <div class="sb-loading">
+      <div class="sb-spinner"></div>
+      <p>Claude is composing visual directions…</p>
+    </div>
+  }
+
+  @if (result && !loading) {
+    <div class="sb-layout">
+
+      <!-- Panel filmstrip -->
+      <div class="sb-strip">
+        @for (panel of result.panels; track panel.sceneId; let i = $index) {
+          <button
+            class="sb-thumb"
+            [class.active]="i === activePanelIndex"
+            (click)="selectPanel(panel, i)"
+          >
+            <span class="thumb-num">{{ i + 1 }}</span>
+            <span class="thumb-act">{{ panel.actLabel.split('—')[0].trim() }}</span>
+            <span class="thumb-scene">{{ panel.chapterTitle }}</span>
+          </button>
+        }
+      </div>
+
+      <!-- Active panel detail -->
+      @if (activePanel) {
+        <div class="sb-detail">
+
+          <div class="sb-panel-header">
+            <span class="panel-act-badge">{{ activePanel.actLabel }}</span>
+            <h2 class="panel-chapter">{{ activePanel.chapterTitle }}</h2>
+            <p class="panel-heading">{{ activePanel.sceneHeading }}</p>
+          </div>
+
+          <div class="sb-frame">
+            <div class="sb-frame-inner">
+              <div class="sb-frame-content">
+                <div class="frame-characters">
+                  @for (char of activePanel.keyCharacters; track char) {
+                    <span class="frame-char-tag">{{ char }}</span>
+                  }
+                </div>
+                <p class="frame-visual">{{ activePanel.visualDescription }}</p>
+                <div class="frame-camera">
+                  <mat-icon>videocam</mat-icon>
+                  <span>{{ activePanel.cameraAngle }}</span>
+                </div>
+              </div>
+              <div class="frame-letterbox top"></div>
+              <div class="frame-letterbox bottom"></div>
+            </div>
+          </div>
+
+          <div class="sb-meta-grid">
+            <div class="sb-meta-card">
+              <div class="meta-label">
+                <mat-icon>palette</mat-icon>
+                Color Palette
+              </div>
+              <p>{{ activePanel.colorPalette }}</p>
+            </div>
+            <div class="sb-meta-card">
+              <div class="meta-label">
+                <mat-icon>mood</mat-icon>
+                Mood
+              </div>
+              <p>{{ activePanel.mood }}</p>
+            </div>
+            <div class="sb-meta-card">
+              <div class="meta-label">
+                <mat-icon>volume_up</mat-icon>
+                Soundscape
+              </div>
+              <p>{{ activePanel.soundscape }}</p>
+            </div>
+            <div class="sb-meta-card highlight">
+              <div class="meta-label">
+                <mat-icon>movie_filter</mat-icon>
+                Director's Note
+              </div>
+              <p>{{ activePanel.directorNote }}</p>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="sb-nav">
+            <button class="sb-nav-btn" (click)="prevPanel()" [disabled]="activePanelIndex === 0">
+              <mat-icon>chevron_left</mat-icon>
+              Previous Scene
+            </button>
+            <span class="sb-nav-pos">{{ activePanelIndex + 1 }} / {{ result.panels.length }}</span>
+            <button class="sb-nav-btn" (click)="nextPanel()" [disabled]="activePanelIndex === result.panels.length - 1">
+              Next Scene
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+
+        </div>
+      }
+
+    </div>
+
+    <div class="sb-footer">
+      <p>Generated {{ result.generatedAt | date:'medium' }}</p>
+      <p>6 key scenes · Claude claude-opus-4-7 · Animation pipeline: Kling · Runway Gen-3 · Midjourney · ElevenLabs · Suno</p>
+    </div>
+  }
+
+</div>

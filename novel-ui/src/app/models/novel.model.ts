@@ -103,11 +103,13 @@ export interface BeatSheet {
 export interface Beat {
   beat_number: number;
   beat_name: string;
-  chapter_id: string;
+  chapter_id: string;          // primary/anchor chapter
+  chapter_ids?: string[];      // all chapters that carry this beat
   scene_description: string;
   thematic_function: string;
   strength_rating: number;
   craft_notes: string;
+  strength_prescription?: string; // what needs to happen to reach 10/10
 }
 
 export interface SubplotOverlay {

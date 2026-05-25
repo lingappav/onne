@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NovelService, VersionEntry } from './services/novel.service';
 import { VersionPanelComponent } from './components/version-panel/version-panel.component';
 import { SaveDialogComponent } from './components/save-dialog/save-dialog.component';
+import { AuthService, AppUser } from './services/auth.service';
 
 interface NavItem {
   path: string;
@@ -35,6 +36,7 @@ export class AppComponent implements OnInit {
   versions: VersionEntry[] = [];
   versionPanelOpen = false;
   saving = false;
+  currentUser: AppUser | null = null;
 
   navItems: NavItem[] = [
     { path: '/dashboard',  label: 'Dashboard',        icon: 'grid_view',      group: 'overview' },
@@ -53,6 +55,10 @@ export class AppComponent implements OnInit {
     { path: '/film-agreement',    label: 'Sunday Cinemas',    icon: 'movie',          group: 'business' },
     { path: '/copywriting-tasks', label: 'Copywriting Tasks', icon: 'task_alt',       group: 'business' },
     { path: '/plan90',            label: '90-Day Plan',       icon: 'rocket_launch',  group: 'business' },
+    { path: '/vision',            label: 'Vision & Film',     icon: 'theaters',       group: 'presale' },
+    { path: '/storyboard',        label: 'AI Storyboard',     icon: 'movie_filter',   group: 'presale' },
+    { path: '/presale',           label: 'Book Pre-Sale',     icon: 'storefront',     group: 'presale' },
+    { path: '/admin-panel',       label: 'Admin Panel',       icon: 'shield',         group: 'presale' },
   ];
 
   groups = [
@@ -62,12 +68,15 @@ export class AppComponent implements OnInit {
     { id: 'analysis',      label: 'Analysis' },
     { id: 'intelligence',  label: 'Intelligence' },
     { id: 'business',      label: 'Business' },
+    { id: 'presale',       label: 'Presale & Funding' },
   ];
 
   constructor(
     private novelService: NovelService,
     private snack: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -79,7 +88,14 @@ export class AppComponent implements OnInit {
     this.novelService.novel$.subscribe(n => {
       if (n?.metadata?.title) this.novelTitle = n.metadata.title;
     });
+    this.authService.user$.subscribe(u => this.currentUser = u);
   }
+
+  signOut() {
+    this.authService.signOut().subscribe(() => this.router.navigate(['/login']));
+  }
+
+  get isAdmin(): boolean { return this.authService.isAdmin; }
 
   navItemsForGroup(g: string): NavItem[] {
     return this.navItems.filter(i => i.group === g);

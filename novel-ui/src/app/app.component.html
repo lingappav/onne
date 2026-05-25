@@ -36,6 +36,27 @@
         <mat-icon>history</mat-icon>
         <span>History</span>
       </button>
+      <!-- Auth user widget -->
+      @if (currentUser) {
+        <div class="tb-user-widget">
+          @if (currentUser.photoURL) {
+            <img class="tb-avatar" [src]="currentUser.photoURL" [alt]="currentUser.displayName || 'User'"
+                 matTooltip="{{ currentUser.displayName }} ({{ currentUser.role }})" />
+          } @else {
+            <div class="tb-avatar-placeholder" matTooltip="{{ currentUser.displayName }} ({{ currentUser.role }})">
+              <mat-icon>person</mat-icon>
+            </div>
+          }
+          <button class="fd-toolbar-btn" (click)="signOut()" matTooltip="Sign out">
+            <mat-icon>logout</mat-icon>
+          </button>
+        </div>
+      } @else {
+        <a class="fd-toolbar-btn" routerLink="/login" matTooltip="Sign in for presale">
+          <mat-icon>login</mat-icon>
+          <span>Sign In</span>
+        </a>
+      }
     </div>
   </header>
 
@@ -49,12 +70,14 @@
           <div class="nav-group">
             <div class="nav-group-label">{{ group.label }}</div>
             @for (item of navItemsForGroup(group.id); track item.path) {
-              <a class="nav-item"
-                 [routerLink]="item.path"
-                 routerLinkActive="active">
-                <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
-                <span class="nav-label">{{ item.label }}</span>
-              </a>
+              @if (item.path !== '/admin-panel' || isAdmin) {
+                <a class="nav-item"
+                   [routerLink]="item.path"
+                   routerLinkActive="active">
+                  <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
+                  <span class="nav-label">{{ item.label }}</span>
+                </a>
+              }
             }
           </div>
         }

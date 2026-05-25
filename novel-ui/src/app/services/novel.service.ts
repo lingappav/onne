@@ -114,6 +114,16 @@ export class NovelService {
     );
   }
 
+  saveBeat(beatNumber: number, beat: any): Observable<any> {
+    const novel = this._novel.value;
+    if (!novel) return new Observable(s => s.error('No novel loaded'));
+    const beats = [...novel.structural_map.beat_sheet.beats];
+    const idx = beats.findIndex(b => b.beat_number === beatNumber);
+    if (idx >= 0) beats[idx] = beat; else beats.push(beat);
+    const updatedMap = { ...novel.structural_map, beat_sheet: { ...novel.structural_map.beat_sheet, beats } };
+    return this.saveSection('structural_map', updatedMap, `Beat ${beatNumber} updated`);
+  }
+
   saveCharacter(id: string, char: Character): Observable<any> {
     return this.http.put(`${this.API}/novel/characters/${id}?version=${this._activeVersion.value}`, char).pipe(
       tap((res: any) => {

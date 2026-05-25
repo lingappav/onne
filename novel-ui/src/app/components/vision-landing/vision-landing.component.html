@@ -1,0 +1,291 @@
+<div class="vl-shell">
+
+  <!-- ══ HERO ══════════════════════════════════════════════════════════════ -->
+  <section class="vl-hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-content">
+
+      <div class="hero-eyebrow">
+        <span class="eyebrow-pill">
+          <mat-icon>movie</mat-icon>
+          Sunday Cinemas × The President's Rule
+        </span>
+      </div>
+
+      <h1 class="hero-headline">
+        A Novel Written to Become<br>
+        <span class="headline-gold">a Feature Film.</span>
+      </h1>
+
+      <p class="hero-subline">
+        Sunday Cinemas has acquired the film rights to a work-in-progress political thriller —
+        not despite it being unfinished, but <em>because</em> of it.
+        The writer's creative process is the pre-production.
+      </p>
+
+      <div class="hero-stats-row">
+        <div class="hs-stat">
+          <span class="hs-num">1,000</span>
+          <span class="hs-label">Early backers needed</span>
+        </div>
+        <div class="hs-sep">×</div>
+        <div class="hs-stat">
+          <span class="hs-num">$10</span>
+          <span class="hs-label">Book pre-order</span>
+        </div>
+        <div class="hs-sep">=</div>
+        <div class="hs-stat gold">
+          <span class="hs-num">$10K</span>
+          <span class="hs-label">Full animated film</span>
+        </div>
+      </div>
+
+      <div class="hero-cta-row">
+        <a class="btn-cta-primary" routerLink="/login">
+          <mat-icon>shopping_cart</mat-icon>
+          Pre-Order the Book · $10
+        </a>
+        <a class="btn-cta-ghost" href="#vision">
+          <mat-icon>expand_more</mat-icon>
+          Learn the Vision
+        </a>
+      </div>
+
+    </div>
+
+    <div class="hero-book-visual">
+      <div class="book-cover">
+        <div class="book-spine"></div>
+        <div class="book-face">
+          <div class="book-title-text">The President's<br>Rule</div>
+          <div class="book-author-text">A Novel</div>
+          <div class="book-badge">
+            <mat-icon>movie</mat-icon>
+            Film Option · Sunday Cinemas
+          </div>
+        </div>
+      </div>
+      <div class="book-shadow"></div>
+    </div>
+  </section>
+
+  <!-- ══ SUNDAY CINEMAS STATEMENT ══════════════════════════════════════════ -->
+  <section class="vl-statement" id="vision">
+    <div class="statement-inner">
+      <div class="statement-label">
+        <mat-icon>format_quote</mat-icon>
+        Sunday Cinemas — Official Position
+      </div>
+      <blockquote class="statement-quote">
+        We don't wait for a polished manuscript. We back writers at the edge of their
+        creative peak — when the story is alive in their hands and hasn't yet been
+        flattened by committee. <strong>"The President's Rule"</strong> is exactly that story.
+        High-stakes political drama, deeply human characters, and a structure
+        that fits the modern cinematic language perfectly.
+      </blockquote>
+      <div class="statement-sig">
+        <div class="sig-role">Sunday Cinemas · Film Acquisitions</div>
+        <div class="sig-note">Film option secured · Rights agreement on file</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ JOURNEY TIMELINE ═══════════════════════════════════════════════════ -->
+  <section class="vl-journey">
+    <div class="section-header">
+      <h2>The Path from Page to Screen</h2>
+      <p>How a novel becomes the most valuable pre-production asset a director can receive</p>
+    </div>
+
+    <div class="journey-timeline">
+      @for (step of journey; track step.phase) {
+        <div class="jt-step">
+          <div class="jt-phase-col">
+            <div class="jt-phase-num">{{ step.phase }}</div>
+            <div class="jt-phase-line"></div>
+          </div>
+          <div class="jt-content">
+            <div class="jt-icon-wrap">
+              <mat-icon>{{ step.icon }}</mat-icon>
+            </div>
+            <div class="jt-text">
+              <h3>{{ step.title }}</h3>
+              <p>{{ step.body }}</p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- ══ WHY A NOVEL BEATS A SCRIPT ════════════════════════════════════════ -->
+  <section class="vl-novel-value">
+    <div class="nv-inner">
+      <div class="nv-text">
+        <div class="section-eyebrow">Pre-Production Value</div>
+        <h2>A Novel Contains<br>Everything a Film Needs</h2>
+        <p>
+          A screenplay is a blueprint. A novel is a fully inhabited world.
+          When a director receives a complete, literary-quality novel, they receive
+          character psychology, subtext, atmosphere, pacing, and the author's full
+          moral vision — none of which can be extracted from a treatment.
+        </p>
+        <p>
+          This cuts months of back-and-forth from the development process.
+          The novel is not a step toward the film — it <em>is</em> the pre-production.
+        </p>
+        <div class="nv-asset-list">
+          @for (asset of ['Character psychology & inner life', 'Scene-by-scene atmosphere & tone', 'Dialogue voice already established', 'Thematic architecture mapped out', 'Act structure & beat sheet embedded', 'World-building depth no script provides']; track asset) {
+            <div class="nv-asset-row">
+              <mat-icon>check_circle</mat-icon>
+              <span>{{ asset }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="nv-comparison">
+        <div class="nvc-card script">
+          <div class="nvc-label">Standard Script Package</div>
+          <div class="nvc-items">
+            @for (item of ['90-page screenplay', 'One-page treatment', 'Verbal pitch', 'Months of notes & rewrites']; track item) {
+              <div class="nvc-item limited">
+                <mat-icon>remove_circle_outline</mat-icon>
+                <span>{{ item }}</span>
+              </div>
+            }
+          </div>
+          <div class="nvc-verdict limited">High development overhead</div>
+        </div>
+
+        <div class="nvc-vs">VS</div>
+
+        <div class="nvc-card novel">
+          <div class="nvc-label">This Novel-to-Film Approach</div>
+          <div class="nvc-items">
+            @for (item of ['Full novel with all characters complete', 'Scene-level detail throughout', 'Author\'s voice preserved', 'Director walks in ready to shoot']; track item) {
+              <div class="nvc-item">
+                <mat-icon>check_circle</mat-icon>
+                <span>{{ item }}</span>
+              </div>
+            }
+          </div>
+          <div class="nvc-verdict">Minimal pre-production gap</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOUR PILLARS ══════════════════════════════════════════════════════ -->
+  <section class="vl-pillars">
+    <div class="section-header">
+      <h2>What Makes This Deal Different</h2>
+      <p>A new model for writer-studio collaboration</p>
+    </div>
+    <div class="pillars-grid">
+      @for (p of pillars; track p.label) {
+        <div class="pillar-card">
+          <div class="pillar-icon">
+            <mat-icon>{{ p.icon }}</mat-icon>
+          </div>
+          <div class="pillar-label">{{ p.label }}</div>
+          <div class="pillar-detail">{{ p.detail }}</div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- ══ FUNDING MECHANICS ═════════════════════════════════════════════════ -->
+  <section class="vl-funding">
+    <div class="funding-inner">
+      <div class="section-header light">
+        <h2>How the $10K Film Gets Made</h2>
+        <p>No investors. No crowdfunding platform fees. Just 1,000 readers who become the founding audience.</p>
+      </div>
+
+      <div class="funding-flow">
+        <div class="ff-step">
+          <div class="ff-circle">
+            <mat-icon>people</mat-icon>
+          </div>
+          <div class="ff-arrow"><mat-icon>arrow_forward</mat-icon></div>
+          <div class="ff-label">1,000 readers<br>from your circle</div>
+        </div>
+        <div class="ff-step">
+          <div class="ff-circle">
+            <mat-icon>shopping_cart</mat-icon>
+          </div>
+          <div class="ff-arrow"><mat-icon>arrow_forward</mat-icon></div>
+          <div class="ff-label">Pre-order book<br>at $10 each</div>
+        </div>
+        <div class="ff-step">
+          <div class="ff-circle gold">
+            <mat-icon>attach_money</mat-icon>
+          </div>
+          <div class="ff-arrow"><mat-icon>arrow_forward</mat-icon></div>
+          <div class="ff-label">$10,000<br>production fund</div>
+        </div>
+        <div class="ff-step">
+          <div class="ff-circle film">
+            <mat-icon>animation</mat-icon>
+          </div>
+          <div class="ff-label">100% AI-animated<br>feature film</div>
+        </div>
+      </div>
+
+      <div class="funding-note">
+        Payment is not charged at pre-order. Once your request is approved by the author,
+        you'll receive payment details. Every approved order is a confirmed production commitment.
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FINAL CTA ══════════════════════════════════════════════════════════ -->
+  <section class="vl-final-cta">
+    <div class="fcta-inner">
+      <div class="fcta-badge">
+        <mat-icon>rocket_launch</mat-icon>
+        Limited to 1,000 founding copies
+      </div>
+      <h2>Be Part of the First 1,000.</h2>
+      <p>
+        Pre-order the book, join the founding audience, and directly fund the
+        production of a fully AI-animated feature film.
+        The author reviews every request personally.
+      </p>
+      <div class="fcta-btn-row">
+        <a class="btn-cta-primary large" routerLink="/login">
+          <mat-icon>shopping_cart</mat-icon>
+          Request Your Copy · $10
+        </a>
+        <a class="btn-cta-ghost" routerLink="/storyboard">
+          <mat-icon>movie_filter</mat-icon>
+          View AI Storyboard
+        </a>
+      </div>
+      <div class="fcta-sub">
+        Already have access? <a routerLink="/presale">Go to Presale →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ════════════════════════════════════════════════════════════ -->
+  <footer class="vl-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <mat-icon>auto_stories</mat-icon>
+        <span>The President's Rule · A Novel by Sunday Cinemas partner author</span>
+      </div>
+      <div class="footer-right">
+        <a routerLink="/login">Sign In</a>
+        <span>·</span>
+        <a routerLink="/storyboard">Storyboard</a>
+        <span>·</span>
+        <a routerLink="/film-agreement">Film Agreement</a>
+        <span>·</span>
+        <span>© 2025 Sunday Cinemas</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
