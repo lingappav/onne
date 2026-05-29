@@ -96,5 +96,13 @@ export const routes: Routes = [
   {
     path: 'storyboard',
     loadComponent: () => import('./components/storyboard/storyboard.component').then(m => m.StoryboardComponent)
+  },
+  {
+    path: 'journal',
+    loadComponent: () => import('./components/writer-journal/writer-journal.component').then(m => m.WriterJournalComponent)
+  },
+  {
+    path: 'journal/:id',
+    loadComponent: () => import('./components/journal-post/journal-post.component').then(m => m.JournalPostComponent)
   }
 ];

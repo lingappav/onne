@@ -57,6 +57,7 @@ export class AppComponent implements OnInit {
     { path: '/plan90',            label: '90-Day Plan',       icon: 'rocket_launch',  group: 'business' },
     { path: '/vision',            label: 'Vision & Film',     icon: 'theaters',       group: 'presale' },
     { path: '/storyboard',        label: 'AI Storyboard',     icon: 'movie_filter',   group: 'presale' },
+    { path: '/journal',           label: 'Writer\'s Journal', icon: 'edit_note',      group: 'presale' },
     { path: '/presale',           label: 'Book Pre-Sale',     icon: 'storefront',     group: 'presale' },
     { path: '/admin-panel',       label: 'Admin Panel',       icon: 'shield',         group: 'presale' },
   ];

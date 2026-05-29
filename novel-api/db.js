@@ -16,6 +16,8 @@ function makeStore(name) {
 const pitchesDb       = makeStore('pitches');
 const filmAgreementDb = makeStore('film_agreement');
 const tasksDb         = makeStore('tasks');
+const journalDb       = makeStore('journal_posts');
+const commentsDb      = makeStore('journal_comments');
 
 // ── seed helpers ─────────────────────────────────────────────────────────────
 
@@ -268,4 +270,4 @@ seedPlanIfNeeded();
 
 seedAll();
 
-module.exports = { pitchesDb, filmAgreementDb, tasksDb, planDb, activityDb };
+module.exports = { pitchesDb, filmAgreementDb, tasksDb, planDb, activityDb, journalDb, commentsDb };

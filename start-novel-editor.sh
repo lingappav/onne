@@ -2,6 +2,11 @@
 # Starts both the Novel API backend and the Angular frontend
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 
+# Kill any stale instances
+pkill -f "node server.js" 2>/dev/null
+pkill -f "ng serve" 2>/dev/null
+sleep 1
+
 echo "Starting Novel API backend on http://localhost:3001 ..."
 cd "$ROOT/novel-api" && node server.js &
 API_PID=$!

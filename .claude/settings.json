@@ -54,7 +54,25 @@
       "Skill(claude-api:*)",
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(list\\(d.keys\\(\\)\\)[:15]\\)\")",
       "Bash(ng build *)",
-      "Bash(curl -s http://localhost:4200/storyboard)"
+      "Bash(curl -s http://localhost:4200/storyboard)",
+      "Bash(npx playwright *)",
+      "Bash(npx -y playwright screenshot http://localhost:4200/vision /tmp/vision-hero.png)",
+      "Read(//private/tmp/pw-runner/**)",
+      "Read(//tmp/**)",
+      "Read(//private/tmp/**)",
+      "Bash(echo \"API PID: $!\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('Title:', d['master_novel']['metadata']['title']\\); print\\('Chapters:', len\\(d['master_novel']['chapters']\\)\\)\")",
+      "Bash(curl -s http://localhost:3001/api/journal)",
+      "Bash(python3 -m json.tool)",
+      "Bash(python3 -c \"import sys,json; posts=json.load\\(sys.stdin\\); print\\(f'{len\\(posts\\)} posts'\\); [print\\(p['id']\\) for p in posts]\")",
+      "Bash(python3 -c \"import sys,json; posts=json.load\\(sys.stdin\\); print\\(f'{len\\(posts\\)} posts'\\); [print\\(p['id'], p['date']\\) for p in posts]\")",
+      "Bash(curl -s -X POST http://localhost:3001/api/journal -H 'Content-Type: application/json' -d '{\"title\":\"Test Entry\",\"subtitle\":\"Testing publish\",\"category\":\"process\",\"readingMinutes\":2,\"body\":\"This is a test.\\\\n\\\\nSecond paragraph.\",\"date\":\"2026-05-28\"}')",
+      "Bash(curl -s -X DELETE http://localhost:3001/api/journal/test-entry)",
+      "Bash(curl -s -X PUT http://localhost:3001/api/journal/who-am-i-and-why-am-i-writing-this -H 'Content-Type: application/json' -d '{\"date\":\"2026-05-01\",\"title\":\"Who Am I, and Why Am I Writing This?\",\"subtitle\":\"From engineering dreams to writing The President'\\\\''s Rule — the honest origin story.\",\"readingMinutes\":4}')",
+      "Bash(python3 -c \"import sys,json; p=json.load\\(sys.stdin\\); print\\(p['date'], p['title']\\)\")",
+      "Bash(curl -s -X PUT http://localhost:3001/api/journal/what-s-my-association-with-sunday-cinemas -H 'Content-Type: application/json' -d '{\"date\":\"2026-05-06\",\"title\":\"What'\\\\''s My Association with Sunday Cinemas?\",\"subtitle\":\"From meeting RaJa in 2018 to being inside the novel-first pipeline for a ₹1,000Cr film.\",\"readingMinutes\":3}')",
+      "Bash(curl -s -X PUT http://localhost:3001/api/journal/why-political-subject -H 'Content-Type: application/json' -d '{\"date\":\"2026-05-08\",\"title\":\"Why a Political Subject?\",\"subtitle\":\"On my lifelong love of leadership, governance, and why I have never voted — yet chose to write about democracy.\",\"readingMinutes\":4}')",
+      "Bash(curl -s -X PUT http://localhost:3001/api/journal/what-s-running-in-my-mind -H 'Content-Type: application/json' -d '{\"date\":\"2026-05-26\",\"title\":\"What'\\\\''s Running in My Mind?\",\"subtitle\":\"The end goal, the Tata Cheriyo trilogy, and why I am building a platform with no regrets.\",\"readingMinutes\":3}')"
     ]
   }
 }

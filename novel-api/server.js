@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { BENCHMARK_NOVELS } = require('./benchmark-data');
 const { parseManuscript } = require('./chapter-parser');
-const { pitchesDb, filmAgreementDb, tasksDb, planDb, activityDb } = require('./db');
+const { pitchesDb, filmAgreementDb, tasksDb, planDb, activityDb, journalDb, commentsDb } = require('./db');
 
 const app = express();
 const PORT = 3001;
@@ -1045,6 +1045,132 @@ app.post('/api/plan90/activity', (req, res) => {
 
 app.delete('/api/plan90/activity/:id', (req, res) => {
   activityDb.remove({ _id: req.params.id }, {}, (err, n) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ removed: n });
+  });
+});
+
+// ── journal routes ───────────────────────────────────────────────────────────
+
+// Seed static posts from journal-posts.ts data on first run
+const STATIC_POSTS = require('./journal-seed');
+function seedJournal() {
+  journalDb.count({}, (err, count) => {
+    if (!err && count === 0) journalDb.insert(STATIC_POSTS, () => {});
+  });
+}
+seedJournal();
+
+// List all posts (sorted newest first)
+app.get('/api/journal', (req, res) => {
+  journalDb.find({}).sort({ date: -1 }).exec((err, docs) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(docs);
+  });
+});
+
+// Get single post by slug id
+app.get('/api/journal/:id', (req, res) => {
+  journalDb.findOne({ id: req.params.id }, (err, doc) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (!doc) return res.status(404).json({ error: 'Not found' });
+    res.json(doc);
+  });
+});
+
+// Create new post (writer only)
+app.post('/api/journal', (req, res) => {
+  const post = {
+    ...req.body,
+    id: req.body.id || req.body.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+    date: req.body.date || new Date().toISOString().split('T')[0],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+  journalDb.insert(post, (err, doc) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(doc);
+  });
+});
+
+// Update post (writer only)
+app.put('/api/journal/:id', (req, res) => {
+  const update = { ...req.body, updatedAt: new Date().toISOString() };
+  delete update._id;
+  journalDb.update({ id: req.params.id }, { $set: update }, {}, (err, n) => {
+    if (err) return res.status(500).json({ error: err.message });
+    journalDb.findOne({ id: req.params.id }, (e, doc) => res.json(doc));
+  });
+});
+
+// Delete post (writer only)
+app.delete('/api/journal/:id', (req, res) => {
+  journalDb.remove({ id: req.params.id }, {}, (err, n) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ removed: n });
+  });
+});
+
+// ── journal comments ─────────────────────────────────────────────────────────
+
+// Get comments for a post
+app.get('/api/journal/:id/comments', (req, res) => {
+  commentsDb.find({ postId: req.params.id }).sort({ createdAt: 1 }).exec((err, docs) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(docs);
+  });
+});
+
+// Post a reader comment
+app.post('/api/journal/:id/comments', (req, res) => {
+  const comment = {
+    postId: req.params.id,
+    author: req.body.author || 'Reader',
+    text: req.body.text,
+    type: 'reader',
+    createdAt: new Date().toISOString(),
+  };
+  commentsDb.insert(comment, (err, doc) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(doc);
+  });
+});
+
+// Writer replies to a comment
+app.post('/api/journal/:id/comments/:commentId/reply', (req, res) => {
+  const reply = {
+    postId: req.params.id,
+    replyTo: req.params.commentId,
+    author: 'Vishwa Shambhulingappa',
+    text: req.body.text,
+    type: 'writer',
+    createdAt: new Date().toISOString(),
+  };
+  commentsDb.insert(reply, (err, doc) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(doc);
+  });
+});
+
+// AI reply to a comment
+app.post('/api/journal/:id/comments/:commentId/ai-reply', (req, res) => {
+  const reply = {
+    postId: req.params.id,
+    replyTo: req.params.commentId,
+    author: 'AI Assistant',
+    text: req.body.text,
+    type: 'ai',
+    createdAt: new Date().toISOString(),
+  };
+  commentsDb.insert(reply, (err, doc) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(doc);
+  });
+});
+
+// Delete a comment (writer)
+app.delete('/api/journal/comments/:commentId', (req, res) => {
+  commentsDb.remove({ _id: req.params.commentId }, {}, (err, n) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json({ removed: n });
   });

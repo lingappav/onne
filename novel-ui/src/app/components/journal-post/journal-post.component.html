@@ -1,0 +1,262 @@
+<div class="jp-shell">
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="jp-loading"><div class="jp-spinner"></div></div>
+  }
+
+  @if (!loading && !post) {
+    <div class="jp-not-found">
+      <mat-icon>search_off</mat-icon>
+      <p>Entry not found.</p>
+      <a routerLink="/journal">← Back to Journal</a>
+    </div>
+  }
+
+  @if (!loading && post) {
+
+    <div class="jp-back-row">
+      <a class="jp-back" routerLink="/journal">
+        <mat-icon>arrow_back</mat-icon>
+        Writer's Journal
+      </a>
+      <button class="jp-edit-btn" (click)="startEdit()">
+        <mat-icon>edit</mat-icon>
+        Edit Entry
+      </button>
+    </div>
+
+    <!-- ── Edit form ── -->
+    @if (editing) {
+      <div class="jp-edit-form">
+        <div class="jpef-header">
+          <h3>Editing Entry</h3>
+          <button class="jpef-close" (click)="cancelEdit()"><mat-icon>close</mat-icon></button>
+        </div>
+        <div class="jpef-fields">
+          <input class="jpef-input" [(ngModel)]="editDraft.title" placeholder="Title *" />
+          <input class="jpef-input" [(ngModel)]="editDraft.subtitle" placeholder="Subtitle" />
+          <div class="jpef-row">
+            <input class="jpef-input" [(ngModel)]="editDraft.date" type="date" />
+            <select class="jpef-input" [(ngModel)]="editDraft.category">
+              @for (cat of categories; track cat.id) {
+                <option [value]="cat.id">{{ cat.label }}</option>
+              }
+            </select>
+            <input class="jpef-input small" [(ngModel)]="editDraft.readingMinutes" type="number" min="1" placeholder="Min read" />
+          </div>
+          <textarea
+            class="jpef-body"
+            [(ngModel)]="editDraft.body"
+            rows="20"
+            placeholder="Entry body..."
+          ></textarea>
+          <div class="jpef-actions">
+            <button class="jpef-cancel" (click)="cancelEdit()">Cancel</button>
+            <button class="jpef-save" (click)="saveEdit()" [disabled]="saving || !editDraft.title || !editDraft.body">
+              @if (saving) { Saving… } @else { Save Changes }
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- ── Article ── -->
+    @if (!editing) {
+      <article class="jp-article">
+        <header class="jp-header">
+          <div class="jp-meta">
+            <span class="jp-date">{{ post.date | date:'MMMM d, yyyy' }}</span>
+            <span class="jp-sep">·</span>
+            <span class="jp-cat">{{ categoryLabel(post.category) }}</span>
+            <span class="jp-sep">·</span>
+            <span class="jp-read">{{ post.readingMinutes }} min read</span>
+          </div>
+          <h1 class="jp-title">{{ post.title }}</h1>
+          <p class="jp-subtitle">{{ post.subtitle }}</p>
+          <div class="jp-byline">
+            <div class="jp-avatar">V</div>
+            <div>
+              <span class="jp-author">Vishwa Shambhulingappa</span>
+              <span class="jp-role">Writer, The President's Rule</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="jp-divider"></div>
+
+        <div class="jp-body">
+          @for (para of paragraphs; track $index) {
+            <p>{{ para }}</p>
+          }
+        </div>
+
+        <div class="jp-divider"></div>
+
+        <footer class="jp-footer">
+          <div class="jp-author-card">
+            <div class="jp-avatar large">V</div>
+            <div>
+              <strong>Vishwa Shambhulingappa</strong>
+              <p>Writing <em>The President's Rule</em> — a political novel about an oncologist appointed Special Administrator of Karnataka during President's Rule. Mentored by director Ramenahalli Jagannatha. SWA Member No. 46108.</p>
+            </div>
+          </div>
+        </footer>
+      </article>
+    }
+
+    <!-- ── Conversation panel ── -->
+    @if (!editing) {
+      <section class="jp-conversation">
+        <div class="jpc-header">
+          <mat-icon>forum</mat-icon>
+          <h2>Join the Conversation</h2>
+          <p>Ask the journal a question. Powered by AI — the writer also reads and replies.</p>
+        </div>
+
+        <!-- Comment thread -->
+        @if (commentsLoading) {
+          <div class="jpc-loading"><div class="jp-spinner small"></div></div>
+        }
+
+        @if (!commentsLoading) {
+          <div class="jpc-thread">
+            @for (comment of topLevelComments(); track commentId(comment)) {
+              <div class="jpc-item" [class.ai-root]="comment.type === 'ai'">
+                <div class="jpc-bubble" [class.reader]="comment.type === 'reader'" [class.ai]="comment.type === 'ai'" [class.writer]="comment.type === 'writer'">
+                  <div class="jpc-meta">
+                    <span class="jpc-author">
+                      @if (comment.type === 'reader') { {{ comment.author }} }
+                      @if (comment.type === 'ai') { AI Assistant }
+                      @if (comment.type === 'writer') { Vishwa (Writer) }
+                    </span>
+                    <span class="jpc-badge" [class.badge-reader]="comment.type === 'reader'" [class.badge-ai]="comment.type === 'ai'" [class.badge-writer]="comment.type === 'writer'">
+                      @if (comment.type === 'reader') { Reader }
+                      @if (comment.type === 'ai') { AI }
+                      @if (comment.type === 'writer') { Writer }
+                    </span>
+                    @if (comment.createdAt) {
+                      <span class="jpc-time">{{ comment.createdAt | date:'MMM d, h:mm a' }}</span>
+                    }
+                  </div>
+                  <p class="jpc-text">{{ comment.text }}</p>
+                </div>
+
+                <!-- Nested replies (AI or writer replies to this comment) -->
+                @for (reply of repliesFor(commentId(comment)); track commentId(reply)) {
+                  <div class="jpc-reply">
+                    <div class="jpc-bubble" [class.ai]="reply.type === 'ai'" [class.writer]="reply.type === 'writer'">
+                      <div class="jpc-meta">
+                        <span class="jpc-author">
+                          @if (reply.type === 'ai') { AI Assistant }
+                          @if (reply.type === 'writer') { Vishwa (Writer) }
+                        </span>
+                        <span class="jpc-badge" [class.badge-ai]="reply.type === 'ai'" [class.badge-writer]="reply.type === 'writer'">
+                          @if (reply.type === 'ai') { AI }
+                          @if (reply.type === 'writer') { Writer }
+                        </span>
+                      </div>
+                      <p class="jpc-text">{{ reply.text }}</p>
+                    </div>
+                  </div>
+                }
+
+                <!-- Writer reply toggle -->
+                @if (comment.type === 'reader') {
+                  <div class="jpc-reply-action">
+                    <button class="jpc-reply-btn" (click)="toggleReply(commentId(comment))">
+                      <mat-icon>reply</mat-icon>
+                      @if (replyOpen[commentId(comment)]) { Cancel } @else { Writer Reply }
+                    </button>
+                    @if (replyOpen[commentId(comment)]) {
+                      <div class="jpc-reply-form">
+                        <textarea
+                          class="jpc-reply-input"
+                          [(ngModel)]="replyDrafts[commentId(comment)]"
+                          placeholder="Write your reply as Vishwa..."
+                          rows="3"
+                        ></textarea>
+                        <button
+                          class="jpc-reply-submit"
+                          (click)="submitReply(commentId(comment))"
+                          [disabled]="replySaving[commentId(comment)] || !(replyDrafts[commentId(comment)] || '').trim()"
+                        >
+                          @if (replySaving[commentId(comment)]) { Posting… } @else { Post Reply }
+                        </button>
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            }
+
+            @if (topLevelComments().length === 0) {
+              <div class="jpc-empty">No comments yet — be the first to ask a question.</div>
+            }
+          </div>
+        }
+
+        <!-- AI chat input -->
+        <div class="jpc-input-area">
+          <div class="jpc-input-label">
+            <mat-icon>auto_awesome</mat-icon>
+            Ask a question about this entry
+          </div>
+          <input
+            class="jpc-name-input"
+            [(ngModel)]="readerName"
+            placeholder="Your name (optional)"
+          />
+          <div class="jpc-input-row">
+            <textarea
+              class="jpc-question-input"
+              [(ngModel)]="readerInput"
+              placeholder="What question does this journal entry raise for you?"
+              rows="3"
+              (keydown.control.enter)="sendAiMessage()"
+            ></textarea>
+            <button
+              class="jpc-send-btn"
+              (click)="sendAiMessage()"
+              [disabled]="aiThinking || !readerInput.trim()"
+            >
+              @if (aiThinking) {
+                <div class="jp-spinner tiny"></div>
+              } @else {
+                <mat-icon>send</mat-icon>
+              }
+            </button>
+          </div>
+          <p class="jpc-hint">Ctrl+Enter to send · Responses are AI-generated · The writer reads all questions</p>
+        </div>
+
+      </section>
+    }
+
+    <!-- Prev / Next navigation -->
+    <nav class="jp-nav">
+      <div class="jp-nav-item prev">
+        @if (prev) {
+          <a [routerLink]="['/journal', prev.id]">
+            <span class="jp-nav-dir"><mat-icon>arrow_back</mat-icon> Previous</span>
+            <span class="jp-nav-title">{{ prev.title }}</span>
+          </a>
+        }
+      </div>
+      <a class="jp-nav-all" routerLink="/journal">
+        <mat-icon>list</mat-icon>
+        All Entries
+      </a>
+      <div class="jp-nav-item next">
+        @if (next) {
+          <a [routerLink]="['/journal', next.id]">
+            <span class="jp-nav-dir">Next <mat-icon>arrow_forward</mat-icon></span>
+            <span class="jp-nav-title">{{ next.title }}</span>
+          </a>
+        }
+      </div>
+    </nav>
+
+  }
+
+</div>

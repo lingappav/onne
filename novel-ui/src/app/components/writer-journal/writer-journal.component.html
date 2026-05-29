@@ -1,0 +1,111 @@
+<div class="wj-shell">
+
+  <div class="wj-header">
+    <div class="wj-header-left">
+      <div class="wj-eyebrow">
+        <mat-icon>edit_note</mat-icon>
+        Writer's Journal
+      </div>
+      <h1 class="wj-title">Vishwa Shambhulingappa</h1>
+      <p class="wj-desc">
+        Daily notes from the writing of <em>The President's Rule</em> — on process, research,
+        craft, and why the topics we choose to write about matter when scale is involved.
+      </p>
+    </div>
+    <div class="wj-header-right">
+      <div class="wj-stat">
+        <span class="ws-num">{{ posts.length }}</span>
+        <span class="ws-label">Entries</span>
+      </div>
+      @if (posts[0]) {
+        <div class="wj-stat">
+          <span class="ws-num">{{ posts[0].date | date:'MMM d' }}</span>
+          <span class="ws-label">Latest</span>
+        </div>
+      }
+      <button class="wj-new-btn" (click)="openNewForm()">
+        <mat-icon>add</mat-icon>
+        New Entry
+      </button>
+    </div>
+  </div>
+
+  <!-- New post form -->
+  @if (showNewForm) {
+    <div class="wj-new-form">
+      <div class="wnf-header">
+        <h3>New Journal Entry</h3>
+        <button class="wnf-close" (click)="cancelNew()"><mat-icon>close</mat-icon></button>
+      </div>
+      <div class="wnf-fields">
+        <input  class="wnf-input" [(ngModel)]="newPost.title"    placeholder="Title *" />
+        <input  class="wnf-input" [(ngModel)]="newPost.subtitle" placeholder="Subtitle — one sentence summary" />
+        <div class="wnf-row">
+          <input  class="wnf-input" [(ngModel)]="newPost.date"   type="date" />
+          <select class="wnf-input" [(ngModel)]="newPost.category">
+            <option value="process">Writing Process</option>
+            <option value="research">Research</option>
+            <option value="craft">Craft</option>
+            <option value="democracy">Democracy</option>
+            <option value="community">Community</option>
+          </select>
+          <input  class="wnf-input small" [(ngModel)]="newPost.readingMinutes" type="number" min="1" placeholder="Min read" />
+        </div>
+        <textarea
+          class="wnf-body"
+          [(ngModel)]="newPost.body"
+          placeholder="Write your entry here. Separate paragraphs with a blank line."
+          rows="14"
+        ></textarea>
+        <div class="wnf-actions">
+          <button class="wnf-cancel" (click)="cancelNew()">Cancel</button>
+          <button class="wnf-submit" (click)="submitNew()" [disabled]="saving || !newPost.title || !newPost.body">
+            @if (saving) { Saving… } @else { Publish Entry }
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Category filter -->
+  <div class="wj-filters">
+    @for (cat of categories; track cat.id) {
+      <button
+        class="wj-filter-btn"
+        [class.active]="activeCategory === cat.id"
+        (click)="activeCategory = cat.id"
+      >{{ cat.label }}</button>
+    }
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="wj-loading"><div class="wj-spinner"></div></div>
+  }
+
+  <!-- Post list -->
+  @if (!loading) {
+    <div class="wj-list">
+      @for (post of filtered; track post.id) {
+        <a class="wj-post-card" [routerLink]="['/journal', post.id]">
+          <div class="wpc-meta">
+            <span class="wpc-date">{{ post.date | date:'MMMM d, yyyy' }}</span>
+            <span class="wpc-sep">·</span>
+            <span class="wpc-cat">{{ categoryLabel(post.category) }}</span>
+            <span class="wpc-sep">·</span>
+            <span class="wpc-read">{{ post.readingMinutes }} min read</span>
+          </div>
+          <h2 class="wpc-title">{{ post.title }}</h2>
+          <p class="wpc-subtitle">{{ post.subtitle }}</p>
+          <div class="wpc-footer">
+            <span class="wpc-cta">Read entry <mat-icon>arrow_forward</mat-icon></span>
+          </div>
+        </a>
+      }
+      @if (filtered.length === 0) {
+        <div class="wj-empty">No entries in this category yet.</div>
+      }
+    </div>
+  }
+
+</div>

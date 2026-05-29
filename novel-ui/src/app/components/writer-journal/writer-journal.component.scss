@@ -1,0 +1,298 @@
+.wj-shell {
+  padding: 32px 40px;
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+// Header
+.wj-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--fd-border);
+}
+
+.wj-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--fd-gold);
+  font-weight: 700;
+  margin-bottom: 10px;
+  mat-icon { font-size: 15px; width: 15px; height: 15px; }
+}
+
+.wj-title {
+  font-size: 26px;
+  font-weight: 800;
+  margin: 0 0 10px;
+  color: var(--fd-text-primary);
+}
+
+.wj-desc {
+  font-size: 13px;
+  color: var(--fd-text-secondary);
+  line-height: 1.65;
+  margin: 0;
+  max-width: 560px;
+  em { color: var(--fd-gold); font-style: italic; }
+}
+
+.wj-header-right {
+  display: flex;
+  gap: 24px;
+  flex-shrink: 0;
+  padding-top: 4px;
+}
+
+.wj-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.ws-num {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--fd-text-primary);
+  font-family: var(--fd-mono);
+  line-height: 1;
+}
+
+.ws-label {
+  font-size: 10px;
+  color: var(--fd-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+// Filters
+.wj-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.wj-filter-btn {
+  font-size: 12px;
+  color: var(--fd-text-muted);
+  background: var(--fd-bg-panel);
+  border: 1px solid var(--fd-border);
+  border-radius: 5px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: color 0.1s, border-color 0.1s, background 0.1s;
+
+  &:hover { color: var(--fd-text-primary); border-color: var(--fd-border-strong); }
+  &.active {
+    color: #1a1a1a;
+    background: var(--fd-gold);
+    border-color: var(--fd-gold);
+    font-weight: 700;
+  }
+}
+
+// Post list
+.wj-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.wj-post-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--fd-border);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.1s;
+
+  &:first-child { padding-top: 0; }
+  &:last-child  { border-bottom: none; }
+  &:hover .wpc-title { color: var(--fd-gold); }
+  &:hover .wpc-cta   { color: var(--fd-gold); }
+}
+
+.wpc-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--fd-text-muted);
+  flex-wrap: wrap;
+}
+
+.wpc-sep   { opacity: 0.4; }
+.wpc-date  { font-family: var(--fd-mono); }
+.wpc-cat   { color: var(--fd-gold); font-weight: 600; text-transform: capitalize; }
+.wpc-read  {}
+
+.wpc-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--fd-text-primary);
+  margin: 0;
+  line-height: 1.25;
+  transition: color 0.12s;
+}
+
+.wpc-subtitle {
+  font-size: 13px;
+  color: var(--fd-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 680px;
+}
+
+.wpc-footer {
+  margin-top: 4px;
+}
+
+.wpc-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fd-text-muted);
+  transition: color 0.12s;
+  mat-icon { font-size: 14px; width: 14px; height: 14px; }
+}
+
+.wj-empty {
+  padding: 40px 0;
+  color: var(--fd-text-muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.wj-new-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1a1a1a;
+  background: var(--fd-gold);
+  border: none;
+  border-radius: 5px;
+  padding: 8px 14px;
+  cursor: pointer;
+  mat-icon { font-size: 16px; width: 16px; height: 16px; }
+  &:hover { opacity: 0.88; }
+}
+
+.wj-loading {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+.wj-spinner {
+  width: 24px; height: 24px;
+  border: 2px solid var(--fd-border-strong);
+  border-top-color: var(--fd-gold);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+// New post form
+.wj-new-form {
+  background: var(--fd-bg-panel);
+  border: 1px solid var(--fd-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.wnf-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--fd-border);
+  h3 { font-size: 14px; font-weight: 700; margin: 0; color: var(--fd-text-primary); }
+}
+
+.wnf-close {
+  background: none; border: none; cursor: pointer;
+  color: var(--fd-text-muted);
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+  &:hover { color: var(--fd-text-primary); }
+}
+
+.wnf-fields {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wnf-row {
+  display: flex;
+  gap: 10px;
+  .wnf-input.small { width: 100px; flex-shrink: 0; }
+}
+
+.wnf-input {
+  width: 100%;
+  background: var(--fd-bg-deep);
+  border: 1px solid var(--fd-border);
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-size: 13px;
+  color: var(--fd-text-primary);
+  font-family: inherit;
+  box-sizing: border-box;
+  &:focus { outline: none; border-color: var(--fd-gold); }
+  &::placeholder { color: var(--fd-text-muted); }
+}
+
+select.wnf-input { flex: 1; }
+
+.wnf-body {
+  width: 100%;
+  background: var(--fd-bg-deep);
+  border: 1px solid var(--fd-border);
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 14px;
+  color: var(--fd-text-primary);
+  font-family: inherit;
+  line-height: 1.7;
+  resize: vertical;
+  box-sizing: border-box;
+  &:focus { outline: none; border-color: var(--fd-gold); }
+  &::placeholder { color: var(--fd-text-muted); }
+}
+
+.wnf-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.wnf-cancel {
+  font-size: 13px; color: var(--fd-text-muted);
+  background: none; border: 1px solid var(--fd-border);
+  border-radius: 5px; padding: 8px 16px; cursor: pointer;
+  &:hover { color: var(--fd-text-primary); }
+}
+
+.wnf-submit {
+  font-size: 13px; font-weight: 700; color: #1a1a1a;
+  background: var(--fd-gold); border: none;
+  border-radius: 5px; padding: 8px 20px; cursor: pointer;
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+  &:not(:disabled):hover { opacity: 0.88; }
+}
