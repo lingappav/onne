@@ -81,7 +81,15 @@
       "Bash(curl -sI \"https://image.pollinations.ai/prompt/test?width=128&height=128&nologo=true\")",
       "Bash(curl -sI \"https://image.pollinations.ai/prompt/Indian%20oncologist%20at%20midnight?width=1280&height=720&nologo=true\")",
       "Bash(grep -n 'crudSave\\\\|deepMerge\\\\|$set\\\\|Object.assign' /Users/tatacheriyo/Documents/onne/novel-api/server.js)",
-      "Bash(grep -n 'section-h2\\\\|section-desc\\\\|--gold\\\\|$gold\\\\|section-label\\\\b' src/app/components/vision-landing/vision-landing.component.scss)"
+      "Bash(grep -n 'section-h2\\\\|section-desc\\\\|--gold\\\\|$gold\\\\|section-label\\\\b' src/app/components/vision-landing/vision-landing.component.scss)",
+      "Bash(node -e 'require\\(\"./novel-api/journal-seed.js\"\\); console.log\\(\"seed parses OK, total posts:\", require\\(\"./novel-api/journal-seed.js\"\\).length\\)')",
+      "Bash(node_modules/.bin/tsc --noEmit -p tsconfig.app.json)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(node -e 'let d=\"\";process.stdin.on\\(\"data\",c=>d+=c\\).on\\(\"end\",\\(\\)=>{try{const a=JSON.parse\\(d\\);console.log\\(\"RUNNING server returned\",a.length,\"posts\"\\);const e=a.filter\\(p=>p.id.startsWith\\(\"engineering-\"\\)\\);console.log\\(\"engineering posts visible:\",e.length\\);}catch\\(e\\){console.log\\(\"parse err; raw:\",d.slice\\(0,150\\)\\)}}\\)')",
+      "Bash(node -e 'let d=\"\";process.stdin.on\\(\"data\",c=>d+=c\\).on\\(\"end\",\\(\\)=>{const a=JSON.parse\\(d\\);console.log\\(\"RUNNING server now returns\",a.length,\"posts\"\\);console.log\\(\"Engineering posts:\"\\);a.filter\\(p=>p.id.startsWith\\(\"engineering-\"\\)\\).forEach\\(p=>console.log\\(\"  [\"+p.category+\"]\",p.title\\)\\);}\\)')",
+      "Bash(node -e 'const p=require\\(\"/Users/tatacheriyo/Documents/onne/novel-api/journal-seed.js\"\\);console.log\\(\"seed OK,\",p.length,\"posts. Engineering dates:\"\\);p.filter\\(x=>x.id.startsWith\\(\"engineering-\"\\)\\).forEach\\(x=>console.log\\(\" \",x.id,x.date\\)\\)')",
+      "Bash(node -e 'let d=\"\";process.stdin.on\\(\"data\",c=>d+=c\\).on\\(\"end\",\\(\\)=>{const a=JSON.parse\\(d\\);console.log\\(\"Feed order \\(newest-first\\), top 6:\"\\);a.slice\\(0,6\\).forEach\\(\\(p,i\\)=>console.log\\(\" \",i+1+\".\",p.date,\"|\",p.title\\)\\);}\\)')",
+      "Bash(node -e 'let d=\"\";process.stdin.on\\(\"data\",c=>d+=c\\).on\\(\"end\",\\(\\)=>{const a=JSON.parse\\(d\\);console.log\\(\"ALL posts in feed:\"\\);a.forEach\\(p=>{const keep=p.id.startsWith\\(\"engineering-\"\\);console.log\\(\" \",keep?\"KEEP\":\"DELETE\",\"|\",p.date,\"|\",p.id\\);}\\);}\\)')"
     ],
     "additionalDirectories": [
       "/tmp"
