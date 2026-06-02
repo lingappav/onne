@@ -7,10 +7,11 @@
       <span>Sunday Cinemas</span>
     </div>
     <div class="nav-links">
-      <a href="#mission">Mission</a>
-      <a href="#novel">The Novel</a>
-      <a href="#model">Revenue Model</a>
-      <a href="#roadmap">Roadmap</a>
+      <a (click)="scrollTo('mission')">Mission</a>
+      <a (click)="scrollTo('novel')">The Novel</a>
+      <a (click)="scrollTo('review-loop')">Review Loop</a>
+      <a (click)="scrollTo('model')">Revenue Model</a>
+      <a (click)="scrollTo('roadmap')">Roadmap</a>
       <a routerLink="/storyboard">Storyboard</a>
     </div>
     <a class="nav-cta" routerLink="/login">Join the 1,000</a>
@@ -45,7 +46,7 @@
           <mat-icon>people</mat-icon>
           Become a Founding Reader · ₹1,000
         </a>
-        <a class="btn-cta-ghost" href="#mission">
+        <a class="btn-cta-ghost" (click)="scrollTo('mission')">
           <mat-icon>expand_more</mat-icon>
           Read the Vision
         </a>
@@ -215,6 +216,46 @@
     </div>
   </section>
 
+  <!-- ══ THE DEMOCRATIC AI REVIEW LOOP ════════════════════════════════════ -->
+  <section class="vl-review-loop" id="review-loop">
+    <div class="section-inner">
+      <div class="section-label">
+        <mat-icon>groups</mat-icon>
+        The Democratic AI Review Loop · Why Your ₹1,000 Buys a Seat at the Table
+      </div>
+      <h2 class="section-h2">You Don't Just Read the Novel.<br><span>You Make It RIGHT.</span></h2>
+      <p class="section-desc">
+        <em>The President's Rule</em> is a political subject — and in a democracy, the people must
+        participate. So we don't write this novel behind a closed door. We send the complete first
+        draft to 1,000 Founding Readers and let democracy shape the story, chapter by chapter.
+        <strong>We won't ask you for suggestions. We ask you one honest question: how is it?</strong>
+      </p>
+
+      <div class="rl-steps">
+        @for (step of reviewLoop; track step.step) {
+          <div class="rl-step">
+            <div class="rl-step-num">{{ step.step }}</div>
+            <div class="rl-step-card">
+              <mat-icon>{{ step.icon }}</mat-icon>
+              <h4>{{ step.title }}</h4>
+              <p>{{ step.body }}</p>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="rl-loop-note">
+        <mat-icon>autorenew</mat-icon>
+        <p>
+          <strong>One reader is a voice. One thousand readers are a mandate.</strong>
+          This is an iterative loop: write → review → consolidate → restructure → next chapter.
+          Vishwa Shambhulingappa has 1,000 people invested in making the novel right —
+          and every chapter you touch is a chapter the nation will read.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- ══ THE PROCESS ════════════════════════════════════════════════════════ -->
   <section class="vl-process" id="process">
     <div class="section-inner">
@@ -268,14 +309,74 @@
         }
       </div>
 
+      <!-- The 1% profit-share math — transparent ROI -->
+      <div class="roi-math-card">
+        <div class="roi-math-head">
+          <mat-icon>calculate</mat-icon>
+          <div>
+            <h3>The Math — In Full Transparency</h3>
+            <p>The ₹10 Lakh seed fund is a seed investment in Sunday Cinemas, granting the 1,000 readers a <strong>1% share of the film's profit</strong>.</p>
+          </div>
+        </div>
+        <div class="roi-math-rows">
+          <div class="roi-row"><span>Your investment</span><span>₹1,000</span></div>
+          <div class="roi-row"><span>Total seed fund · 1,000 readers</span><span>₹10 Lakh</span></div>
+          <div class="roi-row"><span>Your collective stake</span><span>1% of film profit</span></div>
+          <div class="roi-row"><span>If the film makes</span><span>₹1,000 Cr · ₹500 Cr profit</span></div>
+          <div class="roi-row"><span>The 1% share</span><span>₹5 Crore</span></div>
+          <div class="roi-row highlight"><span>Your return per person</span><span>₹50,000</span></div>
+        </div>
+        <p class="roi-math-honest">
+          A ₹1,000 → ₹50,000 trajectory is a moonshot — and we name it as one, honestly.
+          Let's assume the upside never comes. <strong>First, you are building a strong community
+          to brainstorm and shape the novel at the earliest stage.</strong> The 50× return is the
+          dividend of getting the story right.
+        </p>
+      </div>
+
       <div class="comparable-section">
-        <h3>Comparable Films That Validate the Ceiling</h3>
-        <div class="comparable-grid">
-          @for (c of comparables; track c.title) {
-            <div class="comp-card">
-              <span class="comp-flag">{{ c.flag }}</span>
-              <h4>{{ c.title }}</h4>
-              <p>{{ c.detail }}</p>
+        <h3>The Giants Have Already Proven the Ceiling</h3>
+        <div class="comparable-prose">
+          <p>
+            We are not guessing at the upside. The path from a single morally complex protagonist
+            to a global audience has been walked before — and the films that walked it are some of
+            the most successful stories of the modern era. <strong>The White Tiger</strong> turned a
+            Booker Prize into a Netflix global release, proving that literary awards accelerate OTT
+            acquisition. <strong>Gangubai Kathiawadi</strong> took book-first source material to
+            ₹209 Crore at the box office, the Bhansali template for literary adaptation at scale.
+          </p>
+          <p>
+            The genre comparison sits even closer. <strong>The Kerala Story</strong> crossed
+            ₹290 Crore as politically charged, content-driven cinema carried by word of mouth rather
+            than a star — exactly the lane <em>The President's Rule</em> occupies. Add a superstar to
+            that lane and you reach <strong>Sarkar</strong>, the ₹250 Crore-plus political drama that
+            marks the upper ceiling when this novel has its A-list cast moment.
+          </p>
+          <p>
+            And the prestige ceiling is just as real. <strong>Wolf Hall</strong> showed that the
+            administrative-procedural political drama is premium global OTT content, while
+            <strong>All the King's Men</strong> — Pulitzer Prize, three film adaptations — is the
+            literary ancestor of this story. Dr. Sampath Kumar is its photographic negative: the man
+            who refuses everything Willie Stark embraced. The ceiling isn't a hope. The giants have
+            already built it.
+          </p>
+        </div>
+      </div>
+
+      <!-- Where the seed fund goes — research -->
+      <div class="research-section">
+        <h3>Where Your Seed Money Goes — Right Now</h3>
+        <p class="research-intro">
+          The fund-raising is not just the money. Beyond the film, your seed money immediately
+          funds deep research into the subjects this novel must get right — the work the masses
+          need in order to rethink and find guidelines.
+        </p>
+        <div class="research-grid">
+          @for (t of researchTopics; track t.title) {
+            <div class="research-card">
+              <mat-icon>{{ t.icon }}</mat-icon>
+              <h4>{{ t.title }}</h4>
+              <p>{{ t.detail }}</p>
             </div>
           }
         </div>
@@ -369,12 +470,13 @@
 
       <div class="founders-cta-strip">
         <div class="fcs-text">
-          <strong>Only 1,000 spots.</strong> The author reviews every request personally.
-          Once the founding 1,000 is complete, this access closes — permanently.
+          <strong>First come, first served.</strong> No application. No waiting list. No committee.
+          We honour the decisive initiators. The moment 1,000 seats are claimed, the doors lock —
+          permanently. The slow will read the book; the first will have written it.
         </div>
         <a class="btn-cta-primary" routerLink="/login">
           <mat-icon>how_to_reg</mat-icon>
-          Claim Your Spot
+          Claim Your Seat
         </a>
       </div>
     </div>
@@ -473,13 +575,13 @@
     <div class="fcta-inner">
       <div class="fcta-badge">
         <mat-icon>rocket_launch</mat-icon>
-        Limited to 1,000 Founding Members
+        First Come, First Served · Only 1,000 Seats
       </div>
       <h2>The First Frame Starts Here.</h2>
       <p>
-        A superstar. A director. A ₹1,000Cr release. All of it begins with
-        1,000 people who believed in the story before it was finished.
-        The author reviews every request personally. There are no exceptions.
+        A democratic review board. A director. A ₹1,000Cr release. All of it begins with
+        1,000 decisive people who shaped the story before it was finished — ₹1,000 each,
+        a 1% profit share, and a real voice in the novel. Once the doors lock, they stay locked.
       </p>
       <div class="fcta-btn-row">
         <a class="btn-cta-primary large" routerLink="/login">

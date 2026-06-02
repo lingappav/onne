@@ -6,7 +6,7 @@
       <mat-icon class="ps-logo-icon">auto_stories</mat-icon>
       <div>
         <div class="ps-title">The President's Rule</div>
-        <div class="ps-subtitle">Book Pre-sale · AI Animated Film Fund</div>
+        <div class="ps-subtitle">Become a Founding Reader · Democratic Review Board · 1% Film Profit Share</div>
       </div>
     </div>
     @if (user) {
@@ -53,8 +53,11 @@
           <span class="pf-pending">{{ stats.totalPending }} pending review</span>
         </div>
         <div class="pf-mission">
-          Every $10 book sold goes directly toward producing a 100% AI-animated movie of this novel.
-          1,000 backers = $10,000 production budget.
+          <strong>First come, first served — only 1,000 seats.</strong> Your contribution makes you a
+          Founding Reader on the democratic review board: you review Vishwa's weekly drafts, AI consolidates
+          all 1,000 reviews, and the novel is made RIGHT chapter by chapter. The seed fund also grants the
+          1,000 readers a 1% share of the film's profit — and funds deep research into President's Rule,
+          One Nation One Election, and the threats to democracy. Once the doors lock, they stay locked.
         </div>
       </div>
     }
@@ -64,8 +67,8 @@
       <!-- Pre-order form -->
       <div class="ps-form-card">
         <div class="card-header">
-          <mat-icon>shopping_cart</mat-icon>
-          <span>Pre-Order Your Copy</span>
+          <mat-icon>how_to_reg</mat-icon>
+          <span>Claim Your Founding Reader Seat</span>
         </div>
 
         @if (hasPendingOrApproved) {
@@ -94,10 +97,10 @@
             </div>
 
             <div class="form-row col">
-              <label>Message to author <span class="optional">(optional)</span></label>
+              <label>Your review pledge to the author <span class="optional">(optional)</span></label>
               <textarea
                 [(ngModel)]="message"
-                placeholder="Why this story resonates with you, or anything you'd like to share…"
+                placeholder="As a Founding Reader, what perspective will you bring to the weekly reviews? Tell Vishwa why this story — and this democracy — matters to you…"
                 rows="4"
                 maxlength="500"
               ></textarea>
@@ -108,13 +111,14 @@
               @if (submitting) {
                 <span class="btn-spinner"></span> Submitting…
               } @else {
-                <mat-icon>send</mat-icon> Request Pre-Order
+                <mat-icon>send</mat-icon> Claim My Founding Seat
               }
             </button>
 
             <p class="form-note">
-              Payment is <strong>not charged now</strong>. Once the author approves your request,
-              you'll receive payment instructions via email.
+              Payment is <strong>not charged now</strong>. Seats are <strong>first come, first served</strong> —
+              once the author approves your request, you'll receive payment instructions via email and join
+              the democratic review board.
             </p>
           </div>
         }

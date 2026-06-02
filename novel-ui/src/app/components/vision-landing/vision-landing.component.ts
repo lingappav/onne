@@ -12,11 +12,55 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class VisionLandingComponent {
 
+  scrollTo(id: string) {
+    // fd-main is the scrolling container; window-level scrollIntoView doesn't work inside it
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
   novelStats = [
     { num: '25', label: 'Chapters' },
     { num: '72K', label: 'Words' },
     { num: '3', label: 'Acts' },
     { num: '78/100', label: 'Craft Score' },
+  ];
+
+  // ── The Democratic AI Review Loop — the core mechanic of the pitch ──
+  reviewLoop = [
+    {
+      step: '01',
+      icon: 'edit',
+      title: 'Vishwa Writes the Draft',
+      body: 'Vishwa Shambhulingappa writes the complete first draft of a chapter with total creative freedom — confronting the most contemporary issues alive in our society today.'
+    },
+    {
+      step: '02',
+      icon: 'lock_clock',
+      title: 'A 1-Week Review Window Opens',
+      body: 'The draft is sent to all 1,000 Founding Readers and stays open for exactly one week. This is the most democratic way to propose ideas and pressure-test political views.'
+    },
+    {
+      step: '03',
+      icon: 'rate_review',
+      title: 'The Concerned Reader Responds',
+      body: 'You are a leader inside democracy. You answer a focused questionnaire and give your read on the situations in the story — in a restricted word count. We don\'t ask for suggestions. We ask: how is it? That discipline is what shapes the novel in the right direction.'
+    },
+    {
+      step: '04',
+      icon: 'smart_toy',
+      title: 'AI Consolidates 1,000 Reviews',
+      body: 'AI compiles all 1,000 reviews into a single, honest signal — and the novel is rewritten and restructured around it, chapter by chapter. Then we move to the next chapter. This is the iterative loop that makes the novel RIGHT.'
+    },
+  ];
+
+  // ── Where the seed fund goes — research the ₹10 Lakh funds right now ──
+  researchTopics = [
+    { icon: 'account_balance', title: 'President\'s Rule', detail: 'The constitutional mechanism at the heart of the story — studied in depth.' },
+    { icon: 'how_to_vote', title: 'One Nation, One Election', detail: 'Its real consequences for the republic, researched first-hand.' },
+    { icon: 'warning', title: 'Democracy & Its Threats', detail: 'The modern fault lines that test a democracy — and how it can hold.' },
+    { icon: 'workspace_premium', title: 'First Principles of Public Leadership', detail: 'What real power and superpower-scale leadership actually demand.' },
+    { icon: 'local_fire_department', title: 'Elections & Chaos', detail: 'The machinery of elections and the chaos that surrounds them.' },
+    { icon: 'menu_book', title: 'Chanakya\'s Dandaneethi', detail: 'Statecraft from the source — and much more the masses need to rethink.' },
   ];
 
   revenueModel = [

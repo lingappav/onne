@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -72,6 +73,11 @@ export class AppComponent implements OnInit {
     { id: 'presale',       label: 'Presale & Funding' },
   ];
 
+  // Groups collapsed by default to save space; active route's group auto-expands
+  collapsedGroups: Record<string, boolean> = {
+    craft: true, analysis: true, intelligence: true, business: true
+  };
+
   constructor(
     private novelService: NovelService,
     private snack: MatSnackBar,
@@ -90,6 +96,9 @@ export class AppComponent implements OnInit {
       if (n?.metadata?.title) this.novelTitle = n.metadata.title;
     });
     this.authService.user$.subscribe(u => this.currentUser = u);
+    this.expandActiveGroup();
+    this.router.events.pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(() => this.expandActiveGroup());
   }
 
   signOut() {
@@ -100,6 +109,21 @@ export class AppComponent implements OnInit {
 
   navItemsForGroup(g: string): NavItem[] {
     return this.navItems.filter(i => i.group === g);
+  }
+
+  isGroupCollapsed(id: string): boolean {
+    return !!this.collapsedGroups[id];
+  }
+
+  toggleGroup(id: string) {
+    this.collapsedGroups[id] = !this.collapsedGroups[id];
+  }
+
+  // Expand the group that contains the current route
+  private expandActiveGroup() {
+    const url = this.router.url;
+    const active = this.navItems.find(i => url.startsWith(i.path));
+    if (active?.group) this.collapsedGroups[active.group] = false;
   }
 
   get latestVersion(): string {

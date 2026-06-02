@@ -72,7 +72,19 @@
       "Bash(python3 -c \"import sys,json; p=json.load\\(sys.stdin\\); print\\(p['date'], p['title']\\)\")",
       "Bash(curl -s -X PUT http://localhost:3001/api/journal/what-s-my-association-with-sunday-cinemas -H 'Content-Type: application/json' -d '{\"date\":\"2026-05-06\",\"title\":\"What'\\\\''s My Association with Sunday Cinemas?\",\"subtitle\":\"From meeting RaJa in 2018 to being inside the novel-first pipeline for a ₹1,000Cr film.\",\"readingMinutes\":3}')",
       "Bash(curl -s -X PUT http://localhost:3001/api/journal/why-political-subject -H 'Content-Type: application/json' -d '{\"date\":\"2026-05-08\",\"title\":\"Why a Political Subject?\",\"subtitle\":\"On my lifelong love of leadership, governance, and why I have never voted — yet chose to write about democracy.\",\"readingMinutes\":4}')",
-      "Bash(curl -s -X PUT http://localhost:3001/api/journal/what-s-running-in-my-mind -H 'Content-Type: application/json' -d '{\"date\":\"2026-05-26\",\"title\":\"What'\\\\''s Running in My Mind?\",\"subtitle\":\"The end goal, the Tata Cheriyo trilogy, and why I am building a platform with no regrets.\",\"readingMinutes\":3}')"
+      "Bash(curl -s -X PUT http://localhost:3001/api/journal/what-s-running-in-my-mind -H 'Content-Type: application/json' -d '{\"date\":\"2026-05-26\",\"title\":\"What'\\\\''s Running in My Mind?\",\"subtitle\":\"The end goal, the Tata Cheriyo trilogy, and why I am building a platform with no regrets.\",\"readingMinutes\":3}')",
+      "Bash(python3 -c \"import sys,json; [print\\(json.dumps\\(json.loads\\(l\\), indent=2\\)[:300]\\) for l in sys.stdin]\")",
+      "Bash(xargs cat)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(list\\(d.keys\\(\\)\\)[:10]\\)\")",
+      "Bash(python3)",
+      "Bash(head -243 /Users/tatacheriyo/Documents/onne/novel-ui/src/app/services/claude.service.ts > /tmp/claude_service_head.ts *)",
+      "Bash(curl -sI \"https://image.pollinations.ai/prompt/test?width=128&height=128&nologo=true\")",
+      "Bash(curl -sI \"https://image.pollinations.ai/prompt/Indian%20oncologist%20at%20midnight?width=1280&height=720&nologo=true\")",
+      "Bash(grep -n 'crudSave\\\\|deepMerge\\\\|$set\\\\|Object.assign' /Users/tatacheriyo/Documents/onne/novel-api/server.js)",
+      "Bash(grep -n 'section-h2\\\\|section-desc\\\\|--gold\\\\|$gold\\\\|section-label\\\\b' src/app/components/vision-landing/vision-landing.component.scss)"
+    ],
+    "additionalDirectories": [
+      "/tmp"
     ]
   }
 }

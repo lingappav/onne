@@ -40,5 +40,341 @@
     "timestamp": "2026-05-24T08:17:03.860Z",
     "description": "Updated chapter CH_06",
     "parent": "v005"
+  },
+  {
+    "version": "v007",
+    "filename": "v007_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.898Z",
+    "description": "Updated chapter CH_02",
+    "parent": "v006"
+  },
+  {
+    "version": "v008",
+    "filename": "v008_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.900Z",
+    "description": "Updated chapter CH_03",
+    "parent": "v007"
+  },
+  {
+    "version": "v009",
+    "filename": "v009_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.903Z",
+    "description": "Updated chapter CH_04",
+    "parent": "v008"
+  },
+  {
+    "version": "v010",
+    "filename": "v010_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.905Z",
+    "description": "Updated chapter CH_05",
+    "parent": "v009"
+  },
+  {
+    "version": "v011",
+    "filename": "v011_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.907Z",
+    "description": "Updated chapter CH_06",
+    "parent": "v010"
+  },
+  {
+    "version": "v012",
+    "filename": "v012_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.909Z",
+    "description": "Updated chapter CH_07",
+    "parent": "v011"
+  },
+  {
+    "version": "v013",
+    "filename": "v013_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.911Z",
+    "description": "Updated chapter CH_08",
+    "parent": "v012"
+  },
+  {
+    "version": "v014",
+    "filename": "v014_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.913Z",
+    "description": "Updated chapter CH_09",
+    "parent": "v013"
+  },
+  {
+    "version": "v015",
+    "filename": "v015_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.915Z",
+    "description": "Updated chapter CH_10",
+    "parent": "v014"
+  },
+  {
+    "version": "v016",
+    "filename": "v016_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.917Z",
+    "description": "Updated chapter CH_11",
+    "parent": "v015"
+  },
+  {
+    "version": "v017",
+    "filename": "v017_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.919Z",
+    "description": "Updated chapter CH_12",
+    "parent": "v016"
+  },
+  {
+    "version": "v018",
+    "filename": "v018_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.920Z",
+    "description": "Updated chapter CH_13",
+    "parent": "v017"
+  },
+  {
+    "version": "v019",
+    "filename": "v019_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.922Z",
+    "description": "Updated chapter CH_14",
+    "parent": "v018"
+  },
+  {
+    "version": "v020",
+    "filename": "v020_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.924Z",
+    "description": "Updated chapter CH_15",
+    "parent": "v019"
+  },
+  {
+    "version": "v021",
+    "filename": "v021_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.925Z",
+    "description": "Updated chapter CH_16",
+    "parent": "v020"
+  },
+  {
+    "version": "v022",
+    "filename": "v022_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.927Z",
+    "description": "Updated chapter CH_17",
+    "parent": "v021"
+  },
+  {
+    "version": "v023",
+    "filename": "v023_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.929Z",
+    "description": "Updated chapter CH_18",
+    "parent": "v022"
+  },
+  {
+    "version": "v024",
+    "filename": "v024_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.931Z",
+    "description": "Updated chapter CH_19",
+    "parent": "v023"
+  },
+  {
+    "version": "v025",
+    "filename": "v025_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.933Z",
+    "description": "Updated chapter CH_20",
+    "parent": "v024"
+  },
+  {
+    "version": "v026",
+    "filename": "v026_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.935Z",
+    "description": "Updated chapter CH_21",
+    "parent": "v025"
+  },
+  {
+    "version": "v027",
+    "filename": "v027_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.937Z",
+    "description": "Updated chapter CH_22",
+    "parent": "v026"
+  },
+  {
+    "version": "v028",
+    "filename": "v028_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.938Z",
+    "description": "Updated chapter CH_23",
+    "parent": "v027"
+  },
+  {
+    "version": "v029",
+    "filename": "v029_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.940Z",
+    "description": "Updated chapter CH_24",
+    "parent": "v028"
+  },
+  {
+    "version": "v030",
+    "filename": "v030_2026-05-29T19-03-22.json",
+    "timestamp": "2026-05-29T19:03:22.942Z",
+    "description": "Updated chapter CH_EPILOGUE",
+    "parent": "v029"
+  },
+  {
+    "version": "v031",
+    "filename": "v031_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.195Z",
+    "description": "Updated chapter CH_02",
+    "parent": "v030"
+  },
+  {
+    "version": "v032",
+    "filename": "v032_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.197Z",
+    "description": "Updated chapter CH_03",
+    "parent": "v031"
+  },
+  {
+    "version": "v033",
+    "filename": "v033_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.199Z",
+    "description": "Updated chapter CH_04",
+    "parent": "v032"
+  },
+  {
+    "version": "v034",
+    "filename": "v034_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.201Z",
+    "description": "Updated chapter CH_05",
+    "parent": "v033"
+  },
+  {
+    "version": "v035",
+    "filename": "v035_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.203Z",
+    "description": "Updated chapter CH_06",
+    "parent": "v034"
+  },
+  {
+    "version": "v036",
+    "filename": "v036_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.205Z",
+    "description": "Updated chapter CH_07",
+    "parent": "v035"
+  },
+  {
+    "version": "v037",
+    "filename": "v037_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.207Z",
+    "description": "Updated chapter CH_08",
+    "parent": "v036"
+  },
+  {
+    "version": "v038",
+    "filename": "v038_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.209Z",
+    "description": "Updated chapter CH_09",
+    "parent": "v037"
+  },
+  {
+    "version": "v039",
+    "filename": "v039_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.211Z",
+    "description": "Updated chapter CH_10",
+    "parent": "v038"
+  },
+  {
+    "version": "v040",
+    "filename": "v040_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.213Z",
+    "description": "Updated chapter CH_11",
+    "parent": "v039"
+  },
+  {
+    "version": "v041",
+    "filename": "v041_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.215Z",
+    "description": "Updated chapter CH_12",
+    "parent": "v040"
+  },
+  {
+    "version": "v042",
+    "filename": "v042_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.217Z",
+    "description": "Updated chapter CH_13",
+    "parent": "v041"
+  },
+  {
+    "version": "v043",
+    "filename": "v043_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.219Z",
+    "description": "Updated chapter CH_14",
+    "parent": "v042"
+  },
+  {
+    "version": "v044",
+    "filename": "v044_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.221Z",
+    "description": "Updated chapter CH_15",
+    "parent": "v043"
+  },
+  {
+    "version": "v045",
+    "filename": "v045_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.223Z",
+    "description": "Updated chapter CH_16",
+    "parent": "v044"
+  },
+  {
+    "version": "v046",
+    "filename": "v046_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.224Z",
+    "description": "Updated chapter CH_17",
+    "parent": "v045"
+  },
+  {
+    "version": "v047",
+    "filename": "v047_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.226Z",
+    "description": "Updated chapter CH_18",
+    "parent": "v046"
+  },
+  {
+    "version": "v048",
+    "filename": "v048_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.228Z",
+    "description": "Updated chapter CH_19",
+    "parent": "v047"
+  },
+  {
+    "version": "v049",
+    "filename": "v049_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.230Z",
+    "description": "Updated chapter CH_20",
+    "parent": "v048"
+  },
+  {
+    "version": "v050",
+    "filename": "v050_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.232Z",
+    "description": "Updated chapter CH_21",
+    "parent": "v049"
+  },
+  {
+    "version": "v051",
+    "filename": "v051_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.234Z",
+    "description": "Updated chapter CH_22",
+    "parent": "v050"
+  },
+  {
+    "version": "v052",
+    "filename": "v052_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.236Z",
+    "description": "Updated chapter CH_23",
+    "parent": "v051"
+  },
+  {
+    "version": "v053",
+    "filename": "v053_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.238Z",
+    "description": "Updated chapter CH_24",
+    "parent": "v052"
+  },
+  {
+    "version": "v054",
+    "filename": "v054_2026-05-29T19-04-44.json",
+    "timestamp": "2026-05-29T19:04:44.240Z",
+    "description": "Updated chapter CH_EPILOGUE",
+    "parent": "v053"
   }
 ]

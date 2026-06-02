@@ -1,26 +1,78 @@
 <div class="sb-shell">
 
+  <!-- ── Header ── -->
   <header class="sb-header">
-    <a class="sb-back" routerLink="/vision">
-      <mat-icon>arrow_back</mat-icon>
-      Vision & Film
-    </a>
+    <a class="sb-back" routerLink="/vision"><mat-icon>arrow_back</mat-icon>Vision</a>
     <div class="sb-header-center">
-      <span class="sb-eyebrow">AI Storyboard</span>
+      <span class="sb-eyebrow">PreViz Benchmark</span>
       <h1 class="sb-title">The President's Rule</h1>
-      <p class="sb-sub">6 Key Scenes · Pre-Production Visual Direction</p>
+      <p class="sb-sub">{{ result ? result.panels.length : 26 }} Scenes · $10,000 PreViz Budget · Unreal / Kling / Runway</p>
     </div>
-    <button class="sb-regen-btn" (click)="generate()" [disabled]="loading" title="Regenerate storyboard">
-      <mat-icon>refresh</mat-icon>
-    </button>
+    <div class="sb-header-actions">
+      <button class="sb-action-btn gold" (click)="exportPreVizPacket()" [disabled]="!result" title="Export full PreViz packet as Markdown">
+        <mat-icon>download</mat-icon>Export Packet
+      </button>
+      <button class="sb-action-btn" (click)="showBudget = !showBudget" [class.active]="showBudget">
+        <mat-icon>payments</mat-icon>$10K Budget
+      </button>
+      <button class="sb-regen-btn" (click)="generate()" [disabled]="loading" title="Regenerate">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
   </header>
 
-  @if (!isApiConfigured) {
-    <div class="sb-api-notice">
-      <mat-icon>info_outline</mat-icon>
-      <div>
-        <strong>Demo Mode</strong> — storyboard panels are pre-written samples.
-        Add your Anthropic API key to <code>environments/environment.ts → anthropicApiKey</code> to generate live AI-directed storyboards via Claude.
+  <!-- ── Founding Reader intro banner ── -->
+  <div class="sb-intro-banner">
+    <mat-icon>auto_awesome</mat-icon>
+    <p>
+      <strong>Watch the film take shape — while you review it.</strong>
+      As a Founding Reader, you don't just read 72K words across 3 Acts — you see them.
+      AI renders the novel into living, cinematic frames, and as the 1,000 reviews reshape the
+      text each week, these frames evolve with it. You are the only audience on earth watching a
+      ₹1,000 Crore film assemble itself, scene by scene, before it is funded.
+    </p>
+  </div>
+
+  <!-- ── Budget drawer ── -->
+  @if (showBudget) {
+    <div class="sb-budget-drawer">
+      <div class="budget-header">
+        <div class="budget-title">
+          <mat-icon>payments</mat-icon>
+          <span>$10,000 USD PreViz Budget Breakdown</span>
+          <span class="budget-sub">Enough to produce a full 26-scene PreViz cut before any principal photography decision</span>
+        </div>
+        <button class="budget-close" (click)="showBudget = false"><mat-icon>close</mat-icon></button>
+      </div>
+      <div class="budget-body">
+        <div class="budget-lines">
+          @for (line of budgetData.breakdown; track line.item) {
+            <div class="budget-line">
+              <span class="bl-item">{{ line.item }}</span>
+              <span class="bl-cost">${{ line.cost | number }}</span>
+            </div>
+          }
+          <div class="budget-line total">
+            <span class="bl-item">TOTAL</span>
+            <span class="bl-cost">${{ budgetSpent | number }} / ${{ budgetData.total | number }}</span>
+          </div>
+        </div>
+        <div class="budget-engines">
+          <div class="be-label">Production Engines</div>
+          <div class="be-grid">
+            @for (engine of previzEngines; track engine.name) {
+              <a class="be-card" [href]="engine.url" target="_blank" rel="noopener">
+                <mat-icon>{{ engine.icon }}</mat-icon>
+                <div class="be-info">
+                  <div class="be-name">{{ engine.name }}</div>
+                  <div class="be-cost">{{ engine.cost }}</div>
+                  <div class="be-desc">{{ engine.description }}</div>
+                </div>
+                <mat-icon class="be-arrow">open_in_new</mat-icon>
+              </a>
+            }
+          </div>
+        </div>
       </div>
     </div>
   }
@@ -28,109 +80,403 @@
   @if (loading) {
     <div class="sb-loading">
       <div class="sb-spinner"></div>
-      <p>Claude is composing visual directions…</p>
+      <p>Loading storyboard for all 26 scenes…</p>
     </div>
   }
 
   @if (result && !loading) {
     <div class="sb-layout">
 
-      <!-- Panel filmstrip -->
+      <!-- Scene filmstrip -->
       <div class="sb-strip">
-        @for (panel of result.panels; track panel.sceneId; let i = $index) {
-          <button
-            class="sb-thumb"
-            [class.active]="i === activePanelIndex"
-            (click)="selectPanel(panel, i)"
-          >
-            <span class="thumb-num">{{ i + 1 }}</span>
-            <span class="thumb-act">{{ panel.actLabel.split('—')[0].trim() }}</span>
-            <span class="thumb-scene">{{ panel.chapterTitle }}</span>
-          </button>
+        @for (act of acts; track act.id) {
+          <div class="strip-act-group">
+            <div class="strip-act-label">{{ act.label }}</div>
+            @for (panel of act.panels; track panel.sceneId) {
+              <button class="sb-thumb" [class.active]="panel.panelIndex - 1 === activePanelIndex"
+                (click)="selectPanel(panel, panel.panelIndex - 1)">
+                <span class="thumb-num">{{ panel.chapterNumber }}</span>
+                <span class="thumb-scene">{{ panel.chapterTitle }}</span>
+                @if (panel.imageStatus === 'ready') { <span class="thumb-img-dot"></span> }
+              </button>
+            }
+          </div>
         }
       </div>
 
-      <!-- Active panel detail -->
+      <!-- Detail panel -->
       @if (activePanel) {
         <div class="sb-detail">
 
+          <!-- Scene heading -->
           <div class="sb-panel-header">
             <span class="panel-act-badge">{{ activePanel.actLabel }}</span>
-            <h2 class="panel-chapter">{{ activePanel.chapterTitle }}</h2>
+            <div class="panel-chapter-row">
+              <span class="panel-ch-num">Ch {{ activePanel.chapterNumber }}</span>
+              <h2 class="panel-chapter">{{ activePanel.chapterTitle }}</h2>
+            </div>
             <p class="panel-heading">{{ activePanel.sceneHeading }}</p>
           </div>
 
-          <div class="sb-frame">
-            <div class="sb-frame-inner">
-              <div class="sb-frame-content">
-                <div class="frame-characters">
-                  @for (char of activePanel.keyCharacters; track char) {
-                    <span class="frame-char-tag">{{ char }}</span>
-                  }
-                </div>
-                <p class="frame-visual">{{ activePanel.visualDescription }}</p>
-                <div class="frame-camera">
-                  <mat-icon>videocam</mat-icon>
-                  <span>{{ activePanel.cameraAngle }}</span>
-                </div>
-              </div>
-              <div class="frame-letterbox top"></div>
-              <div class="frame-letterbox bottom"></div>
-            </div>
+          <!-- Tabs -->
+          <div class="sb-tabs">
+            <button class="sb-tab" [class.active]="activeTab === 'previz'" (click)="activeTab = 'previz'">
+              <mat-icon>movie_filter</mat-icon>PreViz Scene
+            </button>
+            <button class="sb-tab" [class.active]="activeTab === 'refs'" (click)="activeTab = 'refs'">
+              <mat-icon>local_movies</mat-icon>Film References
+            </button>
+            <button class="sb-tab" [class.active]="activeTab === 'budget'" (click)="activeTab = 'budget'">
+              <mat-icon>smart_display</mat-icon>Animate
+            </button>
+            <button class="sb-tab" [class.active]="activeTab === 'stc'" (click)="activeTab = 'stc'">
+              <mat-icon>auto_stories</mat-icon>Save the Cat
+            </button>
           </div>
 
-          <div class="sb-meta-grid">
-            <div class="sb-meta-card">
-              <div class="meta-label">
-                <mat-icon>palette</mat-icon>
-                Color Palette
+          <!-- ── TAB: PreViz Scene ── -->
+          @if (activeTab === 'previz') {
+
+            <!-- Editable image prompt -->
+            <div class="sb-prompt-editor">
+              <div class="spe-header">
+                <div class="spe-label"><mat-icon>edit</mat-icon>Image / Video Prompt</div>
+                @if (!editingPrompt) {
+                  <button class="spe-edit-btn" (click)="startEditPrompt(activePanel)">
+                    <mat-icon>edit</mat-icon>Edit
+                  </button>
+                }
               </div>
-              <p>{{ activePanel.colorPalette }}</p>
+
+              @if (editingPrompt) {
+                <textarea
+                  class="spe-textarea"
+                  [(ngModel)]="promptDrafts[activePanel.sceneId]"
+                  rows="4"
+                  placeholder="Describe the cinematic scene for AI image/video generation…"
+                ></textarea>
+                <div class="spe-actions">
+                  <button class="spe-cancel" (click)="cancelEditPrompt()">Cancel</button>
+                  <button class="spe-save" (click)="savePrompt(activePanel)">
+                    <mat-icon>check</mat-icon>Save Prompt
+                  </button>
+                </div>
+              } @else {
+                <p class="spe-text">{{ activePanel.imagePrompt }}</p>
+                <div class="spe-copy-row">
+                  <button class="spe-copy-btn" (click)="copyPrompt(activePanel)">
+                    <mat-icon>content_copy</mat-icon>Copy for Kling / Runway / Midjourney
+                  </button>
+                </div>
+              }
             </div>
-            <div class="sb-meta-card">
-              <div class="meta-label">
-                <mat-icon>mood</mat-icon>
-                Mood
+
+            <!-- Image frame -->
+            <div class="sb-frame">
+              @if (activePanel.imageStatus === 'idle') {
+                <div class="sb-frame-placeholder">
+                  <div class="frame-placeholder-inner">
+                    <p class="frame-visual">{{ activePanel.visualDescription }}</p>
+                    <div class="frame-camera"><mat-icon>videocam</mat-icon><span>{{ activePanel.cameraAngle }}</span></div>
+                    <div class="frame-chars">
+                      @for (char of activePanel.keyCharacters; track char) {
+                        <span class="frame-char-tag">{{ char }}</span>
+                      }
+                    </div>
+                    <button class="frame-gen-btn" (click)="generateImage(activePanel)">
+                      <mat-icon>auto_awesome</mat-icon>
+                      Generate Reference Image
+                      <span class="frame-gen-sub">Pollinations.AI · Free</span>
+                    </button>
+                  </div>
+                  <div class="frame-letterbox top"></div>
+                  <div class="frame-letterbox bottom"></div>
+                </div>
+              }
+              @if (activePanel.imageStatus === 'loading') {
+                <div class="sb-frame-loading-overlay">
+                  <div class="img-spinner"></div>
+                  <p>Generating reference image…</p>
+                  <span class="img-hint">Pollinations.AI · free · ~5–15 sec</span>
+                </div>
+              }
+              @if (activePanel.imageStatus === 'ready' && activePanel.imageUrl) {
+                <div class="sb-frame-img">
+                  <img [src]="activePanel.imageUrl" [alt]="activePanel.chapterTitle" class="sb-img" />
+                  <div class="frame-letterbox top"></div>
+                  <div class="frame-letterbox bottom"></div>
+                  <div class="sb-img-overlay">
+                    <div class="frame-camera-overlay"><mat-icon>videocam</mat-icon><span>{{ activePanel.cameraAngle }}</span></div>
+                    <button class="sb-regen-img-btn" (click)="generateImage(activePanel)" title="Regenerate"><mat-icon>refresh</mat-icon></button>
+                  </div>
+                </div>
+              }
+              @if (activePanel.imageStatus === 'error') {
+                <div class="sb-frame-error">
+                  <mat-icon>broken_image</mat-icon>
+                  <p>Image generation failed</p>
+                  <button (click)="generateImage(activePanel)">Try again</button>
+                </div>
+              }
+            </div>
+
+            <!-- Scene meta -->
+            <div class="sb-meta-grid">
+              <div class="sb-meta-card">
+                <div class="meta-label"><mat-icon>palette</mat-icon>Color Palette</div>
+                <p>{{ activePanel.colorPalette }}</p>
               </div>
-              <p>{{ activePanel.mood }}</p>
-            </div>
-            <div class="sb-meta-card">
-              <div class="meta-label">
-                <mat-icon>volume_up</mat-icon>
-                Soundscape
+              <div class="sb-meta-card">
+                <div class="meta-label"><mat-icon>mood</mat-icon>Mood</div>
+                <p>{{ activePanel.mood }}</p>
               </div>
-              <p>{{ activePanel.soundscape }}</p>
-            </div>
-            <div class="sb-meta-card highlight">
-              <div class="meta-label">
-                <mat-icon>movie_filter</mat-icon>
-                Director's Note
+              <div class="sb-meta-card">
+                <div class="meta-label"><mat-icon>volume_up</mat-icon>Soundscape</div>
+                <p>{{ activePanel.soundscape }}</p>
               </div>
-              <p>{{ activePanel.directorNote }}</p>
+              <div class="sb-meta-card highlight">
+                <div class="meta-label"><mat-icon>movie_filter</mat-icon>Director's Note</div>
+                <p>{{ activePanel.directorNote }}</p>
+              </div>
             </div>
-          </div>
+          }
+
+          <!-- ── TAB: Film References ── -->
+          @if (activeTab === 'refs') {
+            <div class="sb-refs">
+              <div class="refs-intro">
+                <mat-icon>local_movies</mat-icon>
+                <div>
+                  <strong>Benchmark References</strong>
+                  <p>Scenes from existing films that define the visual language, tone, or staging this scene should achieve. Use these with the image prompt above when briefing the PreViz team.</p>
+                </div>
+              </div>
+              <div class="refs-list">
+                @for (ref of refsFor(activePanel); track ref.film + ref.scene) {
+                  <div class="ref-card">
+                    <div class="ref-film-row">
+                      <span class="ref-film">{{ ref.film }}</span>
+                      <span class="ref-year">{{ ref.year }}</span>
+                      <span class="ref-aspect-badge">{{ ref.aspect }}</span>
+                    </div>
+                    <p class="ref-scene">{{ ref.scene }}</p>
+                    <p class="ref-why"><strong>Why this reference:</strong> {{ ref.why }}</p>
+                  </div>
+                }
+              </div>
+
+              <div class="refs-prompt-note">
+                <mat-icon>lightbulb</mat-icon>
+                <p>When uploading to Kling or Runway, include the reference film title in your prompt: <em>"in the style of [Film], [scene description]…"</em></p>
+              </div>
+            </div>
+          }
+
+          <!-- ── TAB: Animate ── -->
+          @if (activeTab === 'budget') {
+            <div class="sb-animate">
+              <div class="animate-intro">
+                <mat-icon>smart_display</mat-icon>
+                <div>
+                  <strong>Animate this scene</strong>
+                  <p>Copy the image prompt, then open one of these engines. For Unreal Engine: use the director's note and film references above to brief a MetaHuman artist.</p>
+                </div>
+              </div>
+              <div class="animate-copy-strip">
+                <span class="acs-label">Prompt ready to paste:</span>
+                <span class="acs-text">{{ activePanel.imagePrompt | slice:0:100 }}…</span>
+                <button class="acs-copy" (click)="copyPrompt(activePanel)"><mat-icon>content_copy</mat-icon>Copy</button>
+              </div>
+              <div class="animate-tools">
+                @for (engine of previzEngines; track engine.name) {
+                  <a class="at-card" [href]="engine.url" target="_blank" rel="noopener">
+                    <div class="at-icon"><mat-icon>{{ engine.icon }}</mat-icon></div>
+                    <div class="at-body">
+                      <div class="at-name">{{ engine.name }}</div>
+                      <div class="at-cost">{{ engine.cost }}</div>
+                      <div class="at-desc">{{ engine.description }}</div>
+                    </div>
+                    <mat-icon class="at-arrow">open_in_new</mat-icon>
+                  </a>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- ── TAB: Save the Cat ── -->
+          @if (activeTab === 'stc') {
+            <div class="sb-stc">
+
+              <!-- Beats for this chapter -->
+              @if (beatsForPanel(activePanel).length > 0) {
+                <div class="stc-chapter-beats">
+                  @for (beat of beatsForPanel(activePanel); track beat.beatNumber) {
+                    <div class="stc-beat-card">
+                      <div class="stc-beat-header">
+                        <div class="stc-beat-left">
+                          <span class="stc-beat-num">Beat {{ beat.beatNumber }}</span>
+                          <span class="stc-beat-name">{{ beat.beatName }}</span>
+                        </div>
+                        <div class="stc-strength-pill"
+                          [style.background]="strengthColor(beat.strengthRating) + '22'"
+                          [style.border-color]="strengthColor(beat.strengthRating) + '55'"
+                          [style.color]="strengthColor(beat.strengthRating)">
+                          {{ beat.strengthRating }}/10 · {{ strengthLabel(beat.strengthRating) }}
+                        </div>
+                      </div>
+                      <p class="stc-scene-desc">{{ beat.sceneDescription }}</p>
+                      <div class="stc-row">
+                        <div class="stc-col">
+                          <div class="stc-col-label"><mat-icon>psychology</mat-icon>Thematic Function</div>
+                          <p>{{ beat.thematicFunction }}</p>
+                        </div>
+                        <div class="stc-col">
+                          <div class="stc-col-label"><mat-icon>edit_note</mat-icon>Craft Notes</div>
+                          <p>{{ beat.craftNotes }}</p>
+                        </div>
+                      </div>
+                      @if (beat.strengthRating < 10) {
+                        <div class="stc-prescription">
+                          <div class="stc-presc-label"><mat-icon>build</mat-icon>Writer's Fix</div>
+                          <p>{{ beat.prescription }}</p>
+                        </div>
+                      } @else {
+                        <div class="stc-perfect">
+                          <mat-icon>check_circle</mat-icon>
+                          <span>{{ beat.prescription }}</span>
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              } @else {
+                <div class="stc-no-beat">
+                  <mat-icon>info_outline</mat-icon>
+                  <p>This chapter is not a primary Save the Cat beat — it supports the surrounding beats. See the full beat sheet below.</p>
+                </div>
+              }
+
+              <!-- Thesis strip -->
+              <div class="stc-thesis-strip">
+                <div class="stc-thesis-label"><mat-icon>format_quote</mat-icon>Novel Premise</div>
+                <p class="stc-premise">{{ novelThesis.premiseStatement }}</p>
+                <div class="stc-tta-row">
+                  <div class="stc-tta-card thesis">
+                    <div class="stc-tta-head">Thesis</div>
+                    <p>{{ novelThesis.thesis }}</p>
+                  </div>
+                  <div class="stc-tta-card antithesis">
+                    <div class="stc-tta-head">Antithesis</div>
+                    <p>{{ novelThesis.antithesis }}</p>
+                  </div>
+                  <div class="stc-tta-card synthesis">
+                    <div class="stc-tta-head">Synthesis</div>
+                    <p>{{ novelThesis.synthesis }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Writer's POV — themes -->
+              <div class="stc-section">
+                <div class="stc-section-header">
+                  <mat-icon>lightbulb</mat-icon>
+                  <span>Writer's Thematic Architecture</span>
+                  <span class="stc-section-sub">What this novel is actually about — Vishwa's POV</span>
+                </div>
+                <div class="stc-themes">
+                  @for (t of novelThesis.themes; track t.theme) {
+                    <div class="stc-theme-chip" [class.primary]="t.weight === 'primary'" [class.secondary]="t.weight === 'secondary'" [class.tertiary]="t.weight === 'tertiary'">
+                      <span class="stc-theme-weight">{{ t.weight }}</span>
+                      <span class="stc-theme-text">{{ t.theme }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <!-- Craft strengths -->
+              <div class="stc-section">
+                <div class="stc-section-header">
+                  <mat-icon>star</mat-icon>
+                  <span>What's Working</span>
+                  <span class="stc-section-sub">Manuscript strengths to protect through revision</span>
+                </div>
+                <div class="stc-strengths">
+                  @for (s of novelThesis.strengths; track s.title) {
+                    <div class="stc-strength-item">
+                      <div class="stc-strength-title">{{ s.title }}</div>
+                      <p>{{ s.note }}</p>
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <!-- Revision priorities -->
+              <div class="stc-section">
+                <div class="stc-section-header">
+                  <mat-icon>construction</mat-icon>
+                  <span>Revision Priorities</span>
+                  <span class="stc-section-sub">Ordered fixes — highest structural impact first</span>
+                </div>
+                <div class="stc-revisions">
+                  @for (r of novelThesis.revisionPriorities; track r.rank) {
+                    <div class="stc-revision-item">
+                      <div class="stc-rev-rank">#{{ r.rank }}</div>
+                      <div class="stc-rev-body">
+                        <div class="stc-rev-issue">{{ r.issue }}</div>
+                        <p class="stc-rev-fix">{{ r.fix }}</p>
+                      </div>
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <!-- Full beat sheet summary -->
+              <div class="stc-section">
+                <div class="stc-section-header">
+                  <mat-icon>table_chart</mat-icon>
+                  <span>Full Beat Sheet</span>
+                  <span class="stc-section-sub">All 15 Save the Cat beats — click to jump to that scene</span>
+                </div>
+                <div class="stc-beatsheet">
+                  @for (beat of stcBeats; track beat.beatNumber) {
+                    <div class="stc-bs-row" [class.active]="isBeatActive(beat)" (click)="jumpToBeat(beat)">
+                      <div class="stc-bs-num">{{ beat.beatNumber }}</div>
+                      <div class="stc-bs-name">{{ beat.beatName }}</div>
+                      <div class="stc-bs-chapters">
+                        @for (ch of beat.chapterIds; track ch) {
+                          <span class="stc-bs-ch">{{ ch.replace('CH_0','Ch ').replace('CH_','Ch ') }}</span>
+                        }
+                      </div>
+                      <div class="stc-bs-rating"
+                        [style.color]="strengthColor(beat.strengthRating)">
+                        {{ beat.strengthRating }}/10
+                      </div>
+                    </div>
+                  }
+                </div>
+              </div>
+
+            </div>
+          }
 
           <!-- Navigation -->
           <div class="sb-nav">
             <button class="sb-nav-btn" (click)="prevPanel()" [disabled]="activePanelIndex === 0">
-              <mat-icon>chevron_left</mat-icon>
-              Previous Scene
+              <mat-icon>chevron_left</mat-icon>Previous
             </button>
             <span class="sb-nav-pos">{{ activePanelIndex + 1 }} / {{ result.panels.length }}</span>
             <button class="sb-nav-btn" (click)="nextPanel()" [disabled]="activePanelIndex === result.panels.length - 1">
-              Next Scene
-              <mat-icon>chevron_right</mat-icon>
+              Next<mat-icon>chevron_right</mat-icon>
             </button>
           </div>
 
         </div>
       }
-
     </div>
 
     <div class="sb-footer">
-      <p>Generated {{ result.generatedAt | date:'medium' }}</p>
-      <p>6 key scenes · Claude claude-opus-4-7 · Animation pipeline: Kling · Runway Gen-3 · Midjourney · ElevenLabs · Suno</p>
+      <p>{{ result.panels.length }} scenes · All chapters benchmarked · Generated {{ result.generatedAt | date:'medium' }}</p>
+      <p>Images: Pollinations.AI (free) · PreViz: Unreal · Kling · Runway Gen-3 · Luma · Budget: $10,000 USD</p>
     </div>
   }
 
