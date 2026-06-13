@@ -888,7 +888,8 @@ app.get('/api/pitch-status', (req, res) => {
     const agents      = docs.filter(d => d.type === 'agent');
     const fundraise   = docs.filter(d => d.type === 'fundraise');
     const suggested   = docs.filter(d => d.type === 'suggested');
-    res.json({ summary, publishers, agents, fundraise, suggested });
+    const prodhouses  = docs.filter(d => d.type === 'prodhouse');
+    res.json({ summary, publishers, agents, fundraise, suggested, prodhouses });
   });
 });
 

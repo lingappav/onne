@@ -104,5 +104,9 @@ export const routes: Routes = [
   {
     path: 'journal/:id',
     loadComponent: () => import('./components/journal-post/journal-post.component').then(m => m.JournalPostComponent)
+  },
+  {
+    path: 'eb1a-profile',
+    loadComponent: () => import('./components/eb1a-profile/eb1a-profile.component').then(m => m.Eb1aProfileComponent)
   }
 ];

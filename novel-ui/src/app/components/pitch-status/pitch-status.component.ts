@@ -24,6 +24,10 @@ interface PitchItem {
   reason?: string;
   action?: string;
   channel?: string;
+  contact_email?: string;
+  contact_phone?: string;
+  contact_verified?: boolean;
+  contact_source?: string;
 }
 
 interface FundraiseSummary {
@@ -44,6 +48,7 @@ interface PitchData {
   agents: PitchItem[];
   fundraise: PitchItem[];
   suggested: PitchItem[];
+  prodhouses: PitchItem[];
 }
 
 @Component({
@@ -56,7 +61,7 @@ interface PitchData {
 export class PitchStatusComponent implements OnInit {
   data: PitchData | null = null;
   loading = false;
-  activeTab: 'publishers' | 'agents' | 'fundraise' | 'suggested' = 'publishers';
+  activeTab: 'publishers' | 'agents' | 'prodhouses' | 'fundraise' | 'suggested' = 'publishers';
   editingId: string | null = null;
   editingItem: Partial<PitchItem> = {};
   editingSummary = false;
@@ -113,6 +118,14 @@ export class PitchStatusComponent implements OnInit {
     });
   }
 
+  copyContact(value?: string) {
+    if (!value) return;
+    navigator.clipboard?.writeText(value).then(
+      () => this.snack.open(`Copied: ${value}`, 'OK', { duration: 2000 }),
+      () => this.snack.open('Copy failed', 'OK', { duration: 2000 })
+    );
+  }
+
   statusColor(s: string): string { return this.STATUS_COLORS[s] || '#888'; }
   statusLabel(s: string): string { return this.STATUS_LABELS[s] || s; }
 
@@ -155,4 +168,24 @@ export class PitchStatusComponent implements OnInit {
     }
     return out;
   }
+
+  groupedProdhouses(): Record<string, PitchItem[]> {
+    if (!this.data) return {};
+    const out: Record<string, PitchItem[]> = {};
+    for (const p of this.data.prodhouses || []) {
+      const cat = p.category || 'Other';
+      (out[cat] = out[cat] || []).push(p);
+    }
+    return out;
+  }
+
+  // ── Outreach playbook: how exactly to reach every Indian-founded US production house ──
+  readonly OUTREACH_STEPS = [
+    { icon: 'travel_explore', title: '1 · Build the target list', body: 'Map every Indian-origin-founded production house with a US footprint — diaspora founders, US-NRI investor bases, and India houses with active US/global slates. Tag each by who the decision-maker is.' },
+    { icon: 'badge', title: '2 · Never go cold — find the warm path', body: 'These houses do not read unsolicited scripts. For each target, find the bridge: a shared producer, a WGA-listed literary manager, a festival programmer, or an agent who can make the intro. The Sunday Cinemas option is your door-opener.' },
+    { icon: 'description', title: '3 · Lead with the one-pager, not the novel', body: 'Send a single-page concept: logline, the Pan-India political-drama hook, the finished-novel-as-blueprint advantage, the Sunday Cinemas 24-month option, and comps (Gangubai, The Kerala Story, Sarkar). Attach nothing heavy until asked.' },
+    { icon: 'forum', title: '4 · Pitch the differentiator', body: 'Your edge is that the IP is de-risked: a complete, research-backed novel with an attached director and a founding-reader audience. That eliminates development hell — the exact pain these houses fear. Say that explicitly.' },
+    { icon: 'event', title: '5 · Work the circuit', body: 'Reach diaspora producers through SAJA, IAAC, the New York Indian Film Festival, and the South-Asian film networks. Relationships built there convert cold lists into warm intros over a single season.' },
+    { icon: 'autorenew', title: '6 · Track, follow up, escalate', body: 'Log every touch on this board (Sent → Replied → Meeting). Polite follow-up at day 7 and day 21. Move warm replies to a tailored deck; let cold ones rest and re-approach after a press or award milestone.' },
+  ];
 }

@@ -1,0 +1,217 @@
+<div class="eb-shell">
+
+  <!-- ══ NAV ══════════════════════════════════════════════════════════════ -->
+  <nav class="eb-nav">
+    <div class="nav-brand">
+      <mat-icon>verified_user</mat-icon>
+      <span>EB1A Profile</span>
+    </div>
+    <div class="nav-links">
+      <a (click)="scrollTo('summary')">Summary</a>
+      <a (click)="scrollTo('careers')">Two Careers</a>
+      <a (click)="scrollTo('criteria')">8 Criteria</a>
+      <a (click)="scrollTo('timeline')">Timeline</a>
+      <a (click)="scrollTo('evidence')">Evidence</a>
+    </div>
+    <a class="nav-cta" routerLink="/vision">Sunday Cinemas</a>
+  </nav>
+
+  <!-- ══ HERO ══════════════════════════════════════════════════════════════ -->
+  <section class="eb-hero" id="summary">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <mat-icon>workspace_premium</mat-icon>
+        <span>EB1A · Extraordinary Ability · Petition Profile</span>
+      </div>
+      <h1 class="hero-title">{{ profile.name }}</h1>
+      <p class="hero-field">{{ profile.field }}</p>
+      <p class="hero-sub">{{ profile.tagline }}</p>
+
+      <div class="hero-facts">
+        <div class="fact"><mat-icon>badge</mat-icon><span>{{ profile.swa }}</span></div>
+        <div class="fact"><mat-icon>school</mat-icon><span>{{ profile.education }}</span></div>
+        <div class="fact"><mat-icon>link</mat-icon><a [href]="profile.linkedin" target="_blank" rel="noopener">LinkedIn Profile</a></div>
+      </div>
+
+      <div class="hero-actions">
+        <a class="btn-primary" (click)="scrollTo('criteria')">
+          <mat-icon>fact_check</mat-icon> View the 8-Criteria Map
+        </a>
+        <a class="btn-ghost" (click)="scrollTo('timeline')">
+          <mat-icon>timeline</mat-icon> Career Timeline
+        </a>
+      </div>
+    </div>
+    <div class="hero-bg-text">EXTRAORDINARY ABILITY</div>
+  </section>
+
+  <!-- ══ TWO CAREERS, ONE ARC ════════════════════════════════════════════ -->
+  <section class="eb-careers" id="careers">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="eyebrow">The Dual Field</span>
+        <h2>Two careers. One body of extraordinary work.</h2>
+        <p class="lede">
+          EB1A recognises sustained extraordinary ability. Here it is documented twice over —
+          a twenty-year creative practice and a fifteen-year engineering record — converging on a single,
+          rare synthesis that very few people in the world can claim.
+        </p>
+      </div>
+
+      <div class="pillars">
+        @for (p of pillars; track p.title) {
+          <article class="pillar">
+            <div class="pillar-icon"><mat-icon>{{ p.icon }}</mat-icon></div>
+            <span class="pillar-kicker">{{ p.kicker }}</span>
+            <h3>{{ p.title }}</h3>
+            <p>{{ p.body }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ THE 8 USCIS CRITERIA ════════════════════════════════════════════ -->
+  <section class="eb-criteria" id="criteria">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="eyebrow">8 CFR 204.5(h)(3)</span>
+        <h2>Mapped to the Eight USCIS Criteria</h2>
+        <p class="lede">
+          An EB1A petition must satisfy at least <strong>three of eight</strong> regulatory criteria.
+          Below, each criterion is mapped to documented evidence across both careers — with an honest note on
+          what is already strong and what still needs to be built before filing.
+        </p>
+        <div class="legend">
+          <span class="lg strong"><i></i> Strong evidence</span>
+          <span class="lg building"><i></i> Evidence building</span>
+          <span class="lg planned"><i></i> Needs development</span>
+        </div>
+      </div>
+
+      <div class="criteria-grid">
+        @for (c of criteria; track c.no) {
+          <article class="crit-card" [class.strong]="c.strength === 'strong'"
+                   [class.building]="c.strength === 'building'"
+                   [class.planned]="c.strength === 'planned'">
+            <header class="crit-head">
+              <div class="crit-no"><mat-icon>{{ c.icon }}</mat-icon><span>{{ c.no }}</span></div>
+              <div class="crit-title">
+                <h3>{{ c.title }}</h3>
+                <span class="crit-reg">{{ c.regulation }}</span>
+              </div>
+              <span class="crit-badge">{{ strengthLabel[c.strength] }}</span>
+            </header>
+
+            <ul class="crit-evidence">
+              @for (e of c.evidence; track e) {
+                <li><mat-icon>check_circle</mat-icon><span>{{ e }}</span></li>
+              }
+            </ul>
+
+            @if (c.gap) {
+              <div class="crit-gap">
+                <mat-icon>flag</mat-icon>
+                <span><strong>To strengthen:</strong> {{ c.gap }}</span>
+              </div>
+            }
+          </article>
+        }
+
+        <!-- Criterion ix — high remuneration, supporting -->
+        <article class="crit-card building wide">
+          <header class="crit-head">
+            <div class="crit-no"><mat-icon>{{ remuneration.icon }}</mat-icon><span>9</span></div>
+            <div class="crit-title">
+              <h3>{{ remuneration.title }}</h3>
+              <span class="crit-reg">Supporting criterion</span>
+            </div>
+            <span class="crit-badge">{{ strengthLabel[remuneration.strength] }}</span>
+          </header>
+          <p class="crit-para">{{ remuneration.body }}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ TIMELINE ════════════════════════════════════════════════════════ -->
+  <section class="eb-timeline" id="timeline">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="eyebrow">2006 → 2030</span>
+        <h2>A Career Timeline — Both Tracks at Once</h2>
+        <p class="lede">The engineer is not hidden, and the writer is not abstract. Both ran in parallel for two decades.</p>
+      </div>
+
+      <div class="timeline">
+        @for (t of timeline; track t.year + t.label) {
+          <div class="tl-row" [class.creative]="t.track === 'creative'" [class.software]="t.track === 'software'">
+            <div class="tl-marker">
+              <mat-icon>{{ t.track === 'creative' ? 'auto_stories' : 'architecture' }}</mat-icon>
+            </div>
+            <div class="tl-body">
+              <div class="tl-top">
+                <span class="tl-year">{{ t.year }}</span>
+                <span class="tl-track">{{ t.track === 'creative' ? 'Creative' : 'Software' }}</span>
+              </div>
+              <h4>{{ t.label }}</h4>
+              <p>{{ t.detail }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ EVIDENCE STRIPS ═════════════════════════════════════════════════ -->
+  <section class="eb-evidence" id="evidence">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="eyebrow">Documented Record</span>
+        <h2>The Evidence Behind the Claim</h2>
+      </div>
+
+      <div class="ev-cols">
+        <div class="ev-col">
+          <h3 class="ev-col-head"><mat-icon>architecture</mat-icon> Software Architecture</h3>
+          @for (h of techHighlights; track h.org) {
+            <div class="ev-item">
+              <mat-icon class="ev-icon">{{ h.icon }}</mat-icon>
+              <div>
+                <div class="ev-org">{{ h.org }} · <span>{{ h.role }}</span></div>
+                <p>{{ h.detail }}</p>
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="ev-col">
+          <h3 class="ev-col-head"><mat-icon>auto_stories</mat-icon> Creative Work</h3>
+          @for (h of creativeHighlights; track h.title) {
+            <div class="ev-item">
+              <mat-icon class="ev-icon">{{ h.icon }}</mat-icon>
+              <div>
+                <div class="ev-org">{{ h.title }}</div>
+                <p>{{ h.detail }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER NOTE ═════════════════════════════════════════════════════ -->
+  <footer class="eb-footer">
+    <div class="section-inner">
+      <mat-icon>info</mat-icon>
+      <p>
+        This profile is a working evidence map for an EB1A (Extraordinary Ability) petition. It is honest about
+        strengths and gaps so that an immigration attorney can prioritise the documentation that still needs to be
+        gathered. It is not legal advice. Final criterion selection and filing strategy should be confirmed with
+        qualified immigration counsel.
+      </p>
+    </div>
+  </footer>
+
+</div>

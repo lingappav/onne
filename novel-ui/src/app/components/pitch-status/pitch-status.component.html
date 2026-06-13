@@ -12,6 +12,9 @@
       <button [class.active]="activeTab==='agents'" (click)="activeTab='agents'">
         <mat-icon>person_search</mat-icon> Agents
       </button>
+      <button [class.active]="activeTab==='prodhouses'" (click)="activeTab='prodhouses'">
+        <mat-icon>movie</mat-icon> US Production Houses
+      </button>
       <button [class.active]="activeTab==='fundraise'" (click)="activeTab='fundraise'">
         <mat-icon>account_balance</mat-icon> Fundraise
       </button>
@@ -147,6 +150,108 @@
         <mat-icon>edit</mat-icon> Update
       </button>
     </div>
+  </div>
+
+  <!-- ── US PRODUCTION HOUSES tab ── -->
+  <div class="pitch-content" *ngIf="activeTab==='prodhouses' && data">
+
+    <!-- outreach playbook: how exactly to reach out -->
+    <div class="playbook">
+      <div class="playbook-head">
+        <mat-icon>map</mat-icon>
+        <div>
+          <div class="playbook-title">How to reach every Indian-founded US production house</div>
+          <div class="playbook-sub">A repeatable outreach sequence. These houses don't read cold scripts — the warm path and the one-pager are everything.</div>
+        </div>
+      </div>
+      <div class="playbook-steps">
+        <div class="playbook-step" *ngFor="let s of OUTREACH_STEPS">
+          <mat-icon>{{s.icon}}</mat-icon>
+          <div class="ps-title">{{s.title}}</div>
+          <div class="ps-body">{{s.body}}</div>
+        </div>
+      </div>
+    </div>
+
+    @for (entry of (groupedProdhouses() | keyvalue); track entry.key) {
+      <div class="group-header">{{entry.key}}</div>
+      @for (h of entry.value; track h._id) {
+        <div class="pitch-card">
+          <div class="card-header">
+            <div class="card-title-row">
+              <mat-icon class="priority-icon" [style.color]="priorityColor(h.priority)">{{priorityIcon(h.priority)}}</mat-icon>
+              <span class="card-name">{{h.name}}</span>
+              <span class="tier-badge">{{h.tier}}</span>
+            </div>
+            <div class="status-badge" [style.background]="statusColor(h.status)+'22'" [style.color]="statusColor(h.status)" [style.borderColor]="statusColor(h.status)">
+              {{statusLabel(h.status)}}
+            </div>
+          </div>
+          <div class="card-contact" *ngIf="h.org"><mat-icon class="inline-ic">person</mat-icon>{{h.org}}</div>
+          <div class="card-contact channel" *ngIf="h.channel"><mat-icon class="inline-ic">route</mat-icon>First contact: {{h.channel}}</div>
+
+          <!-- cold-pitch contact block -->
+          <div class="contact-block" *ngIf="h.contact_email || h.contact_phone">
+            <div class="contact-line" *ngIf="h.contact_email">
+              <mat-icon class="inline-ic">mail</mat-icon>
+              <a [href]="'mailto:' + h.contact_email" *ngIf="h.contact_verified; else plainEmail">{{h.contact_email}}</a>
+              <ng-template #plainEmail><span class="contact-indirect">{{h.contact_email}}</span></ng-template>
+              <button class="copy-btn" *ngIf="h.contact_verified" (click)="copyContact(h.contact_email)" matTooltip="Copy email">
+                <mat-icon>content_copy</mat-icon>
+              </button>
+            </div>
+            <div class="contact-line" *ngIf="h.contact_phone && h.contact_phone !== '—'">
+              <mat-icon class="inline-ic">call</mat-icon>
+              <a [href]="'tel:' + h.contact_phone">{{h.contact_phone}}</a>
+              <button class="copy-btn" (click)="copyContact(h.contact_phone)" matTooltip="Copy number">
+                <mat-icon>content_copy</mat-icon>
+              </button>
+            </div>
+            <div class="contact-meta">
+              <span class="verify-badge" [class.verified]="h.contact_verified" [class.indirect]="!h.contact_verified">
+                <mat-icon>{{h.contact_verified ? 'verified' : 'help_outline'}}</mat-icon>
+                {{h.contact_verified ? 'Verified public channel' : 'Indirect — via rep/manager'}}
+              </span>
+              <span class="contact-src" *ngIf="h.contact_source">src: {{h.contact_source}}</span>
+            </div>
+          </div>
+
+          <div class="card-notes">{{h.notes}}</div>
+          <div class="card-dates" *ngIf="h.submitted || h.last_contact">
+            <span *ngIf="h.submitted"><mat-icon>send</mat-icon> Reached out: {{h.submitted}}</span>
+            <span *ngIf="h.last_contact"><mat-icon>history</mat-icon> Last contact: {{h.last_contact}}</span>
+          </div>
+
+          <div class="card-edit" *ngIf="editingId === h._id">
+            <div class="edit-row">
+              <label>Status</label>
+              <select [(ngModel)]="editingItem.status">
+                <option *ngFor="let s of STATUS_OPTIONS" [value]="s">{{statusLabel(s)}}</option>
+              </select>
+            </div>
+            <div class="edit-row">
+              <label>Reached out</label>
+              <input type="date" [(ngModel)]="editingItem.submitted">
+            </div>
+            <div class="edit-row">
+              <label>Last contact</label>
+              <input type="date" [(ngModel)]="editingItem.last_contact">
+            </div>
+            <div class="edit-row">
+              <label>Notes</label>
+              <textarea [(ngModel)]="editingItem.notes" rows="2"></textarea>
+            </div>
+            <div class="edit-actions">
+              <button class="btn-save" (click)="saveEdit(h)">Save</button>
+              <button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+            </div>
+          </div>
+          <button class="card-edit-btn" *ngIf="editingId !== h._id" (click)="startEdit(h)">
+            <mat-icon>edit</mat-icon> Update
+          </button>
+        </div>
+      }
+    }
   </div>
 
   <!-- ── FUNDRAISE tab ── -->

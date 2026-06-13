@@ -356,3 +356,101 @@
   .spin { animation: spin 1s linear infinite; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+// ── outreach playbook (US production houses) ─────────────────────────────────
+.playbook {
+  background: #16161a;
+  border: 1px solid #2a2a2e;
+  border-left: 3px solid #c8962c;
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 18px;
+}
+.playbook-head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  > mat-icon { color: #c8962c; flex-shrink: 0; }
+}
+.playbook-title { font-size: 14px; font-weight: 700; color: #e8e8e8; }
+.playbook-sub { font-size: 12.5px; color: #8a8a8a; line-height: 1.5; margin-top: 3px; }
+.playbook-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.playbook-step {
+  background: #1c1c1f;
+  border: 1px solid #2a2a2e;
+  border-radius: 8px;
+  padding: 12px 13px;
+  mat-icon { font-size: 18px; width: 18px; height: 18px; color: #c8962c; margin-bottom: 6px; }
+  .ps-title { font-size: 12.5px; font-weight: 700; color: #d8d8d8; margin-bottom: 4px; }
+  .ps-body { font-size: 12px; color: #8f8f8f; line-height: 1.5; }
+}
+@media (max-width: 900px) { .playbook-steps { grid-template-columns: 1fr; } }
+
+// channel / inline icons inside prodhouse cards
+.card-contact {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  &.channel { color: #c8962c; }
+  .inline-ic { font-size: 14px; width: 14px; height: 14px; flex-shrink: 0; }
+}
+
+// ── cold-pitch contact block ─────────────────────────────────────────────────
+.contact-block {
+  background: #151518;
+  border: 1px solid #26262a;
+  border-radius: 8px;
+  padding: 9px 11px;
+  margin: 8px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.contact-line {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  .inline-ic { font-size: 15px; width: 15px; height: 15px; color: #c8962c; flex-shrink: 0; }
+  a {
+    color: #6cb6ff;
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
+  }
+  .contact-indirect { color: #9a9a9a; font-style: italic; }
+  .copy-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #777;
+    padding: 2px;
+    display: inline-flex;
+    border-radius: 4px;
+    &:hover { color: #ccc; background: #2a2a2e; }
+    mat-icon { font-size: 14px; width: 14px; height: 14px; }
+  }
+}
+.contact-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 1px;
+}
+.verify-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  padding: 2px 7px;
+  border-radius: 9px;
+  mat-icon { font-size: 12px; width: 12px; height: 12px; }
+  &.verified { color: #3fb950; background: #3fb95018; border: 1px solid #3fb95040; }
+  &.indirect { color: #d29922; background: #d2992218; border: 1px solid #d2992240; }
+}
+.contact-src { font-size: 10px; color: #5c5c5c; font-style: italic; }

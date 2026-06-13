@@ -61,6 +61,7 @@ export class AppComponent implements OnInit {
     { path: '/journal',           label: 'Writer\'s Journal', icon: 'edit_note',      group: 'presale' },
     { path: '/presale',           label: 'Book Pre-Sale',     icon: 'storefront',     group: 'presale' },
     { path: '/admin-panel',       label: 'Admin Panel',       icon: 'shield',         group: 'presale' },
+    { path: '/eb1a-profile',      label: 'EB1A Profile',      icon: 'workspace_premium', group: 'profile' },
   ];
 
   groups = [
@@ -71,6 +72,7 @@ export class AppComponent implements OnInit {
     { id: 'intelligence',  label: 'Intelligence' },
     { id: 'business',      label: 'Business' },
     { id: 'presale',       label: 'Presale & Funding' },
+    { id: 'profile',       label: 'Profile' },
   ];
 
   // Groups collapsed by default to save space; active route's group auto-expands
